@@ -1,0 +1,189 @@
+@import 'utils/vars';
+@import 'utils/reset';
+
+
+@font-face {
+    font-family: "Manrope";
+    src: url("../fonts/Manrope-ExtraLight.ttf") format("woff"), url("../fonts/Manrope-ExtraLight.ttf") format("truetype");
+    font-display: swap;
+    font-weight: 200;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Manrope";
+    src: url("../fonts/Manrope-Light.ttf") format("woff"), url("../fonts/Manrope-Light.ttf") format("truetype");
+    font-display: swap;
+    font-weight: 300;
+    font-style: normal;
+}
+/*@font-face {
+    font-family: "Manrope";
+    src: url("../fonts/Manrope-Regular.ttf") format("woff"), url("../fonts/Manrope-Regular.ttf") format("truetype");
+    font-display: swap;
+    font-weight: 500;
+    font-style: normal;
+}*/
+@font-face {
+    font-family: "Manrope";
+    src: url("../fonts/Manrope-Medium.ttf") format("woff"), url("../fonts/Manrope-Medium.ttf") format("truetype");
+    font-display: swap;
+    font-weight: 400 500;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Manrope";
+    src: url("../fonts/Manrope-SemiBold.ttf") format("woff"), url("../fonts/Manrope-SemiBold.ttf") format("truetype");
+    font-display: swap;
+    font-weight: 600;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Manrope";
+    src: url("../fonts/Manrope-Bold.ttf") format("woff"), url("../fonts/Manrope-Bold.ttf") format("truetype");
+    font-display: swap;
+    font-weight: bold 700;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Manrope";
+    src: url("../fonts/Manrope-ExtraBold.ttf") format("woff"), url("../fonts/Manrope-ExtraBold.ttf") format("truetype");
+    font-display: swap;
+    font-weight: 800;
+    font-style: normal;
+}
+
+
+:root {
+    --black: #0C0806;
+    --white: #ffffff;
+    --red: #ED2424;
+    --pink: #D2015F;
+    --pink-hover: #ab0c4f;
+}
+
+:root:not(.dark) {
+    --f7-page-bg-color: #F9F4F1;
+}
+
+html {
+    line-height: $mainLineHeight;
+    font-size: $mainFontSize;
+    color: $mainFontColor;
+    height: 100%;
+    /*@media screen and (max-width: $desktopWidth) {
+        font-size: 16px;
+    }
+    @media screen and (max-width: $tableWidth) {
+        font-size: 15px;
+    }
+    @media screen and (max-width: $phoneWidth) {
+        font-size: 14px;
+    }*/
+
+    ::-webkit-scrollbar, > * ::-webkit-scrollbar {
+        width: 4px;
+        height: 4px;
+    }
+
+    ::-webkit-scrollbar-track, > * ::-webkit-scrollbar-track {
+        border-radius: 4px;
+        background-color: #e4e7eb;
+    }
+
+    ::-webkit-scrollbar-thumb, > * ::-webkit-scrollbar-thumb {
+        border-radius: 4px;
+        background: #b8babc;
+    }
+
+    &.overflow-y-hidden {
+        overflow-y: hidden !important;
+    }
+}
+
+body {
+    font-family: $mainFont;
+    font-size: $mainFontSize;
+    font-weight: $mainFontWeight;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    padding: 0;
+    background-color: #F9F4F1;
+    color: #111111;
+    min-width: 320px;
+    box-sizing: border-box;
+    text-align: left;
+    overflow: auto;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+    outline: none;
+    margin: 0;
+    padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+}
+
+a {
+    color: #1F2226;
+    text-decoration: none;
+    transition: 200ms linear;
+
+    &:hover {
+        color: var(--orange);
+    }
+}
+
+ul,
+li {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+svg, path {
+    transition: 200ms linear;
+}
+
+button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: 200ms linear;
+}
+
+.container {
+    position: relative;
+    flex: 0 0 auto;
+    margin: 0 auto;
+    padding: 0 10px;
+    width: 100%;
+    max-width: $desktopWidth;
+    /*@media screen and (max-width: $desktopWidth) {
+        padding: 0 16px;
+    }*/
+}
+
+.padding-side {
+    padding: 0 16px;
+}
+
+@import 'framework7';
+@import 'home';
+@import 'waiter';
+@import 'catalog';
+@import 'common/_common';
+
