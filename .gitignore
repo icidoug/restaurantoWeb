@@ -72,7 +72,6 @@ node_modules
 /js
 /css
 /fonts
-index.html
 
 # env files
 .env
