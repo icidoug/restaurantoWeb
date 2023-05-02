@@ -1,23 +1,23 @@
 <template>
     <div class="catalog-items">
         <div class="catalog-items__title">
-            Завтраки
+            {{ activeSection.name }}
         </div>
         <div class="catalog-items__wrapper">
-            <div v-for="i in 10" class="item-card">
+            <div v-for="item in items" class="item-card">
                 <div class="item-card__image">
-                    <img src="/src/assets/images/emoji/catalog-card.png">
+                    <img v-if="item.image" :src="item.image">
                 </div>
                 <div class="item-card__info">
                     <div class="item-card__price">
-                        499₽
+                        {{ item.price_format }}
                     </div>
                     <div class="item-card__weight">
-                        310г
+                        {{ item.weight + 'г' }}
                     </div>
                 </div>
                 <div class="item-card__title">
-                    Омлет с тигровыми креветками и моцареллой
+                    {{ item.name }}
                 </div>
                 <div class="btn btn--border">
                     <span>В заказ</span>
@@ -35,8 +35,18 @@
         components: {
 
         },
-        setup() {
-
+        props: {
+            items: {
+                type: Array,
+                required: true
+            },
+            activeSection: {
+                type: Object,
+                required: true
+            },
+        },
+        setup(props) {
+            console.log('props', props.items)
             return {
             }
         }

@@ -2,8 +2,8 @@
     <div
         class="catalog"
     >
-        <catalog-section/>
-        <catalog-items/>
+        <catalog-section v-if="sections.length > 0 && activeSection" :sections="sections" :active-section="activeSection"/>
+        <catalog-items v-if="items.length > 0 && activeSection" :items="items" :active-section="activeSection"/>
     </div>
 </template>
 
@@ -16,8 +16,22 @@
             CatalogSection,
             CatalogItems
         },
-        setup() {
-
+        props: {
+            items: {
+                type: Array,
+                required: true
+            },
+            sections: {
+                type: Array,
+                required: true
+            },
+            activeSection: {
+                type: Object,
+                required: true
+            },
+        },
+        setup(props) {
+            console.log('items', props.items)
             return {}
         }
     }

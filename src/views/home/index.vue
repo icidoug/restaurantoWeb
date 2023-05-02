@@ -81,7 +81,7 @@
                     </div>
                 </div>
             </div>
-            <catalog/>
+            <catalog :sections="sections" :active-section="activeSection" :items="items"/>
             <div class="home__footer padding-side">
                 <div class="btn btn--gray">
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -109,6 +109,8 @@
     import YourWaiter from "@/components/waiter/YourWaiter.vue";
     import Catalog from "@/components/catalog/Catalog.vue";
     import WaiterPopup from "@/components/waiter/WaiterPopup.vue";
+    import {onMounted, computed} from 'vue';
+    import store from '@/store/store'
 
     export default {
         components: {
@@ -117,9 +119,30 @@
             Catalog
         },
         setup() {
+            onMounted(async () => {
+                await store.dispatch('catalog/getSections');
+                await store.dispatch('catalog/getItems');
+            });
 
+            const items = computed(() => {
+                return store.getters['catalog/sectionItems']
+            });
 
-            return {};
+            const sections = computed(() => {
+                return store.getters['catalog/sections']
+            });
+
+            const activeSection = computed(() => {
+                return store.getters['catalog/activeSection']
+            });
+
+            console.log('store.getters', store.getters)
+
+            return {
+                items,
+                sections,
+                activeSection
+            };
         }
     }
 </script>
