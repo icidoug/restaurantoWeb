@@ -102,6 +102,7 @@
             </div>
         </div>
         <waiter-popup/>
+        <catalog-card-popup/>
     </f7-page>
 </template>
 
@@ -111,9 +112,11 @@
     import WaiterPopup from "@/components/waiter/WaiterPopup.vue";
     import {onMounted, computed} from 'vue';
     import store from '@/store/store'
+    import CatalogCardPopup from "@/components/catalog/CatalogCardPopup.vue";
 
     export default {
         components: {
+            CatalogCardPopup,
             WaiterPopup,
             YourWaiter,
             Catalog

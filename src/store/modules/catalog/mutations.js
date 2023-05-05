@@ -13,4 +13,7 @@ export default {
     setActiveSection(state, activeSection) {
         state.activeSection = activeSection
     },
+    setIsOpenModal(state, isOpenModal) {
+        state.isOpenModal = isOpenModal
+    },
 }

@@ -8,6 +8,8 @@ const getDefaultState = () => {
         sections: [],
         sectionItems: [],
         activeSection: {},
+        isOpenModal: false,
+        detailItem: {},
     }
 };
 

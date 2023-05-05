@@ -3,4 +3,5 @@ export default {
     sections: state => state.sections,
     sectionItems: state => state.sectionItems,
     activeSection: state => state.activeSection,
+    isOpenModal: state => state.isOpenModal,
 }

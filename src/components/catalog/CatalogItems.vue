@@ -5,7 +5,7 @@
         </div>
         <div class="catalog-items__wrapper">
             <div v-for="item in items" class="item-card">
-                <div class="item-card__image">
+                <div class="item-card__image" @click="getDetail(item.id)">
                     <img v-if="item.image" :src="item.image">
                 </div>
                 <div class="item-card__info">
@@ -31,6 +31,8 @@
 </template>
 
 <script>
+    import store from '@/store/store'
+
     export default {
         components: {
 
@@ -46,8 +48,12 @@
             },
         },
         setup(props) {
-            console.log('props', props.items)
+            const getDetail = (id) => {
+                store.commit('catalog/setIsOpenModal', true);
+            }
+
             return {
+                getDetail
             }
         }
     }
