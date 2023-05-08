@@ -13,10 +13,6 @@
     color: #fff;
     gap: 12px;
     text-transform: none;
-
-    &:hover {
-        color: #fff
-    }
 }
 
 .btn--gray {
@@ -64,13 +60,11 @@
     font-weight: 700;
 
     &:hover {
-        color: #434A54;
-        background: #D0D5DB;
+        border-color: var(--pink-hover);
     }
 
     &.active {
-        color: #434A54;
-        background: #D0D5DB;
+        border-color: var(--pink-hover);
     }
 }
 

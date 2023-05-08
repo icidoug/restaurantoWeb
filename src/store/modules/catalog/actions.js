@@ -3,7 +3,7 @@ import Cookies from 'js-cookie'
 
 export default {
     getSections({commit}) {
-        let url = import.meta.env.VITE_API_URL + '/catalog/sections/';
+        let url = import.meta.env.VITE_API_URL + '/catalog/section/';
         
         return axios.get(url, {withCredentials: true})
             .then(response => {
@@ -15,7 +15,7 @@ export default {
             .catch(error => console.log('Ошибка: ', error))
         
     },
-    getItems({state, commit, getters}) {
+    getItems({commit, getters}) {
         let url = import.meta.env.VITE_API_URL + '/catalog/items/',
             params = {};
         
@@ -27,6 +27,18 @@ export default {
             .then(response => {
                 commit('setItems', response.data.data)
                 commit('setSectionItems')
+            })
+            .catch(error => console.log('Ошибка: ', error))
+
+    },
+    getDetail({commit, getters}, id) {
+        let url = import.meta.env.VITE_API_URL + `/catalog/detail/${id}/`;
+    
+        commit('setIsDetailFetching', true)
+        return axios.get(url)
+            .then(response => {
+                commit('setDetailItem', response.data.data)
+                commit('setIsDetailFetching', false)
             })
             .catch(error => console.log('Ошибка: ', error))
 

@@ -9,14 +9,12 @@
                     <img v-if="item.image" :src="item.image">
                 </div>
                 <div class="item-card__info">
-                    <div class="item-card__price">
-                        {{ item.price_format }}
-                    </div>
+                    <div class="item-card__price" v-html="item.price_format"></div>
                     <div class="item-card__weight">
                         {{ item.weight + 'г' }}
                     </div>
                 </div>
-                <div class="item-card__title">
+                <div class="item-card__title" @click="getDetail(item.id)">
                     {{ item.name }}
                 </div>
                 <div class="btn btn--border">
@@ -50,6 +48,8 @@
         setup(props) {
             const getDetail = (id) => {
                 store.commit('catalog/setIsOpenModal', true);
+                store.dispatch('catalog/getDetail', id);
+
             }
 
             return {

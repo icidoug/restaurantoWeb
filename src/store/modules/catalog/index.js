@@ -10,6 +10,7 @@ const getDefaultState = () => {
         activeSection: {},
         isOpenModal: false,
         detailItem: {},
+        isDetailFetching: false,
     }
 };
 

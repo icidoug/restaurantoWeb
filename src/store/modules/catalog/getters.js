@@ -4,4 +4,6 @@ export default {
     sectionItems: state => state.sectionItems,
     activeSection: state => state.activeSection,
     isOpenModal: state => state.isOpenModal,
+    detailItem: state => state.detailItem,
+    isDetailFetching: state => state.isDetailFetching,
 }

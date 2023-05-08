@@ -13,7 +13,7 @@ const app = createApp(App)
 
 registerComponents(app);
 
-app
-    //.use(router)
-    .use(VueAxios, axios)
-    .mount('#app');
+axios.defaults.withCredentials = true;
+
+app.use(VueAxios, axios)
+	.mount('#app');

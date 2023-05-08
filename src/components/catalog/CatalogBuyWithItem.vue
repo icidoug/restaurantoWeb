@@ -1,30 +1,39 @@
 <template>
     <div class="buy-with-item">
-        <div class="buy-with-item__image">
-            <div class="tag tag--green">Новинка</div>
-            <img src="/src/assets/images/buy-with.png">
+        <div class="buy-with-item__image" @click="getDetail(item.id)">
+            <div v-if="is_new" class="tag tag--green">Новинка</div>
+            <img v-if="item.image" :src="item.image">
         </div>
         <div class="buy-with-item__info">
-            <div class="buy-with-item__title">
-                Омлет с тигровыми креветками и томатами
+            <div class="buy-with-item__title" @click="getDetail(item.id)">
+                {{ item.name }}
             </div>
             <div class="buy-with-item__btn">
-
+                <counter :count="0" :price="item.price_format"/>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-    import {ref, computed} from 'vue'
-    import store from '@/store/store'
+
+    import store from "@/store/store";
+    import Counter from "@/components/Counter.vue";
 
     export default {
-        components: {},
+        components: {Counter},
+        props: {
+            item: {
+                type: Object,
+                required: true
+            },
+        },
         setup() {
-
+            const getDetail = (id) => {
+                store.dispatch('catalog/getDetail', id);
+            }
             return {
-
+                getDetail
             }
         }
     }

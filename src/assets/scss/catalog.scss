@@ -17,6 +17,8 @@
   font-size: 22px;
   opacity: 0.36;
   transition: 200ms linear;
+  white-space: nowrap;
+  cursor: pointer;
 
   &.active, &:hover {
     opacity: 1;
@@ -37,8 +39,14 @@
 
 .catalog-items__wrapper {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, 1fr);
   grid-gap: 15px;
+}
+
+@media screen and (min-width: 756px) {
+  .catalog-items__wrapper {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 .item-card {
@@ -51,6 +59,7 @@
 .item-card__image {
   height: 170px;
   margin-bottom: 8px;
+  cursor: pointer;
 
   img {
     width: 100%;
@@ -81,14 +90,21 @@
   font-weight: 600;
   font-size: 13px;
   margin-bottom: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  height: 36px;
+  cursor: pointer;
 }
 
 .item-detail-popup__close {
   position: absolute;
   right: 15px;
   top: 15px;
-  width: 32px;
-  height: 32px;
+  width: 48px;
+  height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -98,9 +114,11 @@
 }
 
 .item-detail__header {
+  width: 100%;
   height: 400px;
   position: absolute;
   top: 0;
+
   img {
     width: 100%;
     height: 100%;
@@ -191,7 +209,6 @@
 .buy-with-item {
   display: flex;
   gap: 12px;
-  align-items: center;
 
   &:first-child {
     margin-left: 16px;
@@ -228,14 +245,27 @@
   font-weight: 600;
   font-size: 14px;
   margin-bottom: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  height: 36px;
 }
 
 .item-detail-review {
   margin-bottom: 20px;
 }
 
+.item-detail-review__btn {
+  width: 100%;
+  height: 50px;
+  margin-bottom: 16px;
+}
+
 .item-detail-review__rating {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 8px;
 }
 
@@ -247,8 +277,8 @@
   gap: 6px;
   align-items: center;
   justify-content: center;
-  width: 115px;
   height: 78px;
+  margin-bottom: 20px;
 
   img {
     width: 32px;
@@ -257,5 +287,129 @@
   span {
     font-weight: 600;
     font-size: 13px;
+  }
+}
+
+.item-detail-review__textarea {
+  padding: 12px 16px;
+  border: 1px solid #C8C8C8;
+  border-radius: 12px;
+  margin-bottom: 20px;
+
+  textarea {
+    border-bottom: 1px solid #F2F1EF;
+    margin-bottom: 4px;
+    font-size: 13px;
+    height: 55px;
+    width: 100%;
+  }
+}
+
+.item-detail-review__prompt {
+  font-weight: 500;
+  font-size: 12px;
+  color: #898989;
+}
+
+.review-services__text {
+  font-size: 13px;
+  text-align: center;
+  color: #898989;
+  margin-bottom: 16px;
+}
+
+.review-services__items {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.review-services__item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 70px;
+  border: 1px solid #333333;
+  border-radius: 12px;
+
+  img {
+    height: 18px;
+  }
+}
+
+.review-item__info {
+  margin-bottom: 20px;
+}
+
+.review-item {
+  padding: 12px 16px 12px 12px;
+  background: #F7F6F4;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  display: flex;
+  gap: 12px;
+}
+
+.review-item__icon {
+  width: 32px;
+
+  img {
+    width: 100%;
+  }
+}
+
+.review-item__header {
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.review-item__title {
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.review-item__date {
+  font-weight: 400;
+  font-size: 12px;
+  color: #898989;
+}
+
+.review-item__text {
+  font-size: 13px;
+}
+
+.item-detail__footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: #FFFFFF;
+  border-top: 1px solid #F2F1EF;
+  z-index: 5;
+  padding: 12px 16px 24px;
+}
+
+.item-detail__footer_btn {
+  margin-bottom: 0;
+  height: 50px;
+  width: 100%;
+}
+
+.item-detail__preloader {
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.counter {
+  .btn--border {
+    width: 120px;
+  }
+  .btn--pink {
+    width: 120px;
+    justify-content: space-between;
   }
 }
