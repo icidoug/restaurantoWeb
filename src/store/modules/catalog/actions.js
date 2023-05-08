@@ -5,7 +5,7 @@ export default {
     getSections({commit}) {
         let url = import.meta.env.VITE_API_URL + '/catalog/sections/';
         
-        return axios.get(url)
+        return axios.get(url, {withCredentials: true})
             .then(response => {
                 if(response.data.data.length > 0) {
                     commit('setSections', response.data.data)
@@ -23,7 +23,7 @@ export default {
             params.section = getters.section;
         }
 
-        return axios.get(url, {params: params})
+        return axios.get(url, {params: params, withCredentials: true})
             .then(response => {
                 commit('setItems', response.data.data)
                 commit('setSectionItems')
