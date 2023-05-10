@@ -205,9 +205,30 @@ button {
     }
 }
 
+.swipe-handler {
+    height: 16px;
+    padding-top: 7px;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    top: 0;
+    cursor: pointer;
+    z-index: 10;
+    background: #fff;
+}
+
+.swipe-handler__icon {
+    width: 45px;
+    height: 4px;
+    background: #e6e6e6;
+    border-radius: 60px;
+    margin: 0 auto;
+}
+
 @import 'framework7';
 @import 'home';
 @import 'waiter';
 @import 'catalog';
+@import 'basket';
 @import 'common/_common';
 

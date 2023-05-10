@@ -1,0 +1,148 @@
+.basket-items {
+  padding: 16px;
+  background: #FFFFFF;
+  border-radius: 32px;
+  margin-bottom: 24px;
+}
+
+.basket-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  margin-bottom: 16px;
+  position: relative;
+
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: calc(100% - 76px);
+    height: 1px;
+    background: #F2F1EF;
+  }
+}
+
+.basket-item__image {
+  width: 60px;
+  min-width: 60px;
+  height: 60px;
+  min-height: 60px;
+
+  img {
+    border-radius: 16px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.basket-item__info {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex: 1;
+  padding-bottom: 10px;
+}
+
+.basket-item__title {
+  font-weight: 600;
+  flex: 1;
+}
+
+.basket-item__price {
+  font-weight: 800;
+  font-size: 18px;
+  color: #D2015F;
+}
+
+.basket-item__delete {
+  cursor: pointer;
+}
+
+.basket-items__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+}
+
+.basket-items__footer_title {
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.basket-items__footer_price {
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.basket__subtitle {
+  font-weight: 600;
+  font-size: 18px;
+  margin-bottom: 16px;
+}
+
+.basket-form {
+  padding: 16px;
+  background: #FFFFFF;
+  border-radius: 32px;
+  margin-bottom: 100px;
+}
+
+.basket-form__header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+
+.basket-form__type {
+  font-weight: 600;
+  font-size: 18px;
+
+  a {
+    color: #FC0077;
+    border-bottom: 1px dotted #FC0077;
+    cursor: pointer;
+    margin-left: 5px;
+  }
+}
+
+.basket-form__textarea {
+  padding: 12px 16px;
+  border: 1px solid #C8C8C8;
+  border-radius: 12px;
+  margin-bottom: 20px;
+
+  textarea {
+    border-bottom: 1px solid #F2F1EF;
+    margin-bottom: 4px;
+    font-size: 13px;
+    height: 55px;
+    width: 100%;
+  }
+}
+
+.basket-form__prompt {
+  font-weight: 500;
+  font-size: 12px;
+  color: #898989;
+}
+
+.basket-form__footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #FFFFFF;
+  border-top: 1px solid #F2F1EF;
+  z-index: 5;
+  padding: 12px 16px 24px;
+
+  .btn {
+    width: 100%;
+    height: 50px;
+  }
+}

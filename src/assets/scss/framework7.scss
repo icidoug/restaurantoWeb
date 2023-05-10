@@ -21,3 +21,7 @@ html.with-modal-popup-push .popup-push, html.with-modal-popup-push-closing .popu
   margin-top: 0;
   border-radius: unset;
 }
+
+.ios {
+  --f7-page-transition-duration: 300ms;
+}

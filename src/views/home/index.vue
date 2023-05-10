@@ -35,7 +35,7 @@
                 </f7-button>
             </div>
             <div class="home-menu">
-                <div class="home-menu__item">
+                <f7-link href="/basket/" class="home-menu__item">
                     <div class="home-menu__item_icon">
                         <svg width="24" height="31" viewBox="0 0 24 31" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" clip-rule="evenodd"
@@ -49,7 +49,7 @@
                     <div class="home-menu__item_title">
                         2 570₽
                     </div>
-                </div>
+                </f7-link>
                 <div class="home-menu__item">
                     <div class="home-menu__item_icon">
                         <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -1,14 +1,16 @@
 <template>
     <div class="counter">
-        <div v-if="count === 0" class="btn btn--border" @click="setValue(count + 1)">
-            <span v-html="price"></span>
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd"
-                      d="M10 3.41666C10.4142 3.41666 10.75 3.75245 10.75 4.16666V9.25H15.8334C16.2476 9.25 16.5834 9.58578 16.5834 10C16.5834 10.4142 16.2476 10.75 15.8334 10.75H10.75V15.8333C10.75 16.2475 10.4142 16.5833 10 16.5833C9.58581 16.5833 9.25002 16.2475 9.25002 15.8333V10.75H4.16669C3.75247 10.75 3.41669 10.4142 3.41669 10C3.41669 9.58578 3.75247 9.25 4.16669 9.25H9.25002V4.16666C9.25002 3.75245 9.58581 3.41666 10 3.41666Z"
-                      fill="#D2015F"/>
-            </svg>
+        <div v-if="count === 0"
+             class="btn"
+             :class="{'btn--border': btnStyle === 'border', 'btn--pink': btnStyle === 'fill'}"
+             @click="count++"
+        >
+            <slot></slot>
         </div>
-        <div v-else class="btn btn--pink">
+        <div v-else
+             class="btn"
+             :class="{'btn--border': btnStyle === 'fill', 'btn--pink': btnStyle === 'border'}"
+        >
             <div class="counter__minus" @click="count--">
                 <svg width="14" height="2" viewBox="0 0 14 2" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" clip-rule="evenodd"
@@ -35,59 +37,26 @@
                 type: Number,
                 required: true,
             },
-            price: {
+            btnStyle: {
                 type: String,
-                required: true,
-            },
+                default: 'border'
+            }
         },
         data() {
             return {
-                /*selected: this.default
-                    ? this.default
-                    : this.options.length > 0
-                        ? this.options[0]
-                        : null,
-                open: !!this.addInput,
-                newValue: ''*/
                 count: 0
             };
         },
         watch: {
-            /*default() {
-                this.selected = JSON.parse(JSON.stringify(this.default))
-            }*/
-        },
-        methods: {
-            setValue(value) {
-                console.log(value)
-                this.count = value
-            }
-            /*show() {
-                if (!this.disabled) {
-                    this.open = !this.open
-                }
+            count(val) {
+                this.$emit('change', val);
             },
-            hide() {
-                this.open = false
+            value(val) {
+                this.count = val
             },
-            addValue() {
-                this.selected = {
-                    text: this.newValue,
-                    value: this.newValue
-                };
-                this.open = false;
-                this.$emit('add', this.selected);
-                this.newValue = '';
-            },
-            select(option) {
-                this.selected = JSON.parse(JSON.stringify(option));
-                this.open = false;
-                this.$emit('select', option);
-            }*/
         },
         mounted() {
-            //this.count = this.value
-            //this.$emit("input", this.selected);
+            this.count = this.value
         },
     };
 </script>

@@ -33,7 +33,11 @@
                                 {{ item.weight + 'г' }}
                             </div>
                         </div>
-                        <div class="item-detail__btn btn btn--pink">
+                        <counter class="item-detail__btn"
+                                 :value="quantity"
+                                 @change="setQuantity($event)"
+                                 btn-style="fill"
+                        >
                             <svg width="17" height="16" viewBox="0 0 17 16" fill="none"
                                  xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" clip-rule="evenodd"
@@ -41,7 +45,7 @@
                                       fill="white"/>
                             </svg>
                             Добавить в заказ
-                        </div>
+                        </counter>
                         <div class="item-detail__line"></div>
                         <div v-if="item.compound" class="item-detail__subtitle">
                             Состав
@@ -53,7 +57,8 @@
                         <div v-if="item.suitable_items && item.suitable_items.length > 0" class="item-detail__subtitle">
                             С этим блюдом покупают
                         </div>
-                        <catalog-buy-with v-if="item.suitable_items && item.suitable_items.length > 0" :items="item.suitable_items"/>
+                        <catalog-buy-with v-if="item.suitable_items && item.suitable_items.length > 0"
+                                          :items="item.suitable_items"/>
                         <div class="item-detail__line"></div>
                         <div class="item-detail__subtitle">
                             Оцените блюдо
@@ -64,12 +69,20 @@
                 </div>
             </div>
             <div class="item-detail__footer">
-                <div class="item-detail__footer_btn btn btn--pink">
-                    <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M8.5 0.25C8.91421 0.25 9.25 0.585786 9.25 1V7.25H15.5C15.9142 7.25 16.25 7.58579 16.25 8C16.25 8.41421 15.9142 8.75 15.5 8.75H9.25V15C9.25 15.4142 8.91421 15.75 8.5 15.75C8.08579 15.75 7.75 15.4142 7.75 15V8.75H1.5C1.08579 8.75 0.75 8.41421 0.75 8C0.75 7.58579 1.08579 7.25 1.5 7.25H7.75V1C7.75 0.585786 8.08579 0.25 8.5 0.25Z" fill="white"/>
+                <counter class="item-detail__btn"
+                         :value="quantity"
+                         @change="setQuantity($event)"
+                         btn-style="fill"
+                >
+                    <svg width="17" height="16" viewBox="0 0 17 16" fill="none"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                              d="M8.5 0.25C8.91421 0.25 9.25 0.585786 9.25 1V7.25H15.5C15.9142 7.25 16.25 7.58579 16.25 8C16.25 8.41421 15.9142 8.75 15.5 8.75H9.25V15C9.25 15.4142 8.91421 15.75 8.5 15.75C8.08579 15.75 7.75 15.4142 7.75 15V8.75H1.5C1.08579 8.75 0.75 8.41421 0.75 8C0.75 7.58579 1.08579 7.25 1.5 7.25H7.75V1C7.75 0.585786 8.08579 0.25 8.5 0.25Z"
+                              fill="white"/>
                     </svg>
-                    <span>Добавить в заказ</span>
-                </div>
+                    Добавить в заказ
+                </counter>
+
             </div>
         </div>
     </f7-popup>
@@ -81,9 +94,11 @@
     import CatalogBuyWith from "@/components/catalog/CatalogBuyWith.vue";
     import CatalogDetailReviews from "@/components/catalog/CatalogDetailReviews.vue";
     import Preloader from "@/components/Preloader.vue";
+    import Counter from "@/components/Counter.vue";
 
     export default {
         components: {
+            Counter,
             Preloader,
             CatalogBuyWith,
             CatalogDetailReviews
@@ -101,16 +116,28 @@
                 return store.getters['catalog/detailItem']
             });
 
+            const quantity = computed(() => {
+                return store.getters['basket/getItemByProductId'](item.value?.id)?.quantity || 0
+            });
+
             const closeModal = () => {
-                console.log('close')
                 store.commit('catalog/setIsOpenModal', false);
+            }
+
+            const setQuantity = (qnt) => {
+                store.dispatch('basket/updateBasket', {
+                    id: item.value?.id,
+                    quantity: qnt,
+                });
             }
 
             return {
                 isOpenModal,
                 closeModal,
                 isFetching,
-                item
+                item,
+                quantity,
+                setQuantity
             }
         }
     }

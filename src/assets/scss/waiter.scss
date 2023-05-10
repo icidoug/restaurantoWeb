@@ -46,7 +46,11 @@
   }
 }
 
-.waiter-popup {
+.popup.waiter-popup {
+  position: absolute;
+  top: unset;
+  bottom: 0;
+  height: auto;
   border-radius: 32px 32px 0px 0px;
 
   .page-content {
