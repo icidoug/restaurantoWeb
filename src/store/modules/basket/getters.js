@@ -1,6 +1,5 @@
 export default {
     items: state => state.items,
-    getItemByProductId: (state) => (product_id) => {
-        return state.items.find(item => item?.product_id === product_id) || {}
-    }
+    getItemById: (state) => (id) => state.items.find(item => item?.id === id) || {},
+    sum: state => state.items.reduce((n, {price, quantity}) => n + price * quantity, 0)
 }

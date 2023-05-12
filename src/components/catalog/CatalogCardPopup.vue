@@ -117,7 +117,7 @@
             });
 
             const quantity = computed(() => {
-                return store.getters['basket/getItemByProductId'](item.value?.id)?.quantity || 0
+                return store.getters['basket/getItemById'](item.value?.id)?.quantity || 0
             });
 
             const closeModal = () => {
@@ -125,10 +125,12 @@
             }
 
             const setQuantity = (qnt) => {
-                store.dispatch('basket/updateBasket', {
-                    id: item.value?.id,
-                    quantity: qnt,
-                });
+                if(quantity.value !== qnt) {
+                    store.dispatch('basket/updateBasket', {
+                        item: item.value,
+                        quantity: qnt,
+                    });
+                }
             }
 
             return {

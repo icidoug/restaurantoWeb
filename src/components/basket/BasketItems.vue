@@ -1,12 +1,14 @@
 <template>
     <div class="basket-items">
-        <basket-item v-for="i in 6" :item="{}"/>
+        <div v-for="item in items">
+            <basket-item v-for="i in item.quantity" :item="item"/>
+        </div>
         <div class="basket-items__footer">
             <div class="basket-items__footer_title">
                 Сумма заказа:
             </div>
             <div class="basket-items__footer_price">
-                2156₽
+                {{ sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} ₽
             </div>
         </div>
     </div>
@@ -15,6 +17,7 @@
 <script>
     import store from '@/store/store'
     import BasketItem from "@/components/basket/BasketItem.vue";
+    import {computed} from 'vue';
 
     export default {
         components: {
@@ -27,10 +30,13 @@
                 required: true
             },
         },
-        setup(props) {
+        setup() {
+            const sum = computed(() => {
+                return store.getters['basket/sum']
+            });
 
             return {
-
+                sum
             }
         }
     }

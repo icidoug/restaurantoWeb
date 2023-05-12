@@ -49,10 +49,13 @@
   }
 }
 
-.item-card {
+.item-card____btn.counter {
   .btn {
-    padding: 6px 18px;
     min-height: 36px;
+    width: 120px;
+  }
+  .counter__minus, .counter__plus {
+    height: 36px;
   }
 }
 

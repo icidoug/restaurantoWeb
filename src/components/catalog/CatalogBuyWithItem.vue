@@ -44,14 +44,16 @@
             }
 
             const quantity = computed(() => {
-                return store.getters['basket/getItemByProductId'](props.item?.id)?.quantity || 0
+                return store.getters['basket/getItemById'](props.item?.id)?.quantity || 0
             });
 
             const setQuantity = (qnt) => {
-                store.dispatch('basket/updateBasket', {
-                    id: props.item?.id,
-                    quantity: qnt,
-                });
+                if (quantity.value !== qnt) {
+                    store.dispatch('basket/updateBasket', {
+                        item: props.item,
+                        quantity: qnt,
+                    });
+                }
             }
 
             return {

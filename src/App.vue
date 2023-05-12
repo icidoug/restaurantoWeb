@@ -1,18 +1,23 @@
 <template>
     <f7-app v-bind="f7params">
-        <f7-views tabs class="safe-areas">
+        <div v-if="isFetching" class="app-preloader">
+            <preloader/>
+        </div>
+        <f7-views v-else tabs class="safe-areas">
             <f7-view id="view-home" main tab tab-active url="/"></f7-view>
         </f7-views>
     </f7-app>
 </template>
 <script setup>
-    import {onMounted} from 'vue';
+    import {onMounted, ref} from 'vue';
     import {
         f7ready,
     } from 'framework7-vue';
     import {getDevice} from 'framework7/lite-bundle';
     import routes from './routes';
     import {f7} from 'framework7-vue';
+    import store from '@/store/store'
+    import Preloader from "@/components/Preloader.vue";
 
     const device = getDevice();
     // Framework7 Parameters
@@ -35,14 +40,15 @@
         },
     };
 
-    onMounted(() => {
-        f7ready(() => {
+    const isFetching = ref(true);
 
-            // Init capacitor APIs (see capacitor-app.js)
-            /*if (device.capacitor) {
-                capacitorApp.init(f7);
-            }*/
-            // Call F7 APIs here
+    onMounted(() => {
+        f7ready(async () => {
+            isFetching.value = true;
+            await store.dispatch('catalog/getSections');
+            await store.dispatch('catalog/getItems');
+            await store.dispatch('basket/getItems');
+            isFetching.value = false;
         });
     });
 </script>

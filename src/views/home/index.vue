@@ -15,7 +15,7 @@
                         <span>Весенний проспект, 36</span>
                     </div>
                 </div>
-                <f7-toggle></f7-toggle>
+<!--                <f7-toggle></f7-toggle>-->
             </div>
             <your-waiter/>
             <div class="home__waiter padding-side">
@@ -47,7 +47,7 @@
                         Текущий заказ
                     </div>
                     <div class="home-menu__item_title">
-                        2 570₽
+                        {{ basketSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} ₽
                     </div>
                 </f7-link>
                 <div class="home-menu__item">
@@ -123,8 +123,7 @@
         },
         setup() {
             onMounted(async () => {
-                await store.dispatch('catalog/getSections');
-                await store.dispatch('catalog/getItems');
+
             });
 
             const items = computed(() => {
@@ -139,12 +138,17 @@
                 return store.getters['catalog/activeSection']
             });
 
+            const basketSum = computed(() => {
+                return store.getters['basket/sum']
+            });
+
             console.log('store.getters', store.getters)
 
             return {
                 items,
                 sections,
-                activeSection
+                activeSection,
+                basketSum
             };
         }
     }
