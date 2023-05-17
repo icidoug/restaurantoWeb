@@ -206,14 +206,14 @@ button {
 }
 
 .swipe-handler {
-    height: 16px;
-    padding-top: 7px;
+    height: 36px;
+    padding-top: 17px;
     position: absolute;
     left: 0;
     width: 100%;
-    top: 0;
+    top: -10px;
     cursor: pointer;
-    z-index: 10;
+    z-index: 10501;
     background: #fff;
 }
 
@@ -238,5 +238,6 @@ button {
 @import 'waiter';
 @import 'catalog';
 @import 'basket';
+@import 'order';
 @import 'common/_common';
 

@@ -6,7 +6,7 @@
             <div v-else class="basket__empty padding-side">
                В корзине пока нет товаров
             </div>
-            <div class="basket__subtitle padding-side">
+            <div class="basket__subtitle padding-side" @click="test">
                 Рекомендуем заказать
             </div>
             <div class="padding-side">
@@ -65,8 +65,26 @@
             CatalogCardPopup,
             Catalog
         },
-        setup() {
+        props: {
+            f7router: Object,
+        },
+        setup(props) {
+            //console.log('props', props.f7router)
+            const orderId = computed(() => {
+                return store.getters['order/Id']
+            });
+
+
+
             onMounted(async () => {
+                //console.log('app', f7router)
+                //props.f7router.navigate('/')
+                console.log('oks')
+                console.log('orderId', orderId)
+                /*if(!items.value) {
+                    props.f7router.view.router.navigate('/');
+                }*/
+
                 await store.dispatch('basket/getItems');
             });
 
@@ -74,9 +92,19 @@
                 return store.getters['basket/items']
             });
 
+            const test = () => {
+                console.log('props.f7router', props.f7router)
+                //props.f7router.view.router.navigate('/');
+
+            }
+
             return {
-                items
+                items,
+                test
             };
+        },
+        mounted() {
+            console.log('this.$f7', this.f7router)
         }
     }
 </script>

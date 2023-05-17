@@ -24,4 +24,13 @@ html.with-modal-popup-push .popup-push, html.with-modal-popup-push-closing .popu
 
 .ios {
   --f7-page-transition-duration: 300ms;
+  --f7-toggle-width: 62px;
+  --f7-toggle-inactive-border-color: #F2F1EF;
+}
+:root {
+  --f7-ios-primary: #D2015F !important;
+}
+
+.ios .toggle-icon:before {
+  background: unset;
 }

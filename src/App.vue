@@ -48,6 +48,7 @@
             await store.dispatch('catalog/getSections');
             await store.dispatch('catalog/getItems');
             await store.dispatch('basket/getItems');
+            await store.dispatch('order/getOrder');
             isFetching.value = false;
         });
     });

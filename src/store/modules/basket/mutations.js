@@ -7,13 +7,15 @@ export default {
         console.log('state.items', state.items)
     },
     updateQuantity(state, context) {
-        let index = state.items.findIndex(d => d.id === context.id);
+        let index = state.items.findIndex(item => item.id === context.id);
     
-        state.items[index].quantity = context.quantity
+        if (index > -1) {
+            state.items[index].quantity = context.quantity
+        }
     },
     deleteItem(state, context) {
         console.log('DLETE', state.items)
-        let index = state.items.findIndex(d => d.id === context.id);
+        let index = state.items.findIndex(item => item.id === context.id);
     
         console.log('delete', state.items[index])
         //state.items[index].quantity = 0;

@@ -24,9 +24,10 @@
             </div>
         </div>
         <div class="basket-form__footer">
-            <div class="btn btn--pink" @click="onSubmit">Подтвердить заказ</div>
+            <f7-button class="btn btn--pink" popup-open=".order-confirm-popup" @click="onSubmit">Подтвердить заказ</f7-button>
         </div>
         <basket-order-type-popup @change="onChangeType($event)"/>
+        <basket-order-confirm-popup :is-loading="isFetching"/>
     </div>
 </template>
 
@@ -34,9 +35,11 @@
     import store from '@/store/store'
     import BasketOrderTypePopup from "@/components/basket/BasketOrderTypePopup.vue";
     import {ref} from 'vue'
+    import BasketOrderConfirmPopup from "@/components/basket/BasketOrderConfirmPopup.vue";
 
     export default {
         components: {
+            BasketOrderConfirmPopup,
             BasketOrderTypePopup
         },
         props: {},
@@ -48,15 +51,24 @@
                 type.value = newType;
             }
 
-            const onSubmit = () => {
-                console.log('type', type.value)
-                console.log('comment', comment.value)
+            const isFetching = ref(false);
+
+            const onSubmit = async () => {
+                isFetching.value = true
+                console.log('start fetching')
+                await store.dispatch('order/create', {
+                    type: type.value,
+                    comment: comment.value,
+                })
+
+                isFetching.value = false;
             }
             return {
                 type,
                 onChangeType,
                 comment,
-                onSubmit
+                onSubmit,
+                isFetching
             }
         }
     }

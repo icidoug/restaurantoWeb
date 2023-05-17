@@ -64,6 +64,6 @@ export default {
 				commit('setItems', items || []);*/
 			})
 			.catch(error => console.log('Ошибка: ', error))
-	}
+	},
 }
 
