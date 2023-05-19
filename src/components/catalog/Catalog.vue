@@ -2,8 +2,13 @@
     <div
         class="catalog"
     >
-        <catalog-section v-if="sections.length > 0 && activeSection" :sections="sections" :active-section="activeSection"/>
-        <catalog-items v-if="items.length > 0 && activeSection" :items="items" :active-section="activeSection"/>
+        <catalog-section v-if="sections.length > 0 && activeSection" :sections="sections"/>
+        <catalog-items v-if="items.length > 0 && sections.length > 0"
+                       v-for="section in sections"
+                       :id="'section_' + section.id"
+                       :items="items.filter(item => item.section_id === section.id)"
+                       :section="section"
+        />
     </div>
 </template>
 

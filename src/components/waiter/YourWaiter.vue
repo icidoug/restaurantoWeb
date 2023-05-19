@@ -1,15 +1,13 @@
 <template>
-    <div
-        class="waiter padding-side"
-    >
+    <div class="waiter padding-side">
         <div class="waiter__wrapper">
             <div class="waiter__info">
                 <div class="waiter__avatar">
-                    <img src="/src/assets/images/waiter.png">
+                    <img v-if="waiter.image" :src="waiter.image">
                 </div>
                 <div class="waiter__title">
                     <div class="waiter__title_name">
-                        Александр
+                        {{ waiter.name }}
                     </div>
                     <div class="waiter__subtitle">
                         Ваш официант
@@ -17,8 +15,10 @@
                 </div>
             </div>
             <div class="waiter__rating">
-                <img src="/src/assets/images/emoji/heart_eyes.png">
-                <span>4.8</span>
+                <img v-if="parseFloat(waiter.rating) > 4" src="/src/assets/images/emoji/heart_eyes.png">
+                <img v-else-if="parseFloat(waiter.rating) > 3" src="/src/assets/images/emoji/smile.png">
+                <img v-else src="/src/assets/images/emoji/sad.png">
+                <span>{{ waiter.rating }}</span>
             </div>
         </div>
     </div>
@@ -26,13 +26,16 @@
 
 <script>
     export default {
-        components: {
-
+        components: {},
+        props: {
+            waiter: {
+                type: Object,
+                required: true
+            },
         },
         setup() {
 
-            return {
-            }
+            return {}
         }
     }
 </script>

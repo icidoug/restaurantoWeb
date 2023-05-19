@@ -1,5 +1,5 @@
 <template>
-    <f7-page>
+    <f7-page id="home">
         <div class="home">
             <div class="home__header padding-side">
                 <div class="home__header_wrapper">
@@ -17,7 +17,7 @@
                 </div>
 <!--                <f7-toggle></f7-toggle>-->
             </div>
-            <your-waiter/>
+            <your-waiter :waiter="waiter"/>
             <div class="home__waiter padding-side">
                 <f7-button class="btn btn--pink btn--arrow" popup-open=".waiter-popup">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -118,7 +118,7 @@
                 </f7-button>
             </div>
         </div>
-        <waiter-popup/>
+        <waiter-popup :waiter="waiter"/>
         <catalog-card-popup/>
     </f7-page>
 </template>
@@ -139,12 +139,8 @@
             Catalog
         },
         setup() {
-            onMounted(async () => {
-
-            });
-
             const items = computed(() => {
-                return store.getters['catalog/sectionItems']
+                return store.getters['catalog/items']
             });
 
             const sections = computed(() => {
@@ -171,6 +167,10 @@
                 return store.getters['order/items']
             });
 
+            const waiter = computed(() => {
+                return store.getters['waiter/waiter']
+            });
+
             return {
                 items,
                 sections,
@@ -178,7 +178,8 @@
                 basketSum,
                 basketItems,
                 orderSum,
-                orderItems
+                orderItems,
+                waiter
             };
         }
     }

@@ -45,6 +45,7 @@
     onMounted(() => {
         f7ready(async () => {
             isFetching.value = true;
+            await store.dispatch('waiter/getWaiter');
             await store.dispatch('catalog/getSections');
             await store.dispatch('catalog/getItems');
             await store.dispatch('basket/getItems');

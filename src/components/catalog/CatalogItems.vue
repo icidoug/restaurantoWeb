@@ -1,7 +1,7 @@
 <template>
     <div class="catalog-items">
         <div class="catalog-items__title">
-            {{ activeSection.name }}
+            {{ section.name }}
         </div>
         <div class="catalog-items__wrapper">
             <catalog-items-card v-for="item in items" :item="item"/>
@@ -21,12 +21,13 @@
                 type: Array,
                 required: true
             },
-            activeSection: {
+            section: {
                 type: Object,
                 required: true
             },
         },
-        setup() {
+        setup(props) {
+            console.log('props.items', props.items)
             return {
 
             }

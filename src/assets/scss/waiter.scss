@@ -19,9 +19,14 @@
 }
 
 .waiter__avatar {
-  width: 42px;
-  height: 42px;
+  width: 45px;
+  height: 45px;
   border-radius: 6px;
+
+  img {
+    border: 3px solid #F7F6F4;
+    border-radius: 8px;
+  }
 }
 
 .waiter__title_name {

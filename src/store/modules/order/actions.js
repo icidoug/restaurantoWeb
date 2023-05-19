@@ -6,7 +6,7 @@ export default {
 		
 		return axios.get(url, {withCredentials: true})
 			.then(response => {
-				const items = response.data.data.list.map(item => {
+				const items = response.data.data?.list.map(item => {
 					const catalogItem = rootGetters['catalog/getItemById'](item.id);
 					return {...item, image: catalogItem?.image || '', is_checked: true};
 				});
