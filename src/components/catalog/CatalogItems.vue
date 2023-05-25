@@ -1,5 +1,5 @@
 <template>
-    <div class="catalog-items">
+    <div class="catalog-items" :class="{hide: !items || items.length === 0}">
         <div class="catalog-items__title">
             {{ section.name }}
         </div>

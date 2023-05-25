@@ -55,7 +55,6 @@
 
             const onSubmit = async () => {
                 isFetching.value = true
-                console.log('start fetching')
                 await store.dispatch('order/create', {
                     type: type.value,
                     comment: comment.value,

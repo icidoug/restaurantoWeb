@@ -5,12 +5,14 @@ import getters from './getters';
 const getDefaultState = () => {
     return {
         items: [],
+        allItems: [],
         sections: [],
         sectionItems: [],
         activeSection: {},
         isOpenModal: false,
         detailItem: {},
         isDetailFetching: false,
+        isSearchOpen: false,
     }
 };
 

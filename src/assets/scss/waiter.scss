@@ -131,3 +131,50 @@
   font-size: 14px;
   margin-bottom: 8px;
 }
+
+
+.waiter-confirm {
+  text-align: center;
+
+  .btn {
+    width: 100%;
+  }
+}
+
+.waiter-confirm__icon {
+  width: 90px;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #00C600;
+  box-shadow: 0 20px 60px -15px rgba(0, 198, 0, 0.5);
+  border-radius: 200px;
+  margin: 0 auto;
+  margin-bottom: 32px;
+
+  &.error {
+    background: #D2015F;
+    box-shadow: 0 20px 60px -15px rgba(210, 1, 95, 0.5);
+  }
+}
+
+.waiter-confirm__title {
+  font-weight: 600;
+  font-size: 18px;
+  margin-bottom: 16px;
+}
+
+.waiter-confirm__descr {
+  font-weight: 400;
+  font-size: 14px;
+  color: #898989;
+  margin-bottom: 16px;
+}
+
+.waiter-confirm-loading {
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

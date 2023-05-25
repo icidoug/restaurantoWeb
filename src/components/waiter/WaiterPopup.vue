@@ -31,12 +31,14 @@
                     Добавить комментарий
                 </div>
                 <textarea placeholder="Что вам нужно?" v-model="comment"></textarea>
-                <div class="btn btn--pink" @click="callWaiter">
+                <f7-button class="btn btn--pink" @click="callWaiter">
                     Позвать официанта
-                </div>
-                <div class="btn btn--border">
+                </f7-button>
+                <waiter-confirm-popup :minutes-difference="minutesDifference" :is-loading="isFetching" :is-error="isWaiterCallError"/>
+                <f7-button class="btn btn--border" @click="callHookah">
                     Позвать кальянщика
-                </div>
+                </f7-button>
+                <hookah-confirm-popup :minutes-difference="minutesDifferenceHookah" :is-loading="isFetching" :is-error="isHookahCallError"/>
             </div>
         </div>
     </f7-popup>
@@ -45,9 +47,12 @@
 <script>
     import store from "@/store/store";
     import {ref} from "vue";
+    import WaiterConfirmPopup from "@/components/waiter/WaiterConfirmPopup.vue";
+    import {f7} from 'framework7-vue';
+    import HookahConfirmPopup from "@/components/waiter/HookahConfirmPopup.vue";
 
     export default {
-        components: {},
+        components: {HookahConfirmPopup, WaiterConfirmPopup},
         props: {
             waiter: {
                 type: Object,
@@ -56,12 +61,75 @@
         },
         setup() {
             const comment = ref('');
-            const callWaiter = () => {
-                store.dispatch('waiter/call', comment.value)
+            const isFetching = ref(true);
+            const isWaiterCallError = ref(false);
+            const isHookahCallError = ref(false);
+
+            let nowTime = new Date().getTime();
+            const minutesDifference = ref(localStorage.waiterFinishTime > nowTime ? (localStorage.waiterFinishTime - nowTime) / 1000 : 0);
+            const callWaiter = async () => {
+                isWaiterCallError.value = false;
+                isFetching.value = true;
+                f7.popup.close('.waiter-popup');
+                f7.popup.open('.waiter-confirm-popup');
+
+                nowTime = new Date().getTime();
+                minutesDifference.value = localStorage.waiterFinishTime > nowTime ? (localStorage.waiterFinishTime - nowTime) / 1000 : 0;
+                if (minutesDifference.value === 0) {
+                    const isSuccess = await store.dispatch('waiter/call', comment.value);
+                    console.log('isSuccess', isSuccess)
+                    if(isSuccess === true) {
+                        await new Promise(r => setTimeout(r, 2000));
+
+                        const date = new Date(Date.now() + (2 * 60 * 1000));
+                        localStorage.waiterFinishTime = date.getTime();
+
+                        minutesDifference.value = 2 * 60;
+                    }
+                    else {
+                        isWaiterCallError.value = true;
+                    }
+                }
+
+                isFetching.value = false;
             }
+
+            const minutesDifferenceHookah = ref(localStorage.hookahFinishTime > nowTime ? (localStorage.hookahFinishTime - nowTime) / 1000 : 0);
+            const callHookah = async () => {
+                isHookahCallError.value = false;
+                isFetching.value = true
+                f7.popup.close('.waiter-popup');
+                f7.popup.open('.hookah-confirm-popup');
+
+                nowTime = new Date().getTime();
+                minutesDifferenceHookah.value = localStorage.hookahFinishTime > nowTime ? (localStorage.hookahFinishTime - nowTime) / 1000 : 0;
+                if (minutesDifferenceHookah.value === 0) {
+                    const isSuccess = await store.dispatch('waiter/callHookah', comment.value);
+                    if(isSuccess === true) {
+                        await new Promise(r => setTimeout(r, 2000));
+
+                        const date = new Date(Date.now() + (2 * 60 * 1000));
+                        localStorage.hookahFinishTime = date.getTime();
+
+                        minutesDifferenceHookah.value = 2 * 60;
+                    }
+                    else {
+                        isHookahCallError.value = true;
+                    }
+                }
+
+                isFetching.value = false;
+            }
+
             return {
                 comment,
-                callWaiter
+                callWaiter,
+                isFetching,
+                minutesDifference,
+                minutesDifferenceHookah,
+                callHookah,
+                isWaiterCallError,
+                isHookahCallError
             }
         }
     }

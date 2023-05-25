@@ -26,6 +26,7 @@ export default {
         return axios.get(url, {params: params, withCredentials: true})
             .then(response => {
                 commit('setItems', response.data.data)
+                commit('setAllItems', response.data.data)
                 commit('setSectionItems')
             })
             .catch(error => console.log('Ошибка: ', error))

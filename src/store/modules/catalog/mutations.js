@@ -2,6 +2,9 @@ export default {
     setItems(state, items) {
         state.items = items
     },
+    setAllItems(state, allItems) {
+        state.allItems = allItems
+    },
     setSections(state, sections) {
         state.sections = sections
     },
@@ -21,5 +24,8 @@ export default {
     },
     setIsDetailFetching(state, isDetailFetching) {
         state.isDetailFetching = isDetailFetching
+    },
+    setIsSearchOpen(state, isSearchOpen) {
+        state.isSearchOpen = isSearchOpen
     },
 }
