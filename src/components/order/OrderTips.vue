@@ -3,7 +3,7 @@
         <div class="order-tips__header">
             Чаевые {{ tipsSum > 0 ? tipsSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + '₽' : '' }}
         </div>
-        <your-waiter/>
+        <your-waiter :waiter="waiter"/>
         <div class="order-tips__items">
             <div class="order-tips__item"
                  :class="{active: tipsType === '10%'}"
@@ -85,6 +85,10 @@
                 return store.getters['order/tipsSum']
             });
 
+            const waiter = computed(() => {
+                return store.getters['waiter/waiter']
+            });
+
             const setTips = (type, sum) => {
                 if(tipsType.value === type) {
                     type = 'none';
@@ -98,7 +102,8 @@
                 tipsType,
                 sum,
                 setTips,
-                tipsSum
+                tipsSum,
+                waiter
             }
         }
     }

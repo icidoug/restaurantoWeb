@@ -42,7 +42,7 @@
                         document.querySelectorAll('.catalog-items')[0].scrollIntoView({behavior: 'smooth', block: 'start'});
                     }, 300)
                 }*/
-                if(isOpen) {
+                if(isOpen && !isSearchOpen.value) {
                     document.querySelectorAll('.page-content')[0].scrollBy(0,-380);
                 }
                 if(!isOpen) {

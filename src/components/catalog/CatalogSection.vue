@@ -54,7 +54,7 @@
                         const elemId = sectionDiv.id.split('_');
                         const sectionId = elemId[1];
 
-                        if (scrollTop > sectionDiv.getBoundingClientRect().top - 100) {
+                        if (scrollTop > sectionDiv.getBoundingClientRect().top + 800) {
                             active = props.sections.find(item => item.id === sectionId);
                         }
                     }

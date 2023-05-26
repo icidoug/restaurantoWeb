@@ -87,3 +87,67 @@
     flex: 1;
   }
 }
+
+.wifi-popup__wrapper {
+  padding: 40px 20px 20px;
+}
+
+.wifi-popup__title {
+  font-weight: 600;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.wifi-popup__form {
+  .wifi-popup__form_field {
+    padding: 12px 16px;
+    width: 100%;
+    height: 50px;
+    border: 1px solid #C8C8C8;
+    border-radius: 12px;
+    font-weight: 400;
+    font-size: 14px;
+    position: relative;
+
+    &.copied {
+      background: rgba(0, 198, 0, 0.1);
+      border: 1px solid rgba(107, 190, 0, 0.2);
+
+      input {
+        color: #00C600;
+      }
+    }
+
+    svg {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 50px;
+      height: 50px;
+      padding: 12px;
+      cursor: pointer;
+    }
+  }
+
+  input {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.wifi-popup__form_group {
+  margin-bottom: 20px;
+}
+
+.wifi-popup__form_label {
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.wifi-popup__form_prompt {
+  font-weight: 500;
+  font-size: 12px;
+  color: #898989;
+  margin-top: 8px;
+}

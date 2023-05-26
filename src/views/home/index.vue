@@ -4,15 +4,20 @@
             <div class="home__header padding-side">
                 <div class="home__header_wrapper">
                     <div class="home__header_title">
-                        Magic Coffee
+                        {{ partner?.name }}
                     </div>
-                    <div class="home__header_geo">
+                    <div
+                        v-if="partner.hasOwnProperty('address')"
+                        class="home__header_geo"
+                    >
                         <svg width="14" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" clip-rule="evenodd"
                                   d="M0.5 7C0.5 3.35359 3.42896 0.833328 7 0.833328C10.571 0.833328 13.5 3.35359 13.5 7C13.5 9.78058 12.2563 11.822 10.8438 13.1593C10.1394 13.8262 9.38961 14.3219 8.72205 14.6527C8.07103 14.9754 7.44715 15.1665 7 15.1665C6.55285 15.1665 5.92897 14.9754 5.27795 14.6527C4.61039 14.3219 3.86063 13.8262 3.15625 13.1593C1.74373 11.822 0.5 9.78058 0.5 7ZM7 9.33333C8.10457 9.33333 9 8.4379 9 7.33333C9 6.22876 8.10457 5.33333 7 5.33333C5.89543 5.33333 5 6.22876 5 7.33333C5 8.4379 5.89543 9.33333 7 9.33333Z"
                                   fill="#D2015F"/>
                         </svg>
-                        <span>Весенний проспект, 36</span>
+                        <span>
+                            {{ partner.address }}
+                        </span>
                     </div>
                 </div>
 <!--                <f7-toggle></f7-toggle>-->
@@ -67,7 +72,7 @@
                 </f7-link>
 
 
-                <div class="home-menu__item">
+                <f7-link class="home-menu__item" popup-open=".wifi-popup">
                     <div class="home-menu__item_icon">
                         <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" clip-rule="evenodd"
@@ -81,7 +86,7 @@
                     <div class="home-menu__item_title">
                         Подключиться
                     </div>
-                </div>
+                </f7-link>
                 <div class="home-menu__item">
                     <div class="home-menu__item_icon">
                         <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -119,6 +124,7 @@
             </div>
         </div>
         <waiter-popup :waiter="waiter"/>
+        <wi-fi-popup :partner="partner"/>
         <catalog-card-popup/>
     </f7-page>
 </template>
@@ -130,9 +136,11 @@
     import {onMounted, computed} from 'vue';
     import store from '@/store/store'
     import CatalogCardPopup from "@/components/catalog/CatalogCardPopup.vue";
+    import WiFiPopup from "@/components/WiFiPopup.vue";
 
     export default {
         components: {
+            WiFiPopup,
             CatalogCardPopup,
             WaiterPopup,
             YourWaiter,
@@ -171,6 +179,10 @@
                 return store.getters['waiter/waiter']
             });
 
+            const partner = computed(() => {
+                return store.getters['partner/partner']
+            });
+
             return {
                 items,
                 sections,
@@ -179,7 +191,8 @@
                 basketItems,
                 orderSum,
                 orderItems,
-                waiter
+                waiter,
+                partner
             };
         }
     }
