@@ -17,7 +17,7 @@
 
 <script>
     import store from '@/store/store'
-    import {onMounted, ref, onUnmounted, computed} from "vue";
+    import {onMounted, ref, onUnmounted, computed, watch} from "vue";
     import CatalogSearch from "@/components/catalog/CatalogSearch.vue";
 
     export default {
@@ -41,12 +41,17 @@
             const activeSection = ref(props.sections[0]);
             let scrollByClick = false;
 
+            console.log('oks')
+            console.log(fixed)
+
             const onScroll = (event) => {
+                //console.log('oks')
                 const scrollTop = event.target.scrollTop;
                 const sectionNavOffsetTop = event.target.sectionNavOffsetTop;
-
+                //console.log('scrollTop', scrollTop)
                 fixed.value = scrollTop > sectionNavOffsetTop;
-
+                //console.log('scrollTop', scrollTop)
+                //console.log('sectionNavOffsetTop', sectionNavOffsetTop)
                 if (!scrollByClick) {
                     let active = props.sections[0];
 
@@ -61,22 +66,39 @@
 
                     activeSection.value = active;
                 }
+                //console.log('fixed.value', fixed.value)
             }
 
+            watch(() => fixed.value, (newfixed) => {
+                console.log('newfixed', newfixed)
+            });
+
             onMounted(() => {
+                console.log('onMounted')
                 const f7page = document.getElementById('home');
                 const scrollableDiv = f7page.querySelector('.page-content');
                 const sectionNavDiv = document.getElementById('sectionNav');
 
                 const sectionsDiv = document.querySelectorAll('.catalog-items');
+                console.log('scrollableDiv', scrollableDiv)
 
+                scrollableDiv.removeEventListener('scroll', onScroll)
                 scrollableDiv.addEventListener('scroll', onScroll);
                 scrollableDiv.sectionNavOffsetTop = sectionNavDiv.getBoundingClientRect().top;
                 scrollableDiv.sectionsDiv = sectionsDiv;
             });
 
             onUnmounted(() => {
+                /*const f7page = document.getElementById('home');
+                const scrollableDiv = f7page.querySelector('.page-content');
+                const sectionNavDiv = document.getElementById('sectionNav');
+
                 scrollableDiv.removeEventListener('scroll', onScroll)
+                scrollableDiv.addEventListener('scroll', onScroll);
+                scrollableDiv.sectionNavOffsetTop = sectionNavDiv.getBoundingClientRect().top;
+                scrollableDiv.sectionsDiv = document.querySelectorAll('.catalog-items');
+                fixed.value = true;
+                console.log(fixed.value)*/
             })
 
             const scrollToSection = (section) => {
@@ -93,7 +115,7 @@
                 activeSection,
                 isSearchOpen
             }
-        }
+        },
     }
 </script>
 

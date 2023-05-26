@@ -59,6 +59,9 @@
                     type: type.value,
                     comment: comment.value,
                 })
+                if(store.getters['order/items'].length > 0) {
+                    //store.commit('tips/setTipsType', 'none');
+                }
 
                 isFetching.value = false;
             }

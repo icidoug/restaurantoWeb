@@ -87,7 +87,7 @@
                         Подключиться
                     </div>
                 </f7-link>
-                <div class="home-menu__item">
+                <f7-link class="home-menu__item" href="/tips/">
                     <div class="home-menu__item_icon">
                         <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path opacity="0.12"
@@ -101,7 +101,7 @@
                     <div class="home-menu__item_title">
                         Оставить<br> чаевые
                     </div>
-                </div>
+                </f7-link>
             </div>
             <catalog :sections="sections" :active-section="activeSection" :items="items"/>
             <div class="home__footer padding-side">
