@@ -37,7 +37,16 @@
             });
             
             const openSearch = (isOpen) => {
+                console.log('open')
+
                 store.commit('catalog/setIsSearchOpen', isOpen);
+                if(isOpen && !document.querySelectorAll('.catalog-section')[0].classList.contains('fixed')) {
+                    setTimeout(() => {
+                        //document.querySelectorAll('.catalog-section')[0].classList.contains('fixed')
+                        document.querySelectorAll('.catalog-items')[0].scrollIntoView({behavior: 'smooth', block: 'start'});
+                        console.log('scroll')
+                    }, 300)
+                }
                 if(!isOpen) {
                     store.commit('catalog/setItems', store.getters['catalog/allItems']);
                     query.value = '';

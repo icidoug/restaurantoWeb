@@ -9,6 +9,7 @@
   background: #f9f4f0;
   transition: top 0.2s linear;
   padding-bottom: 70px;
+  z-index: 5;
 
   &.catalog--search {
     top: 0;
