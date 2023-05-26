@@ -37,20 +37,23 @@
             });
             
             const openSearch = (isOpen) => {
-                console.log('open')
-
-                store.commit('catalog/setIsSearchOpen', isOpen);
-                if(isOpen && !document.querySelectorAll('.catalog-section')[0].classList.contains('fixed')) {
+                /*if(isOpen && !document.querySelectorAll('.catalog-section')[0].classList.contains('fixed')) {
                     setTimeout(() => {
-                        //document.querySelectorAll('.catalog-section')[0].classList.contains('fixed')
                         document.querySelectorAll('.catalog-items')[0].scrollIntoView({behavior: 'smooth', block: 'start'});
-                        console.log('scroll')
                     }, 300)
+                }*/
+                if(isOpen) {
+                    document.querySelectorAll('.page-content')[0].scrollBy(0,-380);
                 }
                 if(!isOpen) {
                     store.commit('catalog/setItems', store.getters['catalog/allItems']);
                     query.value = '';
+                    const pageContent = document.querySelectorAll('.page-content')[0];
+                    if(pageContent.scrollTop > 380) {
+                        pageContent.scrollBy(0,+380);
+                    }
                 }
+                store.commit('catalog/setIsSearchOpen', isOpen);
             }
 
             const search = debounce(() => {

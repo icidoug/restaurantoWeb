@@ -1,5 +1,5 @@
 <template>
-    <div class="catalog-section padding-side" :class="{fixed: fixed}">
+    <div class="catalog-section padding-side" :class="{fixed: fixed || isSearchOpen}">
         <div class="catalog-section__wrapper" id="sectionNav">
             <catalog-search/>
             <div v-if="!isSearchOpen/* && items?.filter(item => item.section_id === section.id).length > 0*/"
