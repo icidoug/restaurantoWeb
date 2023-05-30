@@ -158,3 +158,11 @@
     width: 100%;
   }
 }
+
+.events-detail-popup.popup-behind {
+  z-index: 9999;
+
+  .page-content {
+    overflow: hidden;
+  }
+}
