@@ -158,7 +158,7 @@
     import store from '@/store/store'
     import CatalogCardPopup from "@/components/catalog/CatalogCardPopup.vue";
     import WiFiPopup from "@/components/WiFiPopup.vue";
-    import $$ from "dom7";
+    //import $$ from "dom7";
 
     export default {
         components: {
@@ -208,7 +208,7 @@
             const isVisibleFooter = ref(false);
 
             onMounted(() => {
-                let home = $$('#home:not(.page-previous)');
+                /*let home = $$('#home:not(.page-previous)');
 
                 const scrollableDiv = home.find('.page-content');
                 const waiterCallBtn = home.find('.home__waiter');
@@ -218,8 +218,23 @@
                     const waiterCallBtnOffsetTop = waiterCallBtn[0].offsetTop;
 
                     isVisibleFooter.value = scrollTop > waiterCallBtnOffsetTop + 50;
-                });
+                });*/
+
+                const f7page = document.querySelectorAll('#home:not(.page-previous)')[0];
+                const scrollableDiv = f7page.querySelector('.page-content');
+                const waiterCallBtn = f7page.querySelector('.home__waiter');
+
+
+                scrollableDiv.addEventListener('scroll', onScroll);
+                scrollableDiv.waiterCallBtnOffsetTop = waiterCallBtn.getBoundingClientRect().top;
             });
+
+            const onScroll = (event) => {
+                const scrollTop = event.target.scrollTop;
+                const waiterCallBtnOffsetTop = event.target.sectionNavOffsetTop;
+
+                isVisibleFooter.value = scrollTop > waiterCallBtnOffsetTop - 150;
+            }
 
             return {
                 items,
