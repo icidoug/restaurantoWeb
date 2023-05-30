@@ -31,11 +31,7 @@
                 required: true
             },
         },
-        setup(props) {
-            onMounted(async () => {
-                console.log('props.items', props.items)
-            });
-
+        setup() {
             const sum = computed(() => {
                 return store.getters['order/sum']
             });

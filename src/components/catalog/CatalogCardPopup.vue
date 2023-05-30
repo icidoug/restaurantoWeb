@@ -10,9 +10,18 @@
         <div v-if="isFetching" class="item-detail__preloader">
             <preloader/>
         </div>
-        <div v-else class="page">
+        <div v-else class="page" id="detail_item">
             <div class="item-detail__header">
-                <img src="/src/assets/images/card.png">
+                <img v-if="item.image && item.image !== ''" :src="item.image">
+                <svg v-else width="100" height="100" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M2 16L22 16" stroke="#cd005d" stroke-width="1.5" stroke-linecap="round"></path>
+                    <path d="M4 19L20 19" stroke="#cd005d" stroke-width="1.5" stroke-linecap="round"></path>
+                    <path d="M20 16C20 10.4771 18.5 6 12 6C5.5 6 4 10.4772 4 16" stroke="#cd005d" stroke-width="1.5"></path>
+                    <path opacity="0.12" d="M20 16L4 16C4 10.4771 5.5 6 12 6C18.5 6 20 10.4771 20 16Z" fill="#cd005d"></path>
+                    <path
+                        d="M13.7324 6C13.9026 5.70583 14 5.36429 14 5C14 3.89543 13.1046 3 12 3C10.8954 3 9.99999 3.89543 9.99999 5C9.99999 5.36429 10.0974 5.70583 10.2676 6"
+                        stroke="#cd005d" stroke-width="1.5"></path>
+                </svg>
             </div>
             <div class="page-content">
                 <div class="item-detail">
@@ -63,12 +72,12 @@
                         <div class="item-detail__subtitle">
                             Оцените блюдо
                         </div>
-                        <catalog-detail-reviews/>
+                        <catalog-detail-reviews v-if="item.id" :id="item.id" :reviews="item.reviews || []"/>
                         <div class="item-detail__line"></div>
                     </div>
                 </div>
             </div>
-            <div class="item-detail__footer">
+            <div v-if="isVisibleFooter" class="item-detail__footer">
                 <counter class="item-detail__btn"
                          :value="quantity"
                          @change="setQuantity($event)"
@@ -89,12 +98,13 @@
 </template>
 
 <script>
-    import {ref, computed} from 'vue'
+    import {ref, computed, onMounted} from 'vue'
     import store from '@/store/store'
     import CatalogBuyWith from "@/components/catalog/CatalogBuyWith.vue";
     import CatalogDetailReviews from "@/components/catalog/CatalogDetailReviews.vue";
     import Preloader from "@/components/Preloader.vue";
     import Counter from "@/components/Counter.vue";
+    import $$ from "dom7";
 
     export default {
         components: {
@@ -133,13 +143,34 @@
                 }
             }
 
+            const isVisibleFooter = ref(true);
+
+            /*onMounted(() => {
+                let detailItem = $$('#detail_item:not(.page-previous)');
+
+                const scrollableDiv = detailItem.find('.page-content');
+                const addBasketBtn = detailItem.find('.item-detail__btn');
+
+                scrollableDiv.on('scroll', () => {
+                    const scrollTop = scrollableDiv.scrollTop();
+                    const addBasketBtnOffsetTop = addBasketBtn[0].offsetTop;
+                    console.log('scrollTop', scrollTop)
+                    console.log('addBasketBtnOffsetTop', addBasketBtnOffsetTop)
+
+
+                    isVisibleFooter.value = scrollTop > addBasketBtnOffsetTop + 50;
+                });
+            });*/
+
+
             return {
                 isOpenModal,
                 closeModal,
                 isFetching,
                 item,
                 quantity,
-                setQuantity
+                setQuantity,
+                isVisibleFooter
             }
         }
     }

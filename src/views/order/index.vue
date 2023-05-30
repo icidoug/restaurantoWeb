@@ -6,7 +6,6 @@
             <div v-else class="basket__empty padding-side">
                В заказе нет товаров
             </div>
-            <order-tips/>
             <order-form/>
         </div>
     </f7-page>

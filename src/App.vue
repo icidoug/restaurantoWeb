@@ -51,6 +51,7 @@
             await store.dispatch('catalog/getItems');
             await store.dispatch('basket/getItems');
             await store.dispatch('order/getOrder');
+            await store.dispatch('events/getItems');
             if(store.getters['order/items'].length > 0) {
                 //store.commit('tips/setTipsType', 'none');
             }

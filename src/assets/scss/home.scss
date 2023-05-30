@@ -88,6 +88,24 @@
   }
 }
 
+.home__footer--order {
+  .btn {
+    flex: 1;
+  }
+}
+
+.footer-btn__title {
+  font-weight: 600;
+  font-size: 11px;
+  color: #C8C8C8;
+  margin-bottom: 4px;
+}
+
+.footer-btn__sum {
+  font-weight: 700;
+  font-size: 13px;
+}
+
 .wifi-popup__wrapper {
   padding: 40px 20px 20px;
 }

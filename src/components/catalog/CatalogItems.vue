@@ -26,8 +26,7 @@
                 required: true
             },
         },
-        setup(props) {
-            console.log('props.items', props.items)
+        setup() {
             return {
 
             }

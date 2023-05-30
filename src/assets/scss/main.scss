@@ -237,11 +237,22 @@ button {
     display: none;
 }
 
+.v-enter-active,
+.v-leave-active {
+    transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+    opacity: 0;
+}
+
 @import 'framework7';
 @import 'home';
 @import 'waiter';
 @import 'catalog';
 @import 'basket';
 @import 'order';
+@import 'events';
 @import 'common/_common';
 

@@ -8,8 +8,8 @@ export default {
         return axios.get(url, {withCredentials: true})
             .then(response => {
                 if(response.data.data.length > 0) {
-                    commit('setSections', response.data.data)
-                    commit('setActiveSection', response.data.data[0])
+                    commit('setSections', response.data.data);
+                    commit('setActiveSection', response.data.data[0]);
                 }
             })
             .catch(error => console.log('Ошибка: ', error))
@@ -25,9 +25,9 @@ export default {
 
         return axios.get(url, {params: params, withCredentials: true})
             .then(response => {
-                commit('setItems', response.data.data)
-                commit('setAllItems', response.data.data)
-                commit('setSectionItems')
+                commit('setItems', response.data.data);
+                commit('setAllItems', response.data.data);
+                commit('setSectionItems');
             })
             .catch(error => console.log('Ошибка: ', error))
 
@@ -38,8 +38,29 @@ export default {
         commit('setIsDetailFetching', true)
         return axios.get(url)
             .then(response => {
-                commit('setDetailItem', response.data.data)
-                commit('setIsDetailFetching', false)
+                let detailItem = response.data.data;
+                return axios.get(url + 'reviews/')
+                    .then(response => {
+                        detailItem.reviews = response.data.data?.items || []
+                        commit('setDetailItem', detailItem);
+                        commit('setIsDetailFetching', false);
+                    })
+                    .catch(error => console.log('Ошибка: ', error))
+            })
+            .catch(error => console.log('Ошибка: ', error))
+
+    },
+    sendReview({commit, getters}, {id, review, ratingCode}) {
+        let url = import.meta.env.VITE_API_URL + `/catalog/detail/${id}/reviews/`;
+    
+        return axios.post(url, {
+            rating_code: ratingCode,
+            text: review,
+        }, {withCredentials: true})
+            .then(response => {
+                const detailItem = getters['detailItem'];
+                detailItem.reviews = response.data.data?.items || [];
+                commit('setDetailItem', detailItem);
             })
             .catch(error => console.log('Ошибка: ', error))
 

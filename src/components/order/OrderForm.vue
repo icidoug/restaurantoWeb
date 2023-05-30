@@ -10,22 +10,6 @@
                         {{ sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}₽
                     </div>
                 </div>
-                <div class="order-form__tr">
-                    <div class="order-form__td">
-                        Блюда
-                    </div>
-                    <div class="order-form__td">
-                        {{ parseInt(sum - tipsSum).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}₽
-                    </div>
-                </div>
-                <div class="order-form__tr">
-                    <div class="order-form__td">
-                        Чаевые
-                    </div>
-                    <div class="order-form__td">
-                        {{ tipsSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}₽
-                    </div>
-                </div>
             </div>
             <div class="order-form__field"
                  :class="{active: taxChecked}"
