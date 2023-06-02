@@ -104,7 +104,7 @@
     import CatalogDetailReviews from "@/components/catalog/CatalogDetailReviews.vue";
     import Preloader from "@/components/Preloader.vue";
     import Counter from "@/components/Counter.vue";
-    import $$ from "dom7";
+    //import $$ from "dom7";
 
     export default {
         components: {

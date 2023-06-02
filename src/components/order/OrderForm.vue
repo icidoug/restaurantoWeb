@@ -81,11 +81,12 @@
                     </svg>
                 </div>
             </f7-link>
-            <div class="btn btn--pink">
+            <f7-button popup-open=".order-confirm-popup" class="btn btn--pink" @click="onSubmit">
                 Оплатить {{ splitBill ? 'частично ' : '' }} {{ sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} ₽
-            </div>
+            </f7-button>
         </div>
         <order-payment-type-popup @change="onChangeType($event)"/>
+        <order-payment-result-popup :is-loading="isFetching"/>
     </div>
 </template>
 
@@ -93,9 +94,11 @@
     import store from '@/store/store'
     import {computed, ref} from 'vue'
     import OrderPaymentTypePopup from "@/components/order/OrderPaymentTypePopup.vue";
+    import OrderPaymentResultPopup from "@/components/order/OrderPaymentResultPopup.vue";
 
     export default {
         components: {
+            OrderPaymentResultPopup,
             OrderPaymentTypePopup
         },
         props: {},
@@ -121,13 +124,11 @@
                 return store.getters['order/splitBill']
             });
 
-            const onSubmit = () => {
+            const onSubmit = async () => {
                 isFetching.value = true;
-                setTimeout(() => {
-                    isFetching.value = false;
-                }, 2000);
-                console.log('type', type.value)
-                console.log('comment', comment.value)
+                await store.dispatch('order/pay', {
+                    type: type.value,
+                })
             }
             return {
                 onSubmit,
