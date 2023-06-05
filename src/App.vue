@@ -53,6 +53,7 @@
             await store.dispatch('order/getOrder');
             await store.dispatch('events/getItems');
             if(store.getters['order/items'].length > 0) {
+                //console.log(f7.views[0].navigate('/tips'))
                 //store.commit('tips/setTipsType', 'none');
             }
             isFetching.value = false;

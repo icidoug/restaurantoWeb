@@ -77,20 +77,35 @@
             </div>
         </div>
         <order-payment-type-popup @change="onChangeType($event)"/>
+        <order-payment-confirm-popup/>
     </div>
 </template>
 
 <script>
     import store from '@/store/store'
-    import {computed, ref} from 'vue'
+    import {computed, onMounted, ref} from 'vue'
     import OrderPaymentTypePopup from "@/components/order/OrderPaymentTypePopup.vue";
+    import OrderPaymentConfirmPopup from "@/components/order/OrderPaymentConfirmPopup.vue";
+    import {f7} from "framework7-vue";
 
     export default {
         components: {
+            OrderPaymentConfirmPopup,
             OrderPaymentTypePopup
         },
         props: {},
         setup() {
+
+            onMounted(() => {
+                const urlParams = new URLSearchParams(window.location.search);
+                const isOrderPaid = store.getters['order/isPaid'];
+                if(urlParams.has('operation') && urlParams.has('reference') && isOrderPaid) {
+                    f7.popup.open('.order-payment-popup');
+                    window.history.replaceState(null, '', window.location.pathname);
+                }
+
+            });
+
             const isFetching = ref(false);
             const type = ref('sbp');
             const taxChecked = ref(true);

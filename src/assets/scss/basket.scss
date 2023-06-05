@@ -252,7 +252,7 @@
   margin: 0 auto;
   margin-bottom: 32px;
 
-  .error {
+  &.error {
     background: #D2015F;
     box-shadow: 0 20px 60px -15px rgba(210, 1, 95, 0.5);
   }

@@ -21,4 +21,7 @@ export default {
     setTipsSum(state, tipsSum) {
         state.tipsSum = tipsSum
     },
+    setIsPaid(state, isPaid) {
+        state.isPaid = isPaid
+    },
 }

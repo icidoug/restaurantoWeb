@@ -5,4 +5,7 @@ export default {
     setTipsSum(state, tipsSum) {
         state.tipsSum = tipsSum
     },
+    setIsOpenPaymentModal(state, isOpenPaymentModal) {
+        state.isOpenPaymentModal = isOpenPaymentModal
+    },
 }

@@ -40,7 +40,7 @@
                 </f7-button>
             </div>
             <div class="home-menu">
-                <f7-link v-if="orderItems.length > 0" href="/order/" class="home-menu__item">
+                <f7-link v-if="orderItems.length > 0 && !isOrderPaid" href="/order/" class="home-menu__item">
                     <div class="home-menu__item_icon">
                         <svg width="24" height="31" viewBox="0 0 24 31" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" clip-rule="evenodd"
@@ -102,6 +102,11 @@
                         Оставить<br> чаевые
                     </div>
                 </f7-link>
+                <f7-link class="home-menu__item home-menu__item--events" href="/events/">
+                    <div class="home-menu__item_title">
+                        События <br>и акции
+                    </div>
+                </f7-link>
             </div>
             <catalog :sections="sections" :active-section="activeSection" :items="items"/>
             <transition>
@@ -158,6 +163,7 @@
     import store from '@/store/store'
     import CatalogCardPopup from "@/components/catalog/CatalogCardPopup.vue";
     import WiFiPopup from "@/components/WiFiPopup.vue";
+    import {f7} from "framework7-vue";
     //import $$ from "dom7";
 
     export default {
@@ -168,58 +174,54 @@
             YourWaiter,
             Catalog
         },
-        setup() {
+        props: {
+            f7router: Object,
+        },
+        setup(props) {
             const items = computed(() => {
                 return store.getters['catalog/items']
             });
-
             const sections = computed(() => {
                 return store.getters['catalog/sections']
             });
-
             const activeSection = computed(() => {
                 return store.getters['catalog/activeSection']
             });
-
             const basketSum = computed(() => {
                 return store.getters['basket/sum']
             });
-
             const basketItems = computed(() => {
                 return store.getters['basket/items']
             });
-
             const orderSum = computed(() => {
                 return store.getters['order/sum']
             });
-
             const orderItems = computed(() => {
                 return store.getters['order/items']
             });
-
             const waiter = computed(() => {
                 return store.getters['waiter/waiter']
             });
-
             const partner = computed(() => {
                 return store.getters['partner/partner']
+            });
+            const isOrderPaid = computed(() => {
+                return store.getters['order/isPaid']
             });
 
             const isVisibleFooter = ref(false);
 
+            const urlParams = new URLSearchParams(window.location.search);
+            if(urlParams.has('operation') && urlParams.has('reference')) {
+                const isPaid = store.getters['order/isPaid'];
+                setTimeout(() => {
+                    const route = isPaid ? '/tips/' : '/order/';
+                    //store.commit('order/setIsOpenPaymentModal', true);
+                    props.f7router.navigate(route);
+                }, 100)
+            }
+
             onMounted(() => {
-                /*let home = $$('#home:not(.page-previous)');
-
-                const scrollableDiv = home.find('.page-content');
-                const waiterCallBtn = home.find('.home__waiter');
-
-                scrollableDiv.on('scroll', () => {
-                    const scrollTop = scrollableDiv.scrollTop();
-                    const waiterCallBtnOffsetTop = waiterCallBtn[0].offsetTop;
-
-                    isVisibleFooter.value = scrollTop > waiterCallBtnOffsetTop + 50;
-                });*/
-
                 const f7page = document.querySelectorAll('#home:not(.page-previous)')[0];
                 const scrollableDiv = f7page.querySelector('.page-content');
                 const waiterCallBtn = f7page.querySelector('.home__waiter');
@@ -246,7 +248,8 @@
                 orderItems,
                 waiter,
                 partner,
-                isVisibleFooter
+                isVisibleFooter,
+                isOrderPaid
             };
         }
     }

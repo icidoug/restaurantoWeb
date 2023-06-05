@@ -5,6 +5,7 @@ import getters from './getters';
 const getDefaultState = () => {
     return {
         id: null,
+        isPaid: false,
         items: [],
         splitBill: false,
         tipsType: 'none',

@@ -1,5 +1,6 @@
 export default {
     id: state => state.id,
+    isPaid: state => state.isPaid,
     items: state => state.items,
     getItemById: (state) => (id) => state.items.find(item => item?.id === id) || {},
     sum: (state) => {

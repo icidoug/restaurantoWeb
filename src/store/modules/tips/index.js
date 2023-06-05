@@ -6,6 +6,7 @@ const getDefaultState = () => {
     return {
         tipsType: 'custom',
         tipsSum: 0,
+        isOpenPaymentModal: false,
     }
 };
 

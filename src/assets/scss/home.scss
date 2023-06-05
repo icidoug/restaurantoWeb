@@ -3,6 +3,7 @@
     width: 100%;
   }
 }
+
 .home__header {
   display: flex;
   justify-content: space-between;
@@ -55,6 +56,17 @@
   display: block;
 }
 
+.home-menu__item--events {
+  background: url("/src/assets/images/events_bg.png");
+  background-size: contain;
+
+  .home-menu__item_title {
+    color: #fff;
+    font-weight: 800;
+    font-size: 18px;
+  }
+}
+
 .home-menu__item_icon {
   margin-bottom: 26px;
   margin-left: 6px;
@@ -83,6 +95,7 @@
   .btn--gray {
     font-size: 11px;
   }
+
   .btn--pink {
     flex: 1;
   }

@@ -3,6 +3,10 @@ import axios from 'axios'
 export default {
 	getOrder({commit, getters, rootGetters}) {
 		let url = import.meta.env.VITE_API_URL + '/order/';
+		console.log('localStorage', localStorage)
+		if(localStorage.lastOrderId) {
+			url += '?id=' + localStorage.lastOrderId;
+		}
 		
 		return axios.get(url, {withCredentials: true})
 			.then(response => {
@@ -14,6 +18,8 @@ export default {
 				console.log('getOrder', response.data)
 				
 				commit('setId', response.data.data?.id);
+				commit('setIsPaid', response.data.data?.is_paid);
+				localStorage.lastOrderId = response.data.data?.id || null;
 				commit('setItems', items || []);
 			})
 			.catch(error => console.log('Ошибка: ', error))
@@ -56,6 +62,16 @@ export default {
 				return false;
 			})
 			.catch(error => console.log('Ошибка: ', error))
-	}
+	},
+	checkOrderPayment({commit, getters, rootGetters}, {orderId}) {
+		let url = import.meta.env.VITE_API_URL + '/order/?id=' + orderId;
+		
+		return axios.get(url, {withCredentials: true})
+			.then(response => {
+			
+			})
+			.catch(error => console.log('Ошибка: ', error))
+		
+	},
 }
 
