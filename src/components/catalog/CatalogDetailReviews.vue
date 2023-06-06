@@ -94,9 +94,7 @@
                             {{ review.date }}
                         </div>
                     </div>
-                    <div class="review-item__text">
-                        {{ review.text }}
-                    </div>
+                    <div class="review-item__text" v-html="review.text"></div>
                 </div>
             </div>
         </div>
