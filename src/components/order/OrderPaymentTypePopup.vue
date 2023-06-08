@@ -33,7 +33,7 @@
                     </div>
                     <div class="popup-form__item_checkbox"></div>
                 </div>
-                <div
+<!--                <div
                     class="popup-form__item"
                     :class="{active: selected === 'card'}"
                     @click="selected = 'card'"
@@ -46,7 +46,7 @@
                         <span>Банковская карта</span>
                     </div>
                     <div class="popup-form__item_checkbox"></div>
-                </div>
+                </div>-->
             </div>
         </div>
     </f7-popup>

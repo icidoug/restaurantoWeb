@@ -72,11 +72,13 @@
                     </svg>
                 </div>
             </f7-link>
-            <div class="btn btn--pink">
+            <f7-button popup-open=".order-confirm-popup" class="btn btn--pink" @click="onSubmit">
                 Оплатить {{ tipsSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} ₽
-            </div>
+            </f7-button>
         </div>
         <order-payment-type-popup @change="onChangeType($event)"/>
+        <order-payment-result-popup :is-loading="isFetching" />
+        <tips-payment-confirm-popup/>
         <order-payment-confirm-popup/>
     </div>
 </template>
@@ -85,12 +87,16 @@
     import store from '@/store/store'
     import {computed, onMounted, ref} from 'vue'
     import OrderPaymentTypePopup from "@/components/order/OrderPaymentTypePopup.vue";
-    import OrderPaymentConfirmPopup from "@/components/order/OrderPaymentConfirmPopup.vue";
     import {f7} from "framework7-vue";
+    import TipsPaymentConfirmPopup from "@/components/tips/TipsPaymentConfirmPopup.vue";
+    import OrderPaymentResultPopup from "@/components/order/OrderPaymentResultPopup.vue";
+    import OrderPaymentConfirmPopup from "@/components/order/OrderPaymentConfirmPopup.vue";
 
     export default {
         components: {
             OrderPaymentConfirmPopup,
+            OrderPaymentResultPopup,
+            TipsPaymentConfirmPopup,
             OrderPaymentTypePopup
         },
         props: {},
@@ -99,8 +105,16 @@
             onMounted(() => {
                 const urlParams = new URLSearchParams(window.location.search);
                 const isOrderPaid = store.getters['order/isPaid'];
-                if(urlParams.has('operation') && urlParams.has('reference') && isOrderPaid) {
-                    f7.popup.open('.order-payment-popup');
+                const isTipsPaid = store.getters['tips/isPaid'];
+                const isTipsOrder = store.getters['tips/isTipsOrder'];
+                if(urlParams.has('operation') && urlParams.has('reference')) {
+                    if(isTipsOrder) {
+                        f7.popup.open('.tips-payment-popup');
+                    }
+                    else if(isOrderPaid) {
+                        f7.popup.open('.order-payment-popup');
+                    }
+
                     window.history.replaceState(null, '', window.location.pathname);
                 }
 
@@ -120,11 +134,12 @@
                 return sum > 0 ? sum : 0;
             });
 
-            const onSubmit = () => {
+            const onSubmit = async () => {
                 isFetching.value = true;
-                setTimeout(() => {
-                    isFetching.value = false;
-                }, 2000);
+                await store.dispatch('tips/pay', {
+                    type: type.value,
+                    sum: store.getters['tips/tipsSum'],
+                })
             }
             return {
                 onSubmit,

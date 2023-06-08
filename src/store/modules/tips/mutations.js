@@ -8,4 +8,10 @@ export default {
     setIsOpenPaymentModal(state, isOpenPaymentModal) {
         state.isOpenPaymentModal = isOpenPaymentModal
     },
+    setIsTipsOrder(state, isTipsOrder) {
+        state.isTipsOrder = isTipsOrder
+    },
+    setIsPaid(state, isPaid) {
+        state.isPaid = isPaid
+    },
 }

@@ -36,6 +36,7 @@ export default {
 		}, {withCredentials: true})
 			.then(response => {
 				commit('setId', response.data.data.ORDER_ID);
+				localStorage.lastOrderId = response.data.data.ORDER_ID || null;
 				return true;
 			})
 			.catch(error => console.log('Ошибка: ', error))

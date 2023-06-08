@@ -90,9 +90,6 @@
                 <f7-link class="home-menu__item" href="/tips/">
                     <div class="home-menu__item_icon">
                         <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path opacity="0.12"
-                                  d="M16 28C17.3333 28 29.3333 21.3337 29.3333 12.0006C29.3333 7.33413 25.3333 4.05878 21.3333 4.0009C19.3333 3.97196 17.3333 4.66758 16 6.6675C14.6667 4.66758 12.6321 4.0009 10.6667 4.0009C6.66667 4.0009 2.66667 7.33413 2.66667 12.0006C2.66667 21.3337 14.6667 28 16 28Z"
-                                  fill="#D2015F"/>
                             <path fill-rule="evenodd" clip-rule="evenodd"
                                   d="M21.3225 4.75081C19.5122 4.72461 17.7836 5.34427 16.624 7.08351C16.4849 7.29216 16.2508 7.41748 16 7.41748C15.7493 7.41748 15.5151 7.29216 15.376 7.08352C14.221 5.35108 12.4614 4.75089 10.6667 4.75089C7.03989 4.75089 3.41667 7.78816 3.41667 12.0006C3.41667 16.3453 6.22145 20.157 9.33343 22.9413C10.876 24.3214 12.4599 25.4176 13.734 26.1659C14.3713 26.5402 14.9232 26.8227 15.3463 27.0089C15.5585 27.1022 15.7296 27.1675 15.8573 27.208C15.9333 27.2321 15.9789 27.2425 16 27.2469C16.0211 27.2425 16.0667 27.2321 16.1427 27.208C16.2704 27.1675 16.4415 27.1022 16.6537 27.0089C17.0769 26.8227 17.6287 26.5402 18.266 26.1659C19.5402 25.4176 21.1241 24.3214 22.6666 22.9413C25.7786 20.157 28.5833 16.3453 28.5833 12.0006C28.5833 7.79691 24.9675 4.80355 21.3225 4.75081ZM15.9987 5.44598C17.4705 3.80433 19.4383 3.22339 21.3442 3.25096C25.6992 3.31398 30.0833 6.87131 30.0833 12.0006C30.0833 16.9889 26.8881 21.177 23.6668 24.0591C22.0426 25.5123 20.3765 26.666 19.0256 27.4593C18.3505 27.8558 17.7461 28.167 17.2578 28.3818C17.0142 28.489 16.7908 28.5761 16.5962 28.6378C16.4205 28.6935 16.2041 28.75 16 28.75C15.7959 28.75 15.5795 28.6935 15.4038 28.6378C15.2092 28.5761 14.9858 28.489 14.7422 28.3818C14.254 28.167 13.6495 27.8558 12.9744 27.4593C11.6235 26.666 9.9574 25.5123 8.33326 24.0592C5.1119 21.177 1.91667 16.9889 1.91667 12.0006C1.91667 6.88006 6.29345 3.25089 10.6667 3.25089C12.5261 3.25089 14.5171 3.80644 15.9987 5.44598Z"
                                   fill="#D2015F"/>
@@ -179,12 +176,12 @@
     import YourWaiter from "@/components/waiter/YourWaiter.vue";
     import Catalog from "@/components/catalog/Catalog.vue";
     import WaiterPopup from "@/components/waiter/WaiterPopup.vue";
-    import {onMounted, computed, ref} from 'vue';
+    import {onMounted, computed, ref, onBeforeMount} from 'vue';
     import store from '@/store/store'
     import CatalogCardPopup from "@/components/catalog/CatalogCardPopup.vue";
     import WiFiPopup from "@/components/WiFiPopup.vue";
     import {f7} from "framework7-vue";
-    //import $$ from "dom7";
+    import axios from "axios";
 
     export default {
         components: {
@@ -231,17 +228,7 @@
 
             const isVisibleFooter = ref(false);
 
-            const urlParams = new URLSearchParams(window.location.search);
-            if(urlParams.has('operation') && urlParams.has('reference')) {
-                const isPaid = store.getters['order/isPaid'];
-                setTimeout(() => {
-                    const route = isPaid ? '/tips/' : '/order/';
-                    //store.commit('order/setIsOpenPaymentModal', true);
-                    props.f7router.navigate(route);
-                }, 100)
-            }
-
-            onMounted(() => {
+            onMounted (() => {
                 const f7page = document.querySelectorAll('#home:not(.page-previous)')[0];
                 const scrollableDiv = f7page.querySelector('.page-content');
                 const waiterCallBtn = f7page.querySelector('.home__waiter');
@@ -249,6 +236,36 @@
 
                 scrollableDiv.addEventListener('scroll', onScroll);
                 scrollableDiv.waiterCallBtnOffsetTop = waiterCallBtn.getBoundingClientRect().top;
+            });
+
+            onBeforeMount(async () => {
+                const urlParams = new URLSearchParams(window.location.search);
+                if(urlParams.has('operation') && urlParams.has('reference')) {
+                    const reference = urlParams.get('reference');
+                    let isPaid = false;
+                    let isTipsOrder = false;
+                    if(reference === store.getters['order/id']) {
+                        isPaid = store.getters['order/isPaid'];
+                    }
+                    else {
+                        const order = await axios.get(import.meta.env.VITE_API_URL + `/order/?id=${reference}`, {withCredentials: true})
+                            .then(response => {
+                                console.log('response.data.data', response.data.data)
+                                return response.data.data;
+                            })
+
+                        isTipsOrder = order.is_tips_order;
+                        isPaid = order.is_paid;
+                        store.commit('tips/setIsTipsOrder', isTipsOrder);
+                        store.commit('tips/setIsPaid', isPaid);
+                    }
+
+                    setTimeout(() => {
+                        const route = isPaid || isTipsOrder ? '/tips/' : '/order/';
+                        //store.commit('order/setIsOpenPaymentModal', true);
+                        props.f7router.navigate(route);
+                    }, 100)
+                }
             });
 
             const onScroll = (event) => {
