@@ -7,6 +7,7 @@ const getDefaultState = () => {
         id: null,
         isPaid: false,
         items: [],
+        payments: {},
         splitBill: false,
         tipsType: 'none',
         tipsSum: 0,

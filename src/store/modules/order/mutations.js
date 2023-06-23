@@ -6,6 +6,10 @@ export default {
         state.items = items
     },
     setSplitBill(state, splitBill) {
+        const paidItems = state.items.filter(item => item.is_paid === true) || [];
+        if(paidItems.length > 0) {
+            splitBill = true;
+        }
         state.splitBill = splitBill
     },
     setCheckedItem(state, index) {
@@ -23,5 +27,8 @@ export default {
     },
     setIsPaid(state, isPaid) {
         state.isPaid = isPaid
+    },
+    setPayments(state, payments) {
+        state.payments = payments
     },
 }

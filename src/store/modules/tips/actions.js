@@ -10,6 +10,7 @@ export default {
 			type: type,
 			sum: sum,
 			waiter_id: rootGetters['waiter/waiter']?.id,
+			order_id: rootGetters['order/id'],
 		}, {withCredentials: true})
 			.then(response => {
 				console.log('response.data.data', response.data.data.link)

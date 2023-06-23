@@ -233,6 +233,17 @@ button {
     justify-content: center;
 }
 
+.app-empty-table {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    font-size: 24px;
+}
+
 .hide {
     display: none;
 }

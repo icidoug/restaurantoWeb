@@ -127,6 +127,10 @@
     font-weight: 700;
     font-size: 12px;
     color: #898989;
+
+    &.basket-item__paid {
+      color: #00C600;
+    }
   }
 }
 

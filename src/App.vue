@@ -3,13 +3,16 @@
         <div v-if="isFetching" class="app-preloader">
             <preloader/>
         </div>
-        <f7-views v-else tabs class="safe-areas">
+        <f7-views v-else-if="waiter.id" tabs class="safe-areas">
             <f7-view id="view-home" main tab tab-active url="/"></f7-view>
         </f7-views>
+        <div v-else class="app-empty-table">
+            Какой то текст, что стол не выбран нужно сначала отсканировать QR код
+        </div>
     </f7-app>
 </template>
 <script setup>
-    import {onMounted, ref} from 'vue';
+    import {onMounted, ref, computed} from 'vue';
     import {
         f7ready,
     } from 'framework7-vue';
@@ -18,6 +21,7 @@
     import {f7} from 'framework7-vue';
     import store from '@/store/store'
     import Preloader from "@/components/Preloader.vue";
+    import Cookies from "js-cookie";
 
     const device = getDevice();
     // Framework7 Parameters
@@ -42,20 +46,33 @@
 
     const isFetching = ref(true);
 
+    const waiter = computed(() => {
+        return store.getters['waiter/waiter']
+    });
+
     onMounted(() => {
         f7ready(async () => {
             isFetching.value = true;
-            await store.dispatch('waiter/getWaiter', 1);
-            await store.dispatch('partner/getPartner');
-            await store.dispatch('catalog/getSections');
-            await store.dispatch('catalog/getItems');
-            await store.dispatch('basket/getItems');
-            await store.dispatch('order/getOrder');
-            await store.dispatch('events/getItems');
-            if(store.getters['order/items'].length > 0) {
-                //console.log(f7.views[0].navigate('/tips'))
-                //store.commit('tips/setTipsType', 'none');
+            //localStorage.lastOrderId = 101
+            //delete localStorage.lastOrderId;
+            console.log("TABLE", Cookies.get('table'))
+            const table = Cookies.get('table') || null;
+            if(table) {
+                await store.dispatch('waiter/getWaiter', table);
+                if(waiter.value.id) {
+                    await store.dispatch('partner/getPartner');
+                    await store.dispatch('catalog/getSections');
+                    await store.dispatch('catalog/getItems');
+                    await store.dispatch('basket/getItems');
+                    await store.dispatch('order/getOrder');
+                    await store.dispatch('events/getItems');
+                    if(store.getters['order/items'].length > 0) {
+                        //console.log(f7.views[0].navigate('/tips'))
+                        //store.commit('tips/setTipsType', 'none');
+                    }
+                }
             }
+
             isFetching.value = false;
         });
     });

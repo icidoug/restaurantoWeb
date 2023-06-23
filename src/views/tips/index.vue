@@ -74,10 +74,10 @@
 
 <script>
     import Navbar from "@/components/Navbar.vue";
-    import OrderTips from "@/components/order/OrderTips.vue";
+    import OrderTips from "@/components/tips/Tips.vue";
     import WaiterReview from "@/components/waiter/WaiterReview.vue";
     import YourReview from "@/components/waiter/YourWaiter.vue";
-    import {computed, onMounted, ref} from "vue";
+    import {computed, ref} from "vue";
     import store from "@/store/store";
     import TipsForm from "@/components/tips/TipsForm.vue";
 
@@ -95,7 +95,7 @@
             });
 
             const sum = computed(() => {
-                return store.getters['order/sum']
+                return store.getters['order/fullSum']
             });
 
             const tipsSum = computed(() => {

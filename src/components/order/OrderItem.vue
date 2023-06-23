@@ -2,10 +2,10 @@
     <div class="basket-item">
         <div v-if="splitBill"
              class="basket-item__image"
-             :class="{'active': item.is_checked}"
+             :class="{'active': item.is_checked && !item.is_paid}"
              @click="toggleChecked"
         >
-            <div class="basket-item__checkbox"></div>
+            <div v-if="!item.is_paid" class="basket-item__checkbox"></div>
             <img v-if="item.image" :src="item.image" alt="">
         </div>
         <div v-else class="basket-item__image">
@@ -14,7 +14,9 @@
         <div class="basket-item__info">
             <div class="basket-item__title">
                 {{ item.name }}
-                <span v-if="splitBill">Не оплачено</span>
+                <span v-if="splitBill" :class="{'basket-item__paid': item.is_paid}">
+                    {{ item.is_paid ? 'Оплачено' : 'Не оплачено' }}
+                </span>
             </div>
             <div class="basket-item__price" v-html="item.price_format"></div>
         </div>
@@ -43,7 +45,10 @@
             });
 
             const toggleChecked = () => {
-                store.commit('order/setCheckedItem', props.index)
+                if(!props.item.is_paid) {
+                    store.commit('order/setCheckedItem', props.index)
+
+                }
                 console.log('item', props.item)
             }
 

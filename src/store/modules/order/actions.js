@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Cookies from "js-cookie";
 
 export default {
 	getOrder({commit, getters, rootGetters}) {
@@ -10,9 +11,13 @@ export default {
 		
 		return axios.get(url, {withCredentials: true})
 			.then(response => {
+				commit('setSplitBill', false);
 				const items = response.data.data?.list.map(item => {
 					const catalogItem = rootGetters['catalog/getItemById'](item.id);
-					return {...item, image: catalogItem?.image || '', is_checked: true};
+					if(item.is_paid) {
+						commit('setSplitBill', true);
+					}
+					return {...item, image: catalogItem?.image || '', is_checked: !item.is_paid};
 				});
 				
 				console.log('getOrder', response.data)
@@ -21,6 +26,7 @@ export default {
 				commit('setIsPaid', response.data.data?.is_paid);
 				localStorage.lastOrderId = response.data.data?.id || null;
 				commit('setItems', items || []);
+				commit('setPayments', response.data.data?.payments || {});
 			})
 			.catch(error => console.log('Ошибка: ', error))
 		
@@ -33,6 +39,7 @@ export default {
 			action: action,
 			type: type,
 			comment: comment,
+			table: Cookies.get('table')
 		}, {withCredentials: true})
 			.then(response => {
 				commit('setId', response.data.data.ORDER_ID);
@@ -41,15 +48,28 @@ export default {
 			})
 			.catch(error => console.log('Ошибка: ', error))
 	},
-	pay({commit, getters, rootGetters}, {type}) {
+	pay({commit, getters, rootGetters}, {type, commission}) {
 		let url = import.meta.env.VITE_API_URL + '/order/',
 			action = 'pay';
 		
-		return axios.post(url, {
+		const params = {
 			action: action,
 			type: type,
 			id: getters['id'],
-		}, {withCredentials: true})
+			commission: commission,
+		};
+		
+		if(getters['splitBill']) {
+			const checkedItems = getters['checkedItems'];
+			params.items = checkedItems.map(item => item.basket_id);
+		}
+		
+		if(getters['tipsSum'] > 0) {
+			params.tips = getters['tipsSum'];
+			params.waiter_id = rootGetters['waiter/waiter']?.id;
+		}
+		
+		return axios.post(url, params, {withCredentials: true})
 			.then(response => {
 				console.log('response.data.data', response.data.data.link)
 				//commit('setId', response.data.data.ORDER_ID);

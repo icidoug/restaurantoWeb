@@ -37,7 +37,7 @@
                     Что-то пошло не так...
                 </div>
                 <div class="basket-confirm__descr">
-                    Спасибо, что сэкономили время официанта!
+                    Пожалуйста, попробуйте еще раз
                 </div>
                 <f7-button class="btn btn--border" popup-close>
                     Повторить попытку

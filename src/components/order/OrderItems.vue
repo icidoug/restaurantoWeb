@@ -1,6 +1,6 @@
 <template>
     <div class="basket-items">
-        <div class="basket-items__header">
+        <div v-if="paidItems.length === 0" class="basket-items__header">
             <f7-toggle @change="splitToggle($event.target.checked)"></f7-toggle>
             <span>Разделить счёт</span>
         </div>
@@ -40,6 +40,10 @@
                 return store.getters['order/splitBill']
             });
 
+            const paidItems = computed(() => {
+                return store.getters['order/paidItems']
+            });
+
             const splitToggle = (val) => {
                 store.commit('order/setSplitBill', val)
             }
@@ -47,7 +51,8 @@
             return {
                 sum,
                 splitToggle,
-                splitBill
+                splitBill,
+                paidItems
             }
         }
     }

@@ -7,17 +7,33 @@
                         Итого к оплате:
                     </div>
                     <div class="order-form__td">
-                        {{ sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}₽
+                        {{ totalSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}₽
+                    </div>
+                </div>
+                <div class="order-form__tr">
+                    <div class="order-form__td">
+                        Блюда
+                    </div>
+                    <div class="order-form__td">
+                        {{ parseInt(sum - tipsSum).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}₽
+                    </div>
+                </div>
+                <div class="order-form__tr">
+                    <div class="order-form__td">
+                        Чаевые
+                    </div>
+                    <div class="order-form__td">
+                        {{ tipsSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}₽
                     </div>
                 </div>
             </div>
-            <div class="order-form__field"
+            <div v-if="commission > 0" class="order-form__field"
                  :class="{active: taxChecked}"
                  @click="taxChecked = !taxChecked"
             >
                 <div class="order-form__field_checkbox"></div>
                 <div class="order-form__field_title">
-                    Взять на себя комиссию в размере 37,53₽
+                    Взять на себя комиссию в размере {{ commission }}₽
                 </div>
             </div>
             <div class="order-form__field"
@@ -30,7 +46,7 @@
                 </div>
             </div>
         </div>
-        <div class="order-form__fixed">
+        <div v-if="!splitBill || (splitBill && sum > 0)" class="order-form__fixed">
             <f7-link class="order-payment" popup-open=".order-payment-type-popup">
                 <div class="order-payment__main">
                     <div class="order-payment__icon">
@@ -81,8 +97,11 @@
                     </svg>
                 </div>
             </f7-link>
-            <f7-button popup-open=".order-confirm-popup" class="btn btn--pink" @click="onSubmit">
-                Оплатить {{ splitBill ? 'частично ' : '' }} {{ sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} ₽
+            <f7-button popup-open=".order-confirm-popup"
+                       class="btn btn--pink" @click="onSubmit"
+            >
+                Оплатить {{ splitBill ? 'частично ' : '' }}
+                {{ totalSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} ₽
             </f7-button>
         </div>
         <order-payment-type-popup @change="onChangeType($event)"/>
@@ -110,8 +129,12 @@
             onMounted(() => {
                 const urlParams = new URLSearchParams(window.location.search);
                 const isOrderPaid = store.getters['order/isPaid'];
-                if(urlParams.has('operation') && urlParams.has('reference') && !isOrderPaid) {
-                    f7.popup.open('.order-payment-popup');
+                if (urlParams.has('operation') && urlParams.has('reference') && !isOrderPaid) {
+                    console.log('code', urlParams.get('code'))
+                    if (urlParams.has('code') && urlParams.get('code') !== '1') {
+                        f7.popup.open('.order-payment-popup');
+                    }
+
                     window.history.replaceState(null, '', window.location.pathname);
                 }
             });
@@ -136,10 +159,41 @@
                 return store.getters['order/splitBill']
             });
 
+            const commission = computed(() => {
+                const percentFood = store.getters['partner/partner']?.commission_food || 0;
+                const percentTips = store.getters['partner/partner']?.commission_tips || 0;
+                const commissionSumFood = percentFood > 0 ? parseFloat(((sum.value - tipsSum.value) * (percentFood / 100))) : 0;
+                const commissionSumTips = percentTips > 0 ? parseFloat((tipsSum.value * (percentTips / 100))) : 0;
+
+                return roundNumber(commissionSumFood + commissionSumTips, 2)
+            });
+
+            const roundNumber = (num, scale) => {
+                if(!("" + num).includes("e")) {
+                    return +(Math.round(num + "e+" + scale)  + "e-" + scale);
+                } else {
+                    var arr = ("" + num).split("e");
+                    var sig = ""
+                    if(+arr[1] + scale > 0) {
+                        sig = "+";
+                    }
+                    return +(Math.round(+arr[0] + "e" + sig + (+arr[1] + scale)) + "e-" + scale);
+                }
+            }
+
+            const totalSum = computed(() => {
+                let totalSum = sum.value;
+                if (taxChecked.value) {
+                    totalSum += commission.value;
+                }
+                return totalSum;
+            });
+
             const onSubmit = async () => {
                 isFetching.value = true;
                 await store.dispatch('order/pay', {
                     type: type.value,
+                    commission: taxChecked.value
                 })
             }
             return {
@@ -151,7 +205,9 @@
                 splitBill,
                 tipsSum,
                 taxChecked,
-                personalChecked
+                personalChecked,
+                commission,
+                totalSum
             }
         }
     }

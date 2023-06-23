@@ -7,7 +7,7 @@
         <div class="order-tips__items">
             <div class="order-tips__item"
                  :class="{active: tipsType === '10%'}"
-                 @click="setTips('10%')"
+                 @click="setTips('10%', parseInt(sum * .1))"
             >
                 <div class="order-tips__item_percent">
                     10%
@@ -18,7 +18,7 @@
             </div>
             <div class="order-tips__item"
                  :class="{active: tipsType === '15%'}"
-                 @click="setTips('15%')"
+                 @click="setTips('15%', parseInt(sum * .15))"
             >
                 <div class="order-tips__item_percent">
                     15%
@@ -29,7 +29,7 @@
             </div>
             <div class="order-tips__item"
                  :class="{active: tipsType === '20%'}"
-                 @click="setTips('20%')"
+                 @click="setTips('20%', parseInt(sum * .2))"
             >
                 <div class="order-tips__item_percent">
                     20%
@@ -40,7 +40,7 @@
             </div>
             <div class="order-tips__item"
                  :class="{active: tipsType === 'custom'}"
-                 @click="setTips('custom')"
+                 @click="setTips('custom', 0)"
             >
                 <div class="order-tips__item_title">
                     Ввести свою сумму
@@ -55,14 +55,6 @@
                 </div>
             </div>
         </div>
-        <div v-if="tipsType === 'custom'" class="order-tips__input">
-            <input type="text" :value="customTipsSum" @keypress="isNumber($event)" @keyup="setCustomTips($event.target.value)">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M6.48989 6.53795L3.41889 10.838C2.92189 11.533 2.92189 12.468 3.41889 13.163L6.48989 17.463C6.86489 17.988 7.47089 18.3 8.11689 18.3H18.9999C20.1049 18.3 20.9999 17.405 20.9999 16.3V7.69995C20.9999 6.59495 20.1049 5.69995 18.9999 5.69995H8.11689C7.47089 5.69995 6.86489 6.01195 6.48989 6.53795Z" stroke="#111111" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M16 10L12 14" stroke="#111111" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M16 14L12 10" stroke="#111111" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-        </div>
         <waiter-review/>
     </div>
 </template>
@@ -71,7 +63,7 @@
 
     import YourWaiter from "@/components/waiter/YourWaiter.vue";
     import WaiterReview from "@/components/waiter/WaiterReview.vue";
-    import {computed, ref, watch} from "vue";
+    import {computed} from "vue";
     import store from "@/store/store";
 
     export default {
@@ -86,7 +78,7 @@
             });
 
             const sum = computed(() => {
-                return store.getters['order/sumWithoutTips']
+                return store.getters['order/fullSum']
             });
 
             const tipsSum = computed(() => {
@@ -97,52 +89,13 @@
                 return store.getters['waiter/waiter']
             });
 
-            watch(() => sum.value, (newSum) => {
-                console.log('newSum', newSum)
-                console.log('tipsType.value', tipsType.value)
-                if(tipsType.value !== 'none') {
-                    setTips(tipsType.value, true)
-                }
-            });
-
-            const customTipsSum = ref(0);
-
-            const setTips = (type, force = false) => {
-                let tips = 0
-                if(tipsType.value === type && !force) {
+            const setTips = (type, sum) => {
+                if(tipsType.value === type) {
                     type = 'none';
+                    sum = 0;
                 }
-                if(type === '10%') {
-                    tips = parseInt(sum.value * .1);
-                }
-                else if(type === '15%') {
-                    tips = parseInt(sum.value * .15);
-                }
-                else if(type === '20%') {
-                    tips = parseInt(sum.value * .2);
-                }
-                else if(type === 'custom') {
-                    tips = customTipsSum.value;
-                }
-                console.log('type', type)
-                console.log('tipsSum', tipsSum)
                 store.commit('order/setTipsType', type);
-                store.commit('order/setTipsSum', tips);
-                console.log('SUM', store.getters['order/sum'])
-            }
-
-            const setCustomTips = (value) => {
-                const sum = value > 0  ? value.replace(/^0+/, '') : '';
-
-                customTipsSum.value = parseInt(sum);
-                store.commit('order/setTipsSum', parseInt(sum));
-            }
-
-            const isNumber = ($event) => {
-                let keyCode = ($event.keyCode ? $event.keyCode : $event.which);
-                if ((keyCode < 48 || keyCode > 57) && keyCode !== 46) { // 46 is dot
-                    $event.preventDefault();
-                }
+                store.commit('order/setTipsSum', sum);
             }
 
             return {
@@ -150,10 +103,7 @@
                 sum,
                 setTips,
                 tipsSum,
-                waiter,
-                customTipsSum,
-                setCustomTips,
-                isNumber
+                waiter
             }
         }
     }
