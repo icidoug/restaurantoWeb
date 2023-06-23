@@ -12,6 +12,9 @@ const urlParams = new URLSearchParams(window.location.search);
 if(urlParams.has('table')) {
 	Cookies.set('table', urlParams.get('table'), { expires: 1 })
 }
+if(urlParams.has('zone')) {
+	Cookies.set('zone', urlParams.get('zone'), { expires: 1 })
+}
 
 Framework7.use(Framework7Vue);
 

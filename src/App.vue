@@ -57,8 +57,9 @@
             //delete localStorage.lastOrderId;
             console.log("TABLE", Cookies.get('table'))
             const table = Cookies.get('table') || null;
-            if(table) {
-                await store.dispatch('waiter/getWaiter', table);
+            const zone = Cookies.get('zone') || null;
+            if(table && zone) {
+                await store.dispatch('waiter/getWaiter', {table, zone});
                 if(waiter.value.id) {
                     await store.dispatch('partner/getPartner');
                     await store.dispatch('catalog/getSections');

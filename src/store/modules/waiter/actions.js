@@ -1,8 +1,8 @@
 import axios from 'axios'
 
 export default {
-	getWaiter({commit}, seat) {
-		let url = import.meta.env.VITE_API_URL + `/seat/${seat}/`;
+	getWaiter({commit}, {table, zone}) {
+		let url = import.meta.env.VITE_API_URL + `/seat/${table}/?zone=${zone}`;
 		
 		return axios.get(url, {withCredentials: true})
 			.then(response => {
