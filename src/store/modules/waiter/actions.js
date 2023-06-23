@@ -12,7 +12,7 @@ export default {
 		
 	},
 	call({commit, getters}, comment) {
-		let url = import.meta.env.VITE_API_URL + '/waiter/';
+		let url = import.meta.env.VITE_API_URL + '/call/';
 		
 		return axios.post(url, {
 			action: 'call',
@@ -24,7 +24,7 @@ export default {
 			.catch(error => console.log('Ошибка: ', error))
 	},
 	callHookah({commit, getters}, comment) {
-		let url = import.meta.env.VITE_API_URL + '/waiter/';
+		let url = import.meta.env.VITE_API_URL + '/call/';
 		
 		return axios.post(url, {
 			action: 'hookah',
