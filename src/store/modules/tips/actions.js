@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export default {
-	pay({commit, getters, rootGetters}, {type, sum}) {
+	pay({commit, getters, rootGetters}, {type, sum, commission}) {
 		let url = import.meta.env.VITE_API_URL + '/order/',
 			action = 'tips';
 		
@@ -11,6 +11,7 @@ export default {
 			sum: sum,
 			waiter_id: rootGetters['waiter/waiter']?.id,
 			order_id: rootGetters['order/id'],
+			commission: commission,
 		}, {withCredentials: true})
 			.then(response => {
 				console.log('response.data.data', response.data.data.link)

@@ -7,8 +7,17 @@
                         Итого к оплате:
                     </div>
                     <div class="order-form__td">
-                        {{ tipsSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}₽
+                        {{ totalSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}₽
                     </div>
+                </div>
+            </div>
+            <div v-if="commission > 0" class="order-form__field"
+                 :class="{active: taxChecked}"
+                 @click="taxChecked = !taxChecked"
+            >
+                <div class="order-form__field_checkbox"></div>
+                <div class="order-form__field_title">
+                    Взять на себя комиссию в размере {{ commission }}₽
                 </div>
             </div>
             <div class="order-form__field"
@@ -73,7 +82,7 @@
                 </div>
             </f7-link>
             <f7-button popup-open=".order-confirm-popup" class="btn btn--pink" @click="onSubmit">
-                Оплатить {{ tipsSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} ₽
+                Оплатить {{ totalSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} ₽
             </f7-button>
         </div>
         <order-payment-type-popup @change="onChangeType($event)"/>
@@ -130,8 +139,38 @@
             }
 
             const tipsSum = computed(() => {
-                const sum = store.getters['tips/tipsSum'];
+                const sum = parseInt(store.getters['tips/tipsSum']);
                 return sum > 0 ? sum : 0;
+            });
+
+            const commission = computed(() => {
+                const percentTips = store.getters['partner/partner']?.commission_tips || 0;
+                const commissionSumTips = percentTips > 0 ? parseFloat((tipsSum.value * (percentTips / 100))) : 0;
+
+                return roundNumber(commissionSumTips, 2)
+            });
+
+            const roundNumber = (num, scale) => {
+                if(!("" + num).includes("e")) {
+                    return +(Math.round(num + "e+" + scale)  + "e-" + scale);
+                } else {
+                    var arr = ("" + num).split("e");
+                    var sig = ""
+                    if(+arr[1] + scale > 0) {
+                        sig = "+";
+                    }
+                    return +(Math.round(+arr[0] + "e" + sig + (+arr[1] + scale)) + "e-" + scale);
+                }
+            }
+
+            const totalSum = computed(() => {
+                console.log('tipsSum.value', tipsSum.value)
+                console.log('commission.value', commission.value)
+                let totalSum = tipsSum.value;
+                if (taxChecked.value) {
+                    totalSum += commission.value;
+                }
+                return totalSum;
             });
 
             const onSubmit = async () => {
@@ -139,8 +178,10 @@
                 await store.dispatch('tips/pay', {
                     type: type.value,
                     sum: store.getters['tips/tipsSum'],
+                    commission: taxChecked.value
                 })
             }
+
             return {
                 onSubmit,
                 isFetching,
@@ -148,7 +189,9 @@
                 type,
                 tipsSum,
                 taxChecked,
-                personalChecked
+                personalChecked,
+                commission,
+                totalSum
             }
         }
     }

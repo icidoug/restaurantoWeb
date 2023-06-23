@@ -7,7 +7,7 @@
             <f7-view id="view-home" main tab tab-active url="/"></f7-view>
         </f7-views>
         <div v-else class="app-empty-table">
-            Какой то текст, что стол не выбран нужно сначала отсканировать QR код
+            Для начала работы с системой, отсканируйте QR код расположенный на столе
         </div>
     </f7-app>
 </template>
