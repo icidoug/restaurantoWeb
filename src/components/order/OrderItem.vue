@@ -41,6 +41,7 @@
         },
         setup(props) {
             const splitBill = computed(() => {
+                console.log('splitBill', store.getters['order/splitBill'])
                 return store.getters['order/splitBill']
             });
 

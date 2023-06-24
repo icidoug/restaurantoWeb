@@ -19,7 +19,7 @@ export default {
 			comment: comment
 		}, {withCredentials: true})
 			.then(response => {
-				return !!response.data.data.success;
+				return !!response.data.data.id;
 			})
 			.catch(error => console.log('Ошибка: ', error))
 	},

@@ -7,7 +7,7 @@ export default {
     },
     setSplitBill(state, splitBill) {
         const paidItems = state.items.filter(item => item.is_paid === true) || [];
-        if(paidItems.length > 0) {
+        if(paidItems.length > 0 && !state.isPaid) {
             splitBill = true;
         }
         state.splitBill = splitBill

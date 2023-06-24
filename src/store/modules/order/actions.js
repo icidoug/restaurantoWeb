@@ -15,6 +15,7 @@ export default {
 				const items = response.data.data?.list.map(item => {
 					const catalogItem = rootGetters['catalog/getItemById'](item.id);
 					if(item.is_paid) {
+						console.log('OKS')
 						commit('setSplitBill', true);
 					}
 					return {...item, image: catalogItem?.image || '', is_checked: !item.is_paid};

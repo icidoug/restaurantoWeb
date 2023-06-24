@@ -279,6 +279,10 @@
                         store.commit('tips/setIsPaid', isPaid);
                     }
 
+                    if(isPaid) {
+                        console.log('OKS@@@')
+                        store.commit('order/setSplitBill', false);
+                    }
 
                     if(isPaid && (isOrderWithTips || isTipsOrder)) {
                         if(isTipsOrder) {

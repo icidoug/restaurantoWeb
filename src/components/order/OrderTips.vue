@@ -56,7 +56,12 @@
             </div>
         </div>
         <div v-if="tipsType === 'custom'" class="order-tips__input">
-            <input type="text" :value="customTipsSum" @keypress="isNumber($event)" @keyup="setCustomTips($event.target.value)">
+            <input type="text"
+                   :value="customTipsSum"
+                   @keypress="isNumber($event)"
+                   @keyup="setCustomTips($event.target.value)"
+                   @change="checkSum($event.target.value)"
+            >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M6.48989 6.53795L3.41889 10.838C2.92189 11.533 2.92189 12.468 3.41889 13.163L6.48989 17.463C6.86489 17.988 7.47089 18.3 8.11689 18.3H18.9999C20.1049 18.3 20.9999 17.405 20.9999 16.3V7.69995C20.9999 6.59495 20.1049 5.69995 18.9999 5.69995H8.11689C7.47089 5.69995 6.86489 6.01195 6.48989 6.53795Z" stroke="#111111" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 <path d="M16 10L12 14" stroke="#111111" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -134,8 +139,15 @@
             const setCustomTips = (value) => {
                 const sum = value > 0  ? value.replace(/^0+/, '') : '';
 
-                customTipsSum.value = parseInt(sum);
-                store.commit('order/setTipsSum', parseInt(sum));
+                customTipsSum.value = sum === '' ? '' : parseInt(sum);
+                store.commit('order/setTipsSum', sum === '' ? '' : parseInt(sum));
+            }
+
+            const checkSum = (value) => {
+                if(value === '') {
+                    customTipsSum.value = 0;
+                    store.commit('order/setTipsSum', 0);
+                }
             }
 
             const isNumber = ($event) => {
@@ -153,7 +165,8 @@
                 waiter,
                 customTipsSum,
                 setCustomTips,
-                isNumber
+                isNumber,
+                checkSum
             }
         }
     }
