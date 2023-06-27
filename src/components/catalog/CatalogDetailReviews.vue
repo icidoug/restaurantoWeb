@@ -60,19 +60,22 @@
                          target="_blank"
                          class="review-services__item"
                 >
-                    <img src="/src/assets/images/services/yandex.png" alt="">
+                    <img v-if="partner.dark_theme" src="/src/assets/images/services/yandex_dark.png" alt="">
+                    <img v-else src="/src/assets/images/services/yandex.png" alt="">
                 </f7-link>
                 <f7-link external v-if="partner.services['2gis']" :href="partner.services['2gis']"
                          target="_blank"
                          class="review-services__item"
                 >
-                    <img src="/src/assets/images/services/2gis.png" alt="">
+                    <img v-if="partner.dark_theme" src="/src/assets/images/services/2gis_dark.png" alt="">
+                    <img v-else src="/src/assets/images/services/2gis.png" alt="">
                 </f7-link>
                 <f7-link external v-if="partner.services['tripadvisor']" :href="partner.services['tripadvisor']"
                          target="_blank"
                          class="review-services__item"
                 >
-                    <img src="/src/assets/images/services/tripadvisor.png" alt="">
+                    <img v-if="partner.dark_theme" src="/src/assets/images/services/tripadvisor_dark.png" alt="">
+                    <img v-else src="/src/assets/images/services/tripadvisor.png" alt="">
                 </f7-link>
             </div>
         </div>

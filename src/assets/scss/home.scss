@@ -50,7 +50,7 @@
   min-width: 150px;
   max-width: 150px;
   height: 120px;
-  background: #FFFFFF;
+  background: var( --r-bg-panel-color);
   border-radius: 16px;
   padding: 12px;
   display: block;
@@ -81,7 +81,7 @@
 .home-menu__item_title {
   font-weight: 600;
   font-size: 14px;
-  color: #111111;
+  color: var(--r-text-color);
 }
 
 .home__footer {

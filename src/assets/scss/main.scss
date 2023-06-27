@@ -64,12 +64,50 @@
 
 :root:not(.dark) {
     --f7-page-bg-color: #F9F4F1;
+    --r-main-bg-color: #F9F4F1;
+    --r-text-color: #1F2226;
+    --r-bg-panel-color: #fff;
+    --r-avatar-border-color: #F7F6F4;
+    --r-close-bg-color: #333;
+    --r-icon-color: #111;
+    --r-btn-border-text-color: #434A54;
+    --r-textarea-bg-color: transparent;
+    --r-textarea-border-color: #C8C8C8;
+    --r-textarea-border-bottom-color: #F2F1EF;
+    --r-textarea-prompt-text-color: #898989;
+    --r-swipe-handler-color: #e6e6e6;
+    --r-line-color: #F2F1EF;
+    --r-review-bg-color: #F7F6F4;
+    --r-basket-line-color: #F2F1EF;
+    --r-fixed-border-top-color: #F2F1EF;
+    --r-event-date-bg-color: #F2F1EF;
+}
+
+:root.dark {
+    --f7-page-bg-color: #111;
+    --r-main-bg-color: #111;
+    --r-text-color: #fff;
+    --r-bg-panel-color: #1E1E1F;
+    --r-avatar-border-color: #333;
+    --r-close-bg-color: #333;
+    --r-icon-color: #fff;
+    --r-btn-border-text-color: #fff;
+    --r-textarea-bg-color: #333;
+    --r-textarea-border-color: transparent;
+    --r-textarea-border-bottom-color: #656666;
+    --r-textarea-prompt-text-color: #C8C8C8;
+    --r-swipe-handler-color: #5d5d5d;
+    --r-line-color: #1E1E1F;
+    --r-review-bg-color: #333;
+    --r-basket-line-color: #333;
+    --r-fixed-border-top-color: #333;
+    --r-event-date-bg-color: #1E1E1F;
 }
 
 html {
     line-height: $mainLineHeight;
     font-size: $mainFontSize;
-    color: $mainFontColor;
+    color: var(--r-text-color);
     height: 100%;
     /*@media screen and (max-width: $desktopWidth) {
         font-size: 16px;
@@ -107,10 +145,9 @@ body {
     font-weight: $mainFontWeight;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    margin: 0;
     padding: 0;
     background-color: #F9F4F1;
-    color: #111111;
+    color: var(--r-text-color);
     min-width: 320px;
     box-sizing: border-box;
     text-align: left;
@@ -214,13 +251,13 @@ button {
     top: -10px;
     cursor: pointer;
     z-index: 10501;
-    background: #fff;
+    background: var(--r-bg-panel-color);
 }
 
 .swipe-handler__icon {
     width: 45px;
     height: 4px;
-    background: #e6e6e6;
+    background: var(--r-swipe-handler-color);
     border-radius: 60px;
     margin: 0 auto;
 }

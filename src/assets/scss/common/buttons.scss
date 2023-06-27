@@ -58,7 +58,7 @@
 .btn--border {
     background: transparent;
     border: 2px solid var(--pink);;
-    color: #434A54;
+    color: var(--r-btn-border-text-color);
     font-weight: 700;
 
     &:hover {

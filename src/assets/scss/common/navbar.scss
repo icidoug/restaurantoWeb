@@ -11,6 +11,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
+    svg path {
+      fill: var(--r-icon-color);
+    }
   }
 }
 
@@ -26,4 +30,10 @@
   flex: 1;
   font-weight: 700;
   font-size: 24px;
+}
+
+.navbar__share {
+  svg path {
+    fill: var(--r-icon-color);
+  }
 }

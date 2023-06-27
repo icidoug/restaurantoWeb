@@ -29,7 +29,7 @@
   cursor: pointer;
 
   &:not(:last-child) {
-    border-bottom: 1px solid #F2F1EF;
+    border-bottom: 1px solid var(--r-basket-line-color);
   }
 
   &.active {

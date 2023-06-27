@@ -7,7 +7,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  background: #FFFFFF;
+  background: var(--r-bg-panel-color);
   border-radius: 16px;
   justify-content: space-between;
 }
@@ -24,7 +24,7 @@
   border-radius: 6px;
 
   img {
-    border: 3px solid #F7F6F4;
+    border: 3px solid var(--r-avatar-border-color);
     border-radius: 8px;
   }
 }
@@ -73,7 +73,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: #F7F6F4;
+  background: var(--r-close-bg-color);
   z-index: 10502;
 }
 
@@ -114,11 +114,12 @@
 .waiter-popup__form {
   textarea {
     padding: 12px 16px;
-    border: 1px solid #C8C8C8;
+    border: 1px solid var(--r-textarea-border-color);
     border-radius: 12px;
     font-size: 14px;
     margin-bottom: 24px;
     width: 100%;
+    background: var(--r-textarea-bg-color);
   }
 
   .btn {

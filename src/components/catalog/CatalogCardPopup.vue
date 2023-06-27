@@ -55,7 +55,7 @@
                             </svg>
                             Добавить в заказ
                         </counter>
-                        <div class="item-detail__line"></div>
+                        <div v-if="item.compound" class="item-detail__line"></div>
                         <div v-if="item.compound" class="item-detail__subtitle">
                             Состав
                         </div>

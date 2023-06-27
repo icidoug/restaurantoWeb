@@ -53,15 +53,17 @@
     onMounted(() => {
         f7ready(async () => {
             isFetching.value = true;
-            //localStorage.lastOrderId = 101
-            //delete localStorage.lastOrderId;
-            console.log("TABLE", Cookies.get('table'))
+
             const table = Cookies.get('table') || null;
             const zone = Cookies.get('zone') || null;
             if(table && zone) {
                 await store.dispatch('waiter/getWaiter', {table, zone});
                 if(waiter.value.id) {
-                    await store.dispatch('partner/getPartner');
+                    await store.dispatch('partner/getPartner').then(settings => {
+                        if(settings.dark_theme) {
+                            f7.setDarkMode(true);
+                        }
+                    })
                     await store.dispatch('catalog/getSections');
                     await store.dispatch('catalog/getItems');
                     await store.dispatch('basket/getItems');
