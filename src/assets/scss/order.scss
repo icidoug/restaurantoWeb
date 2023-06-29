@@ -263,6 +263,11 @@
   font-size: 12px;
   line-height: 130%;
   color: #898989;
+
+  a {
+    color: white;
+    text-decoration: underline;
+  }
 }
 
 .order-form__fixed {

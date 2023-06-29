@@ -1,14 +1,18 @@
 <template>
     <f7-app v-bind="f7params">
-        <div v-if="isFetching" class="app-preloader">
-            <preloader/>
+        <Transition>
+        <div class="app-view" v-if="partner.id">
+            <div v-if="isFetching" class="app-preloader">
+                <preloader/>
+            </div>
+            <f7-views v-else-if="waiter.id" tabs class="safe-areas">
+                <f7-view id="view-home" main tab tab-active url="/"></f7-view>
+            </f7-views>
+            <div v-else class="app-empty-table">
+                Для начала работы с системой, отсканируйте QR код расположенный на столе
+            </div>
         </div>
-        <f7-views v-else-if="waiter.id" tabs class="safe-areas">
-            <f7-view id="view-home" main tab tab-active url="/"></f7-view>
-        </f7-views>
-        <div v-else class="app-empty-table">
-            Для начала работы с системой, отсканируйте QR код расположенный на столе
-        </div>
+        </Transition>
     </f7-app>
 </template>
 <script setup>
@@ -44,14 +48,24 @@
         },
     };
 
-    const isFetching = ref(true);
+    const isFetching = ref(false);
 
     const waiter = computed(() => {
         return store.getters['waiter/waiter']
     });
+    const partner = computed(() => {
+        return store.getters['partner/partner']
+    });
 
     onMounted(() => {
         f7ready(async () => {
+            await store.dispatch('partner/getPartner').then(settings => {
+                const urlParams = new URLSearchParams(window.location.search);
+                if(settings.dark_theme || urlParams.get('dark')) {
+                    f7.setDarkMode(true);
+                }
+            })
+
             isFetching.value = true;
 
             const table = Cookies.get('table') || null;
@@ -59,11 +73,6 @@
             if(table && zone) {
                 await store.dispatch('waiter/getWaiter', {table, zone});
                 if(waiter.value.id) {
-                    await store.dispatch('partner/getPartner').then(settings => {
-                        if(settings.dark_theme) {
-                            f7.setDarkMode(true);
-                        }
-                    })
                     await store.dispatch('catalog/getSections');
                     await store.dispatch('catalog/getItems');
                     await store.dispatch('basket/getItems');
