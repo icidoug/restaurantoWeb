@@ -26,11 +26,12 @@
             >
                 <div class="order-form__field_checkbox"></div>
                 <div class="order-form__field_title">
-                    Согласен с условиями Пользовательского соглашения и Политикой обработки персональных данных
+                    Согласен с условиями <a @click.stop="openLink('/public/Public-offer-resto-ranto.pdf')" href="/public/Public-offer-resto-ranto.pdf" target="_blank">Пользовательского соглашения</a>
+                    и <a @click.stop="openLink('/public/Private-policy-resto-ranto.pdf')" href="/public/Private-policy-resto-ranto.pdf" target="_blank">Политикой обработки персональных данных</a>
                 </div>
             </div>
         </div>
-        <div v-if="tipsSum > 0" class="order-form__fixed">
+        <div v-if="personalChecked && tipsSum > 0" class="order-form__fixed">
             <f7-link class="order-payment" popup-open=".order-payment-type-popup">
                 <div class="order-payment__main">
                     <div class="order-payment__icon">
@@ -181,7 +182,9 @@
                     commission: taxChecked.value
                 })
             }
-
+            const openLink = (url) => {
+                window.open(url)
+            }
             return {
                 onSubmit,
                 isFetching,
@@ -191,7 +194,8 @@
                 taxChecked,
                 personalChecked,
                 commission,
-                totalSum
+                totalSum,
+                openLink
             }
         }
     }
