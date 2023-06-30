@@ -47,10 +47,13 @@
   cursor: pointer;
 
   &.active {
-    background: #333333;
+    background: var(--r-review-bg-active-color);
 
     .order-tips__item_percent, .order-tips__item_title {
       color: #fff;
+    }
+    .order-tips__item_sum {
+      color: var(--r-textarea-prompt-text-color);
     }
   }
 
