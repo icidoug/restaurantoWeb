@@ -187,3 +187,15 @@
   color: #898989;
   margin-top: 8px;
 }
+
+.footer {
+  margin-bottom: 80px;
+  text-align: center;
+
+  a {
+    color: var(--r-text-color);
+    text-decoration: underline;
+    font-size: 12px;
+    font-weight: 500;
+  }
+}

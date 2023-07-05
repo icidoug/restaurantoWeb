@@ -106,6 +106,11 @@
                 </f7-link>
             </div>
             <catalog :sections="sections" :active-section="activeSection" :items="items"/>
+            <div class="footer">
+                <a @click.stop="openLink('/public/Public-offer-resto-ranto.pdf')">
+                    Пользовательское соглашение
+                </a>
+            </div>
             <transition>
                 <div class="home__footer padding-side"
                      v-if="isVisibleFooter"
@@ -176,6 +181,7 @@
         <catalog-card-popup/>
         <tips-payment-confirm-popup/>
         <order-payment-confirm-popup/>
+
     </f7-page>
 </template>
 
@@ -314,6 +320,10 @@
                 isVisibleFooter.value = scrollTop > waiterCallBtnOffsetTop - 150;
             }
 
+            const openLink = (url) => {
+                window.open(url)
+            }
+
             return {
                 items,
                 sections,
@@ -325,7 +335,8 @@
                 waiter,
                 partner,
                 isVisibleFooter,
-                isOrderPaid
+                isOrderPaid,
+                openLink
             };
         }
     }
