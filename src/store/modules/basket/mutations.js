@@ -2,6 +2,9 @@ export default {
     setItems(state, items) {
         state.items = items
     },
+    setSuitableItems(state, suitableItems) {
+        state.suitableItems = suitableItems
+    },
     addItem(state, item) {
         state.items.push(item);
         console.log('state.items', state.items)

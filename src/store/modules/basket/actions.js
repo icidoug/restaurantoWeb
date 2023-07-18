@@ -12,6 +12,9 @@ export default {
 				});
 				
 				commit('setItems', items || []);
+				if(response.data.data.suitable_items.length > 0) {
+					commit('setSuitableItems', response.data.data.suitable_items || []);
+				}
 			})
 			.catch(error => console.log('Ошибка: ', error))
 		

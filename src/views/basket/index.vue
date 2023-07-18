@@ -6,39 +6,11 @@
             <div v-else class="basket__empty padding-side">
                В корзине пока нет товаров
             </div>
-            <div class="basket__subtitle padding-side" @click="test">
+            <div class="basket__subtitle padding-side">
                 Рекомендуем заказать
             </div>
             <div class="padding-side">
-                <catalog-buy-with :items="[
-                                        {
-                                            id: '6',
-                                            image: 'https://restauranto.8up.ru/upload/resize_cache/iblock/620/500_500_2/flz6apk1i5ut7pclkzbcu096eseg1gsq.png',
-                                            is_hit: true,
-                                            is_new: false,
-                                            name: 'Салат Крендель',
-                                            price: 589,
-                                            price_format: '589 ₽',
-                                        },
-                                        {
-                                            id: '1',
-                                            image: 'https://restauranto.8up.ru/upload/iblock/00a/33a1ti3sbmgnztdc8th4fujdfwk61f52.png',
-                                            is_hit: false,
-                                            is_new: false,
-                                            name: 'Омлет с тигровыми креветками и моцареллой',
-                                            price: 310,
-                                            price_format: '310 ₽',
-                                        },
-                                        {
-                                            id: '10',
-                                            image: 'https://restauranto.8up.ru/upload/resize_cache/iblock/600/500_500_2/37os2z5gwu4jojnl04xiku8ro5l0b1be.png',
-                                            is_hit: false,
-                                            is_new: false,
-                                            name: 'Борщ с тефтелей из телятины',
-                                            price: 499,
-                                            price_format: '499 ₽',
-                                        },
-                                    ]"/>
+                <catalog-buy-with v-if="suitableItems && suitableItems.length > 0" :items="suitableItems"/>
             </div>
             <basket-form v-if="items.length > 0"/>
         </div>
@@ -77,14 +49,6 @@
 
 
             onMounted(async () => {
-                //console.log('app', f7router)
-                //props.f7router.navigate('/')
-                console.log('oks')
-                console.log('orderId', orderId)
-                /*if(!items.value) {
-                    props.f7router.view.router.navigate('/');
-                }*/
-
                 await store.dispatch('basket/getItems');
             });
 
@@ -92,15 +56,13 @@
                 return store.getters['basket/items']
             });
 
-            const test = () => {
-                console.log('props.f7router', props.f7router)
-                //props.f7router.view.router.navigate('/');
-
-            }
+            const suitableItems = computed(() => {
+                return store.getters['basket/suitableItems']
+            });
 
             return {
                 items,
-                test
+                suitableItems
             };
         },
         mounted() {

@@ -5,6 +5,7 @@ import getters from './getters';
 const getDefaultState = () => {
     return {
         items: [],
+        suitableItems: [],
     }
 };
 
