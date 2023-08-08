@@ -42,7 +42,8 @@
                                 {{ item.weight + 'г' }}
                             </div>
                         </div>
-                        <counter class="item-detail__btn"
+                        <counter v-if="!partner.only_menu"
+                                 class="item-detail__btn"
                                  :value="quantity"
                                  @change="setQuantity($event)"
                                  btn-style="fill"
@@ -77,7 +78,7 @@
                     </div>
                 </div>
             </div>
-            <div v-if="isVisibleFooter" class="item-detail__footer">
+            <div v-if="isVisibleFooter && !partner.only_menu" class="item-detail__footer">
                 <counter class="item-detail__btn"
                          :value="quantity"
                          @change="setQuantity($event)"
@@ -130,6 +131,10 @@
                 return store.getters['basket/getItemById'](item.value?.id)?.quantity || 0
             });
 
+            const partner = computed(() => {
+                return store.getters['partner/partner']
+            });
+
             const closeModal = () => {
                 store.commit('catalog/setIsOpenModal', false);
             }
@@ -170,7 +175,8 @@
                 item,
                 quantity,
                 setQuantity,
-                isVisibleFooter
+                isVisibleFooter,
+                partner
             }
         }
     }

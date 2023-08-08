@@ -21,7 +21,8 @@
         <div class="item-card__title" @click="getDetail">
             {{ item.name }}
         </div>
-        <counter class="item-card____btn"
+        <counter v-if="!partner.only_menu"
+                 class="item-card____btn"
                  :value="quantity"
                  @change="setQuantity($event)"
                  btn-style="border"
@@ -71,10 +72,15 @@
                 }
             }
 
+            const partner = computed(() => {
+                return store.getters['partner/partner']
+            });
+
             return {
                 getDetail,
                 quantity,
-                setQuantity
+                setQuantity,
+                partner
             }
         }
     }
