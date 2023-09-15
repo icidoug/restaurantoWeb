@@ -60,6 +60,10 @@
         return store.getters['partner/partner']
     });
 
+    const getWaiter = () => {
+        store.dispatch('waiter/getWaiter', {table, zone});
+    }
+
     onMounted(() => {
         f7ready(async () => {
             await store.dispatch('partner/getPartner').then(settings => {
