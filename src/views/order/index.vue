@@ -6,7 +6,7 @@
             <div v-else class="basket__empty padding-side">
                В заказе нет товаров
             </div>
-            <order-tips/>
+            <order-tips v-if="waiter.id"/>
             <order-form/>
         </div>
     </f7-page>
@@ -35,9 +35,13 @@
             const items = computed(() => {
                 return store.getters['order/items']
             });
+            const waiter = computed(() => {
+                return store.getters['waiter/waiter']
+            });
 
             return {
-                items
+                items,
+                waiter
             };
         }
     }

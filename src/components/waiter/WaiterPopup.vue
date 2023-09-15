@@ -15,7 +15,7 @@
             </svg>
         </f7-link>
         <div class="waiter-popup__wrapper">
-            <div class="waiter-popup__header">
+            <div v-if="waiter.id" class="waiter-popup__header">
                 <div class="waiter-popup__image">
                     <img v-if="waiter.image" :src="waiter.image">
                 </div>

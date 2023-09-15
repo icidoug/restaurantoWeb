@@ -18,7 +18,7 @@
                         {{ parseInt(sum - tipsSum).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}₽
                     </div>
                 </div>
-                <div class="order-form__tr">
+                <div v-if="waiter.id" class="order-form__tr">
                     <div class="order-form__td">
                         Чаевые
                     </div>
@@ -148,6 +148,10 @@
                 type.value = newType;
             }
 
+            const waiter = computed(() => {
+                return store.getters['waiter/waiter']
+            });
+
             const sum = computed(() => {
                 return store.getters['order/sum']
             });
@@ -212,7 +216,8 @@
                 personalChecked,
                 commission,
                 totalSum,
-                openLink
+                openLink,
+                waiter
             }
         }
     }

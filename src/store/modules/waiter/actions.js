@@ -6,6 +6,7 @@ export default {
 		
 		return axios.get(url, {withCredentials: true})
 			.then(response => {
+				commit('setIsError', response.data.status === 'error');
 				commit('setWaiter', response.data.data || []);
 			})
 			.catch(error => console.log('Ошибка: ', error))

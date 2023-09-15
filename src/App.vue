@@ -1,17 +1,17 @@
 <template>
     <f7-app v-bind="f7params">
         <Transition>
-        <div class="app-view" v-if="partner.id">
-            <div v-if="isFetching" class="app-preloader">
-                <preloader/>
+            <div class="app-view" v-if="partner.id">
+                <div v-if="isFetching" class="app-preloader">
+                    <preloader/>
+                </div>
+                <div v-else-if="isError" class="app-empty-table">
+                    Для начала работы с системой, отсканируйте QR код расположенный на столе
+                </div>
+                <f7-views v-else tabs class="safe-areas">
+                    <f7-view id="view-home" main tab tab-active url="/"></f7-view>
+                </f7-views>
             </div>
-            <f7-views v-else-if="waiter.id" tabs class="safe-areas">
-                <f7-view id="view-home" main tab tab-active url="/"></f7-view>
-            </f7-views>
-            <div v-else class="app-empty-table">
-                Для начала работы с системой, отсканируйте QR код расположенный на столе
-            </div>
-        </div>
         </Transition>
     </f7-app>
 </template>
@@ -53,6 +53,9 @@
     const waiter = computed(() => {
         return store.getters['waiter/waiter']
     });
+    const isError = computed(() => {
+        return store.getters['waiter/isError']
+    });
     const partner = computed(() => {
         return store.getters['partner/partner']
     });
@@ -61,7 +64,7 @@
         f7ready(async () => {
             await store.dispatch('partner/getPartner').then(settings => {
                 const urlParams = new URLSearchParams(window.location.search);
-                if(settings.dark_theme || urlParams.get('dark')) {
+                if (settings.dark_theme || urlParams.get('dark')) {
                     f7.setDarkMode(true);
                 }
             })
@@ -70,15 +73,15 @@
 
             const table = Cookies.get('table') || null;
             const zone = Cookies.get('zone') || null;
-            if(table && zone) {
+            if (table && zone) {
                 await store.dispatch('waiter/getWaiter', {table, zone});
-                if(waiter.value.id) {
+                if (!isError.value) {
                     await store.dispatch('catalog/getSections');
                     await store.dispatch('catalog/getItems');
                     await store.dispatch('basket/getItems');
                     await store.dispatch('order/getOrder');
                     await store.dispatch('events/getItems');
-                    if(store.getters['order/items'].length > 0) {
+                    if (store.getters['order/items'].length > 0) {
                         //console.log(f7.views[0].navigate('/tips'))
                         //store.commit('tips/setTipsType', 'none');
                     }
