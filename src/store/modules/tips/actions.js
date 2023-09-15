@@ -14,12 +14,10 @@ export default {
 			commission: commission,
 		}, {withCredentials: true})
 			.then(response => {
-				console.log('response.data.data', response.data.data.link)
 				//commit('setId', response.data.data.ORDER_ID);
 				if (response.data.data.link) {
 					const link = document.createElement('a');
 					link.href = response.data.data.link;
-					console.log('link', link)
 					link.click();
 				}
 				

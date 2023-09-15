@@ -41,7 +41,6 @@
         },
         setup(props) {
             const splitBill = computed(() => {
-                console.log('splitBill', store.getters['order/splitBill'])
                 return store.getters['order/splitBill']
             });
 
@@ -50,7 +49,6 @@
                     store.commit('order/setCheckedItem', props.index)
 
                 }
-                console.log('item', props.item)
             }
 
             return {

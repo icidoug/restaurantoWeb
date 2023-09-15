@@ -77,7 +77,6 @@
                 minutesDifference.value = localStorage.waiterFinishTime > nowTime ? (localStorage.waiterFinishTime - nowTime) / 1000 : 0;
                 if (minutesDifference.value === 0) {
                     const isSuccess = await store.dispatch('waiter/call', comment.value);
-                    console.log('isSuccess', isSuccess)
                     if(isSuccess === true) {
                         await new Promise(r => setTimeout(r, 2000));
 

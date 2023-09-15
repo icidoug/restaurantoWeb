@@ -78,7 +78,6 @@
                 const sectionNavDiv = document.getElementById('sectionNav');
 
                 const sectionsDiv = document.querySelectorAll('.catalog-items');
-                console.log('scrollableDiv', scrollableDiv)
 
                 scrollableDiv.addEventListener('scroll', onScroll);
                 scrollableDiv.sectionNavOffsetTop = sectionNavDiv.getBoundingClientRect().top;

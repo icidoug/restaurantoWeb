@@ -9,9 +9,7 @@ export default {
 				commit('setIsError', response.data.status === 'error');
 				commit('setWaiter', response.data.data || []);
 				if (!response.data?.data?.id) {
-					console.log('NO WAITER')
 					setTimeout(() => {
-						console.log('getWaiter')
 						dispatch('getWaiter', {table, zone})
 					}, 10000)
 				}

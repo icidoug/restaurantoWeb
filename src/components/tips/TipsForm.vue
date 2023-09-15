@@ -165,8 +165,6 @@
             }
 
             const totalSum = computed(() => {
-                console.log('tipsSum.value', tipsSum.value)
-                console.log('commission.value', commission.value)
                 let totalSum = tipsSum.value;
                 if (taxChecked.value) {
                     totalSum += commission.value;

@@ -273,7 +273,6 @@
                     } else {
                         const order = await axios.get(import.meta.env.VITE_API_URL + `/order/?id=${orderId}`, {withCredentials: true})
                             .then(response => {
-                                console.log('response.data.data', response.data.data)
                                 return response.data.data;
                             })
 
@@ -284,7 +283,6 @@
                     }
 
                     if(isPaid) {
-                        console.log('OKS@@@')
                         store.commit('order/setSplitBill', false);
                     }
 
@@ -299,7 +297,7 @@
                     }
                     else {
                         setTimeout(() => {
-                            const route = isPaid || isTipsOrder ? '/tips/' : '/order/';
+                            const route = (isPaid && waiter.value.id) || isTipsOrder ? '/tips/' : '/order/';
                             //store.commit('order/setIsOpenPaymentModal', true);
                             props.f7router.navigate(route);
                         }, 100)

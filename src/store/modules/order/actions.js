@@ -4,7 +4,6 @@ import Cookies from "js-cookie";
 export default {
 	getOrder({commit, getters, rootGetters}) {
 		let url = import.meta.env.VITE_API_URL + '/order/';
-		console.log('localStorage', localStorage)
 		if(localStorage.lastOrderId) {
 			url += '?id=' + localStorage.lastOrderId;
 		}
@@ -15,13 +14,10 @@ export default {
 				const items = response.data.data?.list.map(item => {
 					const catalogItem = rootGetters['catalog/getItemById'](item.id);
 					if(item.is_paid) {
-						console.log('OKS')
 						commit('setSplitBill', true);
 					}
 					return {...item, image: catalogItem?.image || '', is_checked: !item.is_paid};
 				});
-				
-				console.log('getOrder', response.data)
 				
 				commit('setId', response.data.data?.id);
 				commit('setIsPaid', response.data.data?.is_paid);
@@ -72,12 +68,10 @@ export default {
 		
 		return axios.post(url, params, {withCredentials: true})
 			.then(response => {
-				console.log('response.data.data', response.data.data.link)
 				//commit('setId', response.data.data.ORDER_ID);
 				if(response.data.data.link) {
 					const link = document.createElement('a');
 					link.href = response.data.data.link;
-					console.log('link', link)
 					link.click();
 				}
 				

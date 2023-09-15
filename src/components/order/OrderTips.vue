@@ -103,8 +103,6 @@
             });
 
             watch(() => sum.value, (newSum) => {
-                console.log('newSum', newSum)
-                console.log('tipsType.value', tipsType.value)
                 if(tipsType.value !== 'none') {
                     setTips(tipsType.value, true)
                 }
@@ -129,11 +127,8 @@
                 else if(type === 'custom') {
                     tips = customTipsSum.value;
                 }
-                console.log('type', type)
-                console.log('tipsSum', tipsSum)
                 store.commit('order/setTipsType', type);
                 store.commit('order/setTipsSum', tips);
-                console.log('SUM', store.getters['order/sum'])
             }
 
             const setCustomTips = (value) => {

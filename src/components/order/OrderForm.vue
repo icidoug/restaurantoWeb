@@ -131,7 +131,6 @@
                 const urlParams = new URLSearchParams(window.location.search);
                 const isOrderPaid = store.getters['order/isPaid'];
                 if (urlParams.has('operation') && urlParams.has('reference') && !isOrderPaid) {
-                    console.log('code', urlParams.get('code'))
                     if (urlParams.has('code') && urlParams.get('code') !== '1') {
                         f7.popup.open('.order-payment-popup');
                     }
