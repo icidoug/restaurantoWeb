@@ -6,6 +6,7 @@ import router from './router'
 import Cookies from 'js-cookie'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import Vue3Lottie from 'vue3-lottie'
 import './assets/scss/main.scss'
 
 const urlParams = new URLSearchParams(window.location.search);
@@ -29,4 +30,5 @@ axios.defaults.withCredentials = true;
 axios.defaults.headers.common['partner'] = Cookies.get('partner') || '';
 
 app.use(VueAxios, axios)
+	.use(Vue3Lottie)
 	.mount('#app');

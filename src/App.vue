@@ -3,7 +3,7 @@
         <Transition>
             <div class="app-view" v-if="partner.id">
                 <div v-if="isFetching" class="app-preloader">
-                    <preloader/>
+                    <init-preloader :is-dark-mode="isDarkMode"/>
                 </div>
                 <div v-else-if="isError" class="app-empty-table">
                     Для начала работы с системой, отсканируйте QR код расположенный на столе
@@ -26,6 +26,7 @@
     import store from '@/store/store'
     import Preloader from "@/components/Preloader.vue";
     import Cookies from "js-cookie";
+    import InitPreloader from "@/components/InitPreloader.vue";
 
     const device = getDevice();
     // Framework7 Parameters
@@ -59,6 +60,7 @@
     const partner = computed(() => {
         return store.getters['partner/partner']
     });
+    const isDarkMode = ref(false);
 
     const getWaiter = () => {
         store.dispatch('waiter/getWaiter', {table, zone});
@@ -70,6 +72,7 @@
                 const urlParams = new URLSearchParams(window.location.search);
                 if (settings.dark_theme || urlParams.get('dark')) {
                     f7.setDarkMode(true);
+                    isDarkMode.value = true;
                 }
             })
 
