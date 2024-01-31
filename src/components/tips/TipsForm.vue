@@ -4,7 +4,7 @@
             <div class="order-form__table">
                 <div class="order-form__th">
                     <div class="order-form__td">
-                        Итого к оплате:
+                        {{ $t('total') }}:
                     </div>
                     <div class="order-form__td">
                         {{ totalSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}₽
@@ -17,7 +17,7 @@
             >
                 <div class="order-form__field_checkbox"></div>
                 <div class="order-form__field_title">
-                    Взять на себя комиссию в размере {{ commission }}₽
+                    {{ $t('take_commission') }} {{ commission }}₽
                 </div>
             </div>
             <div class="order-form__field"
@@ -26,8 +26,8 @@
             >
                 <div class="order-form__field_checkbox"></div>
                 <div class="order-form__field_title">
-                    Согласен с условиями <a @click.stop="openLink('/public/Public-offer-resto-ranto.pdf')" href="/public/Public-offer-resto-ranto.pdf" target="_blank">Пользовательского соглашения</a>
-                    и <a @click.stop="openLink('/public/Private-policy-resto-ranto.pdf')" href="/public/Private-policy-resto-ranto.pdf" target="_blank">Политикой обработки персональных данных</a>
+                    {{ $t('agree_terms') }} <a @click.stop="openLink('/public/Public-offer-resto-ranto.pdf')" href="/public/Public-offer-resto-ranto.pdf" target="_blank">{{ $t('user_agreement') }}</a>
+                    {{ $t('and') }} <a @click.stop="openLink('/public/Private-policy-resto-ranto.pdf')" href="/public/Private-policy-resto-ranto.pdf" target="_blank">{{ $t('personal_data') }}</a>
                 </div>
             </div>
         </div>
@@ -67,10 +67,10 @@
                     </div>
                     <div class="order-payment__info">
                         <div class="order-payment__subtitle">
-                            Способ оплаты
+                            {{ $t('payment_method') }}
                         </div>
                         <div class="order-payment__selection">
-                            {{ type === 'card' ? 'Банковская карта' : 'Система быстрых платежей' }}
+                            {{ type === 'card' ? $t('bank_card') : $t('sbp') }}
                         </div>
                     </div>
                 </div>
@@ -83,7 +83,7 @@
                 </div>
             </f7-link>
             <f7-button popup-open=".order-confirm-popup" class="btn btn--pink" @click="onSubmit">
-                Оплатить {{ totalSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} ₽
+                {{ $t('pay') }} {{ totalSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} ₽
             </f7-button>
         </div>
         <order-payment-type-popup @change="onChangeType($event)"/>

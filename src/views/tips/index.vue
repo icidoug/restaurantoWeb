@@ -4,7 +4,7 @@
             <navbar title="Чаевые" back-url="/"/>
             <div class="order-tips">
                 <div class="order-tips__header">
-                    Чаевые {{ tipsSum > 0 ? tipsSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + '₽' : '' }}
+                    {{ $t('tips') }} {{ tipsSum > 0 ? tipsSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + '₽' : '' }}
                 </div>
                 <your-review :waiter="waiter"/>
                 <div v-if="parseInt(sum) > 0" class="order-tips__items">
@@ -46,7 +46,7 @@
                          @click="setTips('custom', 0)"
                     >
                         <div class="order-tips__item_title">
-                            Ввести свою сумму
+                            {{ $t('enter_your_amount') }}
                         </div>
                         <div class="order-tips__item_icon">
                             <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -20,7 +20,7 @@
                     <img v-if="waiter.image" :src="waiter.image">
                 </div>
                 <div class="waiter-popup__subtitle">
-                    Ваш официант
+                    {{ $t('your_waiter') }}
                 </div>
                 <div class="waiter-popup__title">
                     {{ waiter.name }}
@@ -28,15 +28,15 @@
             </div>
             <div class="waiter-popup__form">
                 <div class="waiter-popup__form_label">
-                    Добавить комментарий
+                    {{ $t('add_comment') }}
                 </div>
-                <textarea placeholder="Что вам нужно?" v-model="comment"></textarea>
+                <textarea :placeholder="$t('what_you_need')" v-model="comment"></textarea>
                 <f7-button class="btn btn--pink" @click="callWaiter">
-                    Позвать официанта
+                    {{ $t('call_waiter') }}
                 </f7-button>
                 <waiter-confirm-popup :minutes-difference="minutesDifference" :is-loading="isFetching" :is-error="isWaiterCallError"/>
                 <f7-button class="btn btn--border" @click="callHookah">
-                    Позвать кальянщика
+                    {{ $t('call_hookah_man') }}
                 </f7-button>
                 <hookah-confirm-popup :minutes-difference="minutesDifferenceHookah" :is-loading="isFetching" :is-error="isHookahCallError"/>
             </div>

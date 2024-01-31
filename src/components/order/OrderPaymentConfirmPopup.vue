@@ -21,10 +21,10 @@
 
                 </div>
                 <div class="basket-confirm__title">
-                    Вы успешно оплатили заказ
+                    {{ $t('pay_success') }}
                 </div>
                 <div class="basket-confirm__descr">
-                    Спасибо, что сэкономили время официанта!
+                    {{ $t('thank_waiter_time') }}
                 </div>
             </div>
             <div v-else class="basket-confirm">
@@ -34,13 +34,13 @@
                     </svg>
                 </div>
                 <div class="basket-confirm__title">
-                    Что-то пошло не так...
+                    {{ $t('something_went_wrong') }}
                 </div>
                 <div class="basket-confirm__descr">
-                    Пожалуйста, попробуйте еще раз
+                    {{ $t('try_again') }}
                 </div>
                 <f7-button class="btn btn--border" popup-close>
-                    Повторить попытку
+                    {{ $t('to_retry') }}
                 </f7-button>
             </div>
         </div>

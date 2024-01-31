@@ -20,10 +20,10 @@
                     </svg>
                 </div>
                 <div class="basket-confirm__title">
-                    Спасибо
+                    {{ $t('thank_you') }}
                 </div>
                 <div class="basket-confirm__descr">
-                    Мы получили ваши чаевые
+                    {{ $t('we_received_your_tip') }}
                 </div>
             </div>
             <div v-else class="basket-confirm">
@@ -33,13 +33,13 @@
                     </svg>
                 </div>
                 <div class="basket-confirm__title">
-                    Что-то пошло не так...
+                    {{ $t('something_went_wrong') }}
                 </div>
                 <div class="basket-confirm__descr">
-                    Спасибо, что сэкономили время официанта!
+                    {{ $t('something_went_wrong') }}
                 </div>
                 <f7-button class="btn btn--border" popup-close>
-                    Повторить попытку
+                    {{ $t('to_retry') }}
                 </f7-button>
             </div>
         </div>

@@ -9,7 +9,7 @@
         </div>
         <div class="popup__wrapper">
             <div class="popup__header">
-                Подать заказ
+                {{ $t('order_type') }}
             </div>
             <div class="popup-form">
                 <div class="popup-form__item"
@@ -17,7 +17,7 @@
                      @click="selected = 'TABLE'"
                 >
                     <div class="popup-form__item_title">
-                        К столу
+                        {{ $t('eat_here') }}
                     </div>
                     <div class="popup-form__item_checkbox"></div>
                 </div>
@@ -27,7 +27,7 @@
                     @click="selected = 'SELF'"
                 >
                     <div class="popup-form__item_title">
-                        С собой
+                        {{ $t('take_away') }}
                     </div>
                     <div class="popup-form__item_checkbox"></div>
                 </div>

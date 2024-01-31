@@ -11,16 +11,16 @@
                     stroke="#333333" stroke-width="1.5"/>
             </svg>
             <div class="basket-form__type">
-                Подать заказ
+                {{ $t('order_type') }}
                 <f7-link popup-open=".order-type-popup">
-                    {{ type === 'TABLE' ? 'к столу' : 'с собой' }}
+                    {{ type === 'TABLE' ? $t('eat_here') : $t('take_away') }}
                 </f7-link>
             </div>
         </div>
         <div class="basket-form__textarea">
-            <textarea v-model="comment" placeholder="Комментарий к заказу"></textarea>
+            <textarea v-model="comment" :placeholder="$t('order_comment')"></textarea>
             <div class="basket-form__prompt">
-                Ваши особые предпочтения, порядок подачи блюд
+                {{ $t('your_special_preferences') }}
             </div>
         </div>
         <div class="basket-form__footer">

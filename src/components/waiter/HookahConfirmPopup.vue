@@ -22,12 +22,12 @@
                     </svg>
                 </div>
                 <div class="waiter-confirm__title">
-                    Что-то пошло не так...
+                    {{ $t('something_went_wrong') }}
                 </div>
                 <div class="waiter-confirm__descr">
-                    Пожалуйста, попробуйте еще раз
+                    {{ $t('try_again') }}
                 </div>
-                <div class="btn btn--border" @click="repeat">Повторить попытку</div>
+                <div class="btn btn--border" @click="repeat">{{ $t('to_retry') }}</div>
             </div>
             <div v-else class="waiter-confirm">
                 <div class="waiter-confirm__icon">
@@ -38,10 +38,10 @@
                     </svg>
                 </div>
                 <div class="waiter-confirm__title">
-                    Кальянщик скоро к вам подойдет
+                    {{ $t('hookah_man_will_come') }}
                 </div>
                 <div class="waiter-confirm__descr">
-                    Следующий вызов можно будет сделать через {{ timerString }}
+                    {{ $t('next_call_can_be_made_via') }} {{ timerString }}
                 </div>
             </div>
         </div>

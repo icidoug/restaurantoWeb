@@ -10,7 +10,7 @@
                         {{ waiter.name }}
                     </div>
                     <div class="waiter__subtitle">
-                        Ваш официант
+                        {{ $t('your_waiter') }}
                     </div>
                 </div>
             </div>

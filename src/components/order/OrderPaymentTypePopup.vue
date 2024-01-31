@@ -9,7 +9,7 @@
         </div>
         <div class="popup__wrapper">
             <div class="popup__header">
-                Способ оплаты
+                {{ $t('payment_method') }}
             </div>
             <div class="popup-form">
                 <div class="popup-form__item"
@@ -28,7 +28,7 @@
                             <path d="M3.56934 21.2057L12.3647 15.8178L9.40772 14.0035L6.65802 15.6893L3.56934 21.2057Z" fill="#984995"/>
                         </svg>
                        <span>
-                           Система быстрых платежей
+                           {{ $t('sbp') }}
                        </span>
                     </div>
                     <div class="popup-form__item_checkbox"></div>

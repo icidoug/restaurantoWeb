@@ -16,12 +16,12 @@
         </f7-link>
         <div class="wifi-popup__wrapper">
             <div class="wifi-popup__title">
-                Wi-Fi заведения
+                {{ $t('wi_fi_establishments') }}
             </div>
             <div class="wifi-popup__form">
                 <div class="wifi-popup__form_group">
                     <div class="wifi-popup__form_label">
-                        Сеть
+                        {{ $t('network') }}
                     </div>
                     <div class="wifi-popup__form_field">
                         <input type="text" readonly :value="partner?.wifi?.name">
@@ -29,7 +29,7 @@
                 </div>
                 <div class="wifi-popup__form_group">
                     <div class="wifi-popup__form_label">
-                        Пароль
+                        {{ $t('password') }}
                     </div>
                     <div class="wifi-popup__form_field" :class="{copied: isCopied}">
                         <input id="wifi_password" type="text" readonly :value="isCopied ? 'Пароль скопирован' : partner?.wifi?.password">
@@ -41,7 +41,7 @@
                         </svg>
                     </div>
                     <div class="wifi-popup__form_prompt">
-                        Нажмите на пароль, чтобы скопировать
+                        {{ $t('copy_password') }}
                     </div>
                 </div>
             </div>

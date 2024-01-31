@@ -4,10 +4,10 @@
             <navbar title="Текущий заказ" share/>
             <basket-items v-if="items.length > 0" :items="items"/>
             <div v-else class="basket__empty padding-side">
-               В корзине пока нет товаров
+                {{ $t('empty_cart') }}
             </div>
             <div class="basket__subtitle padding-side">
-                Рекомендуем заказать
+                {{ $t('recommended') }}
             </div>
             <div class="padding-side">
                 <catalog-buy-with v-if="suitableItems && suitableItems.length > 0" :items="suitableItems"/>

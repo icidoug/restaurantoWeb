@@ -7,7 +7,18 @@ import Cookies from 'js-cookie'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import Vue3Lottie from 'vue3-lottie'
+import { createI18n } from "vue-i18n";
 import './assets/scss/main.scss'
+import messages from "@intlify/unplugin-vue-i18n/messages";
+
+const i18n = createI18n({
+	legacy: false,
+	globalInjection: true,
+	locale: "en",
+	fallbackLocale: "en",
+	availableLocales: ["en", "ru"],
+	messages: messages,
+});
 
 const urlParams = new URLSearchParams(window.location.search);
 if(urlParams.has('table')) {
@@ -31,4 +42,5 @@ axios.defaults.headers.common['partner'] = Cookies.get('partner') || '';
 
 app.use(VueAxios, axios)
 	.use(Vue3Lottie)
+	.use(i18n)
 	.mount('#app');

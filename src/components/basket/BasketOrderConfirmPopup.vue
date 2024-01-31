@@ -20,13 +20,13 @@
                     </svg>
                 </div>
                 <div class="basket-confirm__title">
-                    Мы приняли ваш заказ
+                    {{ $t('order_accepted') }}
                 </div>
                 <div class="basket-confirm__descr">
-                    Официант и повара получили ваш заказ и уже начали готовить
+                    {{ $t('order_started_cooking') }}
                 </div>
                 <f7-link class="btn btn--pink" href="/order/" popup-close>
-                    Перейти к заказу
+                    {{ $t('go_to_order') }}
                 </f7-link>
             </div>
         </div>

@@ -5,7 +5,7 @@
         </div>
         <div class="basket-items__footer">
             <div class="basket-items__footer_title">
-                Сумма заказа:
+                {{ $t('order_price') }}:
             </div>
             <div class="basket-items__footer_price">
                 {{ sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} ₽

@@ -15,7 +15,7 @@
             <div class="basket-item__title">
                 {{ item.name }}
                 <span v-if="splitBill" :class="{'basket-item__paid': item.is_paid}">
-                    {{ item.is_paid ? 'Оплачено' : 'Не оплачено' }}
+                    {{ item.is_paid ? $t('paid') : $t('not_paid') }}
                 </span>
             </div>
             <div class="basket-item__price" v-html="item.price_format"></div>

@@ -6,31 +6,31 @@
                  @click="reviewRating = 'badly'"
             >
                 <img src="/src/assets/images/emoji/badly.png">
-                <span>Плохо</span>
+                <span>{{ $t('bad') }}</span>
             </div>
             <div class="rating-item rating-item--fine"
                  :class="{active: reviewRating === 'fine'}"
                  @click="reviewRating = 'fine'"
             >
                 <img src="/src/assets/images/emoji/fine.png">
-                <span>Нормально</span>
+                <span>{{ $t('normal') }}</span>
             </div>
             <div class="rating-item rating-item--great"
                  :class="{active: reviewRating === 'great'}"
                  @click="reviewRating = 'great'"
             >
                 <img src="/src/assets/images/emoji/great.png">
-                <span>Отлично</span>
+                <span>{{ $t('great') }}</span>
             </div>
         </div>
         <div class="item-detail-review__textarea">
             <textarea v-model="review" placeholder="Напишите отзыв"></textarea>
             <div class="item-detail-review__prompt">
-                Оставьте номер телефона, если хотите, чтобы с вами связались
+                {{ $t('leave_your_phone') }}
             </div>
         </div>
         <div class="item-detail-review__btn btn btn--border" @click="sendReview">
-            Отправить отзыв
+            {{ $t('post_review') }}
         </div>
         <transition>
             <div v-if="isSent" class="review-success">
@@ -43,17 +43,17 @@
                 </div>
                 <div class="review-success__info">
                     <div class="review-success__title">
-                        Спасибо за Ваш отзыв!
+                        {{ $t('thanks_for_feedback') }}
                     </div>
                     <div class="review-success__descr">
-                        Мы очень стараемся, чтобы вы остались довольны
+                        {{ $t('we_make_satisfied') }}
                     </div>
                 </div>
             </div>
         </transition>
         <div class="review-services">
             <div class="review-services__text">
-                Также вы можете оставить отзыв в других сервисах
+                {{ $t('review_in_other_services') }}
             </div>
             <div class="review-services__items">
                 <f7-link external v-if="partner.services['yandex']" :href="partner.services['yandex']"
@@ -82,7 +82,7 @@
         <div v-if="reviews.length > 0" class="item-detail-review__items">
             <div class="item-detail__line"></div>
             <div class="item-detail__subtitle">
-                Отзывы гостей
+                {{ $t('order_price') }}
             </div>
             <div v-for="review in reviews" class="review-item">
                 <div class="review-item__icon">

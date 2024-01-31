@@ -1,10 +1,10 @@
 <template>
     <f7-page>
         <div class="order">
-            <navbar title="Текущий заказ" back-url="/" share/>
+            <navbar :title="$t('current_order')" back-url="/" share/>
             <order-items v-if="items.length > 0" :items="items"/>
             <div v-else class="basket__empty padding-side">
-               В заказе нет товаров
+                {{ $t('no_goods_in_order') }}
             </div>
             <order-tips v-if="waiter.id"/>
             <order-form/>

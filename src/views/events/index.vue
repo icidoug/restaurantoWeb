@@ -1,7 +1,7 @@
 <template>
     <f7-page>
         <div class="events">
-            <navbar title="События и акции" back-url="/"/>
+            <navbar :title="$t('events_and_promotions')" back-url="/"/>
             <events-items :items="items"/>
             <events-card-popup/>
         </div>
