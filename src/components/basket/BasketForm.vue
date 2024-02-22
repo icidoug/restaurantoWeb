@@ -24,7 +24,9 @@
             </div>
         </div>
         <div class="basket-form__footer">
-            <f7-button class="btn btn--pink" popup-open=".order-confirm-popup" @click="onSubmit">Подтвердить заказ</f7-button>
+            <f7-button class="btn btn--pink" popup-open=".order-confirm-popup" @click="onSubmit">
+                {{ $t('confirm_order') }}
+            </f7-button>
         </div>
         <basket-order-type-popup @change="onChangeType($event)"/>
         <basket-order-confirm-popup :is-loading="isFetching"/>

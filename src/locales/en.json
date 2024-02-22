@@ -38,6 +38,7 @@
   "enter_your_amount": "Enter your amount",
   "order_type": "Order type: ",
   "eat_here": "eat here",
+  "take_away": "take away",
   "your_special_preferences": "Your special preferences, order of serving dishes",
   "order_comment": "Order comment",
   "order_price": "Order price",
@@ -46,7 +47,7 @@
   "go_to_order": "To oder",
   "total": "Total",
   "dishes": "Dishes",
-  "take_commission ": "Take on a commission of",
+  "take_commission": "Take on a commission of",
   "agree_terms": "I agree with the terms",
   "user_agreement": "User Agreement",
   "and": "and",
@@ -75,5 +76,7 @@
   "wi_fi_establishments": "Wi-Fi establishments",
   "network": "Network",
   "password": "Password",
-  "copy_password": "Click on the password to copy"
+  "copy_password": "Click on the password to copy",
+  "confirm_order": "Confirm the order",
+  "currency": "$"
 }

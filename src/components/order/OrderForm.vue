@@ -7,7 +7,7 @@
                         {{ $t('total') }}:
                     </div>
                     <div class="order-form__td">
-                        {{ totalSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}₽
+                        {{ totalSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}{{ $t('currency') }}
                     </div>
                 </div>
                 <div class="order-form__tr">
@@ -15,7 +15,7 @@
                         {{ $t('dishes') }}
                     </div>
                     <div class="order-form__td">
-                        {{ parseInt(sum - tipsSum).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}₽
+                        {{ parseInt(sum - tipsSum).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}{{ $t('currency') }}
                     </div>
                 </div>
                 <div v-if="waiter.id" class="order-form__tr">
@@ -23,7 +23,7 @@
                         {{ $t('tips') }}Чаевые
                     </div>
                     <div class="order-form__td">
-                        {{ tipsSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}₽
+                        {{ tipsSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}{{ $t('currency') }}
                     </div>
                 </div>
             </div>
@@ -33,7 +33,7 @@
             >
                 <div class="order-form__field_checkbox"></div>
                 <div class="order-form__field_title">
-                    {{ $t('take_commission') }} {{ commission }}₽
+                    {{ $t('take_commission') }} {{ commission }}{{ $t('currency') }}
                 </div>
             </div>
             <div class="order-form__field"
@@ -102,7 +102,7 @@
                        class="btn btn--pink" @click="onSubmit"
             >
                 {{ $t('pay') }} {{ splitBill ? ($t('in_part') + ' ') : '' }}
-                {{ totalSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} ₽
+                {{ totalSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} {{ $t('currency') }}
             </f7-button>
         </div>
         <order-payment-type-popup @change="onChangeType($event)"/>

@@ -4,7 +4,7 @@
             <navbar title="Чаевые" back-url="/"/>
             <div class="order-tips">
                 <div class="order-tips__header">
-                    {{ $t('tips') }} {{ tipsSum > 0 ? tipsSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + '₽' : '' }}
+                    {{ $t('tips') }} {{ tipsSum > 0 ? tipsSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + $t('currency') : '' }}
                 </div>
                 <your-review :waiter="waiter"/>
                 <div v-if="parseInt(sum) > 0" class="order-tips__items">
@@ -16,7 +16,7 @@
                             10%
                         </div>
                         <div class="order-tips__item_sum">
-                            {{ parseInt(sum * .1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}₽
+                            {{ parseInt(sum * .1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}{{ $t('currency') }}
                         </div>
                     </div>
                     <div class="order-tips__item"
@@ -27,7 +27,7 @@
                             15%
                         </div>
                         <div class="order-tips__item_sum">
-                            {{ parseInt(sum * .15).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}₽
+                            {{ parseInt(sum * .15).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}{{ $t('currency') }}
                         </div>
                     </div>
                     <div class="order-tips__item"
@@ -38,7 +38,7 @@
                             20%
                         </div>
                         <div class="order-tips__item_sum">
-                            {{ parseInt(sum * .2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}₽
+                            {{ parseInt(sum * .2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}{{ $t('currency') }}
                         </div>
                     </div>
                     <div class="order-tips__item"

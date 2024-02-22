@@ -76,5 +76,7 @@
   "wi_fi_establishments": "Wi-Fi заведения",
   "network": "Сеть",
   "password": "Пароль",
-  "copy_password": "Нажмите на пароль, чтобы скопировать"
+  "copy_password": "Нажмите на пароль, чтобы скопировать",
+  "confirm_order": "Подтвердить заказ",
+  "currency": "₽"
 }

@@ -1,7 +1,7 @@
 <template>
     <f7-page>
         <div class="basket">
-            <navbar title="Текущий заказ" share/>
+            <navbar :title="$t('current_order')" share/>
             <basket-items v-if="items.length > 0" :items="items"/>
             <div v-else class="basket__empty padding-side">
                 {{ $t('empty_cart') }}
