@@ -3,7 +3,8 @@
         <Transition>
             <div class="app-view" v-if="partner.id">
                 <div v-if="isFetching" class="app-preloader">
-                    <init-preloader :is-dark-mode="isDarkMode"/>
+<!--                    <init-preloader :is-dark-mode="isDarkMode"/>-->
+                    <Preloader />
                 </div>
                 <div v-else-if="isError" class="app-empty-table">
                     Для начала работы с системой, отсканируйте QR код расположенный на столе
