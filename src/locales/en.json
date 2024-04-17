@@ -28,6 +28,7 @@
   "leave_your_phone": "Leave your phone number if you want to be contacted",
   "post_review": "Post a review",
   "write_review": "Write a review",
+  "write_review_placeholder": "Write a review",
   "thanks_for_feedback": "Thanks for your feedback!",
   "we_make_satisfied": "We try very hard to make you satisfied",
   "review_in_other_services": "You can also leave a review in other services",
@@ -78,5 +79,7 @@
   "password": "Password",
   "copy_password": "Click on the password to copy",
   "confirm_order": "Confirm the order",
-  "currency": "$"
+  "currency": "$",
+  "cash": "Cash",
+  "complete_order": "Complete order"
 }

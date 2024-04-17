@@ -20,7 +20,7 @@
                 </div>
                 <div v-if="waiter.id" class="order-form__tr">
                     <div class="order-form__td">
-                        {{ $t('tips') }}Чаевые
+                        {{ $t('tips') }}
                     </div>
                     <div class="order-form__td">
                         {{ tipsSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}{{ $t('currency') }}
@@ -86,7 +86,7 @@
                             {{ $t('payment_method') }}
                         </div>
                         <div class="order-payment__selection">
-                            {{ type === 'card' ? $t('bank_card') : $t('sbp') }}
+                            {{ type === 'card' ? $t('bank_card') : $t('cash') }}
                         </div>
                     </div>
                 </div>
@@ -98,7 +98,7 @@
                     </svg>
                 </div>
             </f7-link>
-            <f7-button popup-open=".order-confirm-popup"
+            <f7-button v-if="type !== 'cash'" popup-open=".order-confirm-popup"
                        class="btn btn--pink" @click="onSubmit"
             >
                 {{ $t('pay') }} {{ splitBill ? ($t('in_part') + ' ') : '' }}
@@ -139,11 +139,12 @@
                 }
             });
             const isFetching = ref(false);
-            const type = ref('sbp');
+            const type = ref('card');
             const taxChecked = ref(true);
             const personalChecked = ref(true);
 
             const onChangeType = (newType) => {
+                console.log('newType', newType)
                 type.value = newType;
             }
 

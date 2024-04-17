@@ -1,7 +1,7 @@
 <template>
     <f7-page>
         <div class="order">
-            <navbar title="Чаевые" back-url="/"/>
+            <navbar :title="$t('tips')" back-url="/"/>
             <div class="order-tips">
                 <div class="order-tips__header">
                     {{ $t('tips') }} {{ tipsSum > 0 ? tipsSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + $t('currency') : '' }}

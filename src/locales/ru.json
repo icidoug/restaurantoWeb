@@ -28,6 +28,7 @@
   "leave_your_phone": "Оставьте номер телефона, если хотите, чтобы с вами связались",
   "post_review": "Отправить отзыв",
   "write_review": "Написать отзыв",
+  "write_review_placeholder": "Напишите отзыв",
   "thanks_for_feedback": "Спасибо за Ваш отзыв!",
   "we_make_satisfied": "Мы очень стараемся, чтобы вы остались довольны",
   "review_in_other_services": "Также вы можете оставить отзыв в других сервисах",
@@ -78,5 +79,7 @@
   "password": "Пароль",
   "copy_password": "Нажмите на пароль, чтобы скопировать",
   "confirm_order": "Подтвердить заказ",
-  "currency": "₽"
+  "currency": "₽",
+  "cash": "Наличные",
+  "complete_order": "Завершить заказ"
 }

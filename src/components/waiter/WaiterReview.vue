@@ -27,7 +27,7 @@
             </div>
         </div>
         <div class="waiter-review__textarea" :class="{active: isTextareaOpen}">
-            <textarea placeholder="Напишите отзыв" v-model="review"></textarea>
+            <textarea :placeholder="$t('write_review_placeholder')" v-model="review"></textarea>
             <div class="waiter-review__prompt">
                 {{ $t('leave_your_phone') }}
             </div>
