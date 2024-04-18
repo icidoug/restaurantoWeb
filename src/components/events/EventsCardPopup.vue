@@ -37,17 +37,17 @@
                         </div>
                         <div class="events-detail__line"></div>
                         <div v-if="item.description" class="events-detail__subtitle">
-                            Подробности
+                            {{ $t('details') }}
                         </div>
                         <div v-if="item.description" class="events-detail__descr">
                             {{ item.description }}
                         </div>
                         <div class="events-detail__line"></div>
                         <div v-if="item.date" class="events-detail__subtitle">
-                            Условия
+                            {{ $t('conditions') }}
                         </div>
                         <div v-if="item.date" class="events-detail__conditions">
-                            <span>Дата проведения: {{ item.date }}</span>
+                            <span>{{ $t('date') }}: {{ item.date }}</span>
                         </div>
                     </div>
                 </div>

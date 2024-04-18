@@ -81,5 +81,8 @@
   "confirm_order": "Confirm the order",
   "currency": "$",
   "cash": "Cash",
-  "complete_order": "Complete order"
+  "complete_order": "Complete order",
+  "details": "Details",
+  "conditions": "Conditions",
+  "date": "Date"
 }

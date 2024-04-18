@@ -81,5 +81,8 @@
   "confirm_order": "Подтвердить заказ",
   "currency": "₽",
   "cash": "Наличные",
-  "complete_order": "Завершить заказ"
+  "complete_order": "Завершить заказ",
+  "details": "Подробности",
+  "conditions": "Условия",
+  "date": "Дата проведения"
 }

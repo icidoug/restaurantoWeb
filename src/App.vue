@@ -87,7 +87,22 @@
                     await store.dispatch('catalog/getSections');
                     await store.dispatch('catalog/getItems');
                     await store.dispatch('basket/getItems');
-                    await store.dispatch('order/getOrder');
+                    const workerOrder = async () => {
+                        const order = await store.dispatch('order/getOrder');
+                        if (order?.id && !order.is_tips_order) {
+                            if(!order.is_paid) {
+                                setTimeout(async () => {
+                                    await workerOrder();
+                                }, 5000)
+                            }
+                            else {
+                                f7.popup.open('.order-payment-popup');
+                                localStorage.lastOrderId = null;
+                            }
+                        }
+                    }
+                    workerOrder();
+
                     await store.dispatch('events/getItems');
                     if (store.getters['order/items'].length > 0) {
                         //console.log(f7.views[0].navigate('/tips'))

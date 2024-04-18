@@ -10,20 +10,28 @@ export default {
 		
 		return axios.get(url, {withCredentials: true})
 			.then(response => {
-				commit('setSplitBill', false);
-				const items = response.data.data?.list.map(item => {
-					const catalogItem = rootGetters['catalog/getItemById'](item.id);
-					if(item.is_paid) {
-						commit('setSplitBill', true);
+				if(response.data?.data) {
+					commit('setSplitBill', false);
+					if(response.data?.data?.list) {
+						const items = response.data?.data?.list.map(item => {
+							const catalogItem = rootGetters['catalog/getItemById'](item.id);
+							if(item.is_paid) {
+								commit('setSplitBill', true);
+							}
+							return {...item, image: catalogItem?.image || '', is_checked: !item.is_paid};
+						});
+						commit('setItems', items || []);
 					}
-					return {...item, image: catalogItem?.image || '', is_checked: !item.is_paid};
-				});
+					
+					commit('setId', response.data.data?.id);
+					commit('setIsPaid', response.data.data?.is_paid);
+					localStorage.lastOrderId = response.data.data?.id || null;
+					commit('setPayments', response.data.data?.payments || {});
+					
+					return response.data?.data;
+				}
 				
-				commit('setId', response.data.data?.id);
-				commit('setIsPaid', response.data.data?.is_paid);
-				localStorage.lastOrderId = response.data.data?.id || null;
-				commit('setItems', items || []);
-				commit('setPayments', response.data.data?.payments || {});
+				return {};
 			})
 			.catch(error => console.log('Ошибка: ', error))
 		
