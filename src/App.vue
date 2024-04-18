@@ -101,7 +101,10 @@
                             }
                         }
                     }
-                    workerOrder();
+
+                    if (localStorage.lastOrderId && localStorage.lastOrderId !== 'null') {
+                        workerOrder();
+                    }
 
                     await store.dispatch('events/getItems');
                     if (store.getters['order/items'].length > 0) {
