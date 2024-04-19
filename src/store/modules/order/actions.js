@@ -4,14 +4,13 @@ import Cookies from "js-cookie";
 export default {
 	getOrder({commit, getters, rootGetters}) {
 		let url = import.meta.env.VITE_API_URL + '/order/';
-		if(localStorage.lastOrderId) {
-			url += '?id=' + localStorage.lastOrderId;
+		if(Cookies.get('table') && Cookies.get('zone') && Cookies.get('partner')) {
+			url += '?table=' + Cookies.get('table') + '&zone=' + Cookies.get('zone') + '&partner=' + Cookies.get('partner');
 		}
-		
 		return axios.get(url, {withCredentials: true})
 			.then(response => {
 				if(response.data?.data) {
-					commit('setSplitBill', false);
+					//commit('setSplitBill', false);
 					if(response.data?.data?.list) {
 						const items = response.data?.data?.list.map(item => {
 							const catalogItem = rootGetters['catalog/getItemById'](item.id);

@@ -88,6 +88,7 @@
                     await store.dispatch('catalog/getItems');
                     await store.dispatch('basket/getItems');
                     const workerOrder = async () => {
+                        console.log('workerOrder')
                         const order = await store.dispatch('order/getOrder');
                         if (order?.id && !order.is_tips_order) {
                             if(!order.is_paid) {
@@ -101,10 +102,7 @@
                             }
                         }
                     }
-
-                    if (localStorage.lastOrderId && localStorage.lastOrderId !== 'null') {
-                        workerOrder();
-                    }
+                    workerOrder();
 
                     await store.dispatch('events/getItems');
                     if (store.getters['order/items'].length > 0) {
