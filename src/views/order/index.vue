@@ -8,6 +8,7 @@
             </div>
             <order-tips v-if="waiter.id"/>
             <order-form/>
+            <share-bill-popup />
         </div>
     </f7-page>
 </template>
@@ -19,9 +20,11 @@
     import OrderItems from "@/components/order/OrderItems.vue";
     import OrderTips from "@/components/order/OrderTips.vue";
     import OrderForm from "@/components/order/OrderForm.vue";
+    import ShareBillPopup from "@/components/ShareBillPopup.vue";
 
     export default {
         components: {
+            ShareBillPopup,
             OrderForm,
             OrderTips,
             OrderItems,

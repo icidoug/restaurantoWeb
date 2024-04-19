@@ -19,6 +19,13 @@ export default {
             state.items[index].is_checked = !state.items[index].is_checked
         }
     },
+    setCheckedItemByBasketId(state, basketId) {
+        let index = state.items.findIndex(item => item.basket_id === basketId);
+    
+        if (index > -1 && state.items[index]) {
+            state.items[index].is_checked = !state.items[index].is_checked
+        }
+    },
     setTipsType(state, tipsType) {
         state.tipsType = tipsType
     },

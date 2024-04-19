@@ -9,6 +9,7 @@ export default {
         if(state.splitBill) {
             items = state.items.filter(item => item.is_checked === true);
         }
+        
         let sum = items.reduce((n, {price}) => n + price, 0);
         if(state.tipsSum > 0) {
             sum += state.tipsSum;

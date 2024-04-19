@@ -87,22 +87,21 @@
                     await store.dispatch('catalog/getSections');
                     await store.dispatch('catalog/getItems');
                     await store.dispatch('basket/getItems');
-                    const workerOrder = async () => {
-                        console.log('workerOrder')
-                        const order = await store.dispatch('order/getOrder');
-                        if (order?.id && !order.is_tips_order) {
-                            if(!order.is_paid) {
-                                setTimeout(async () => {
-                                    await workerOrder();
-                                }, 5000)
-                            }
-                            else {
-                                f7.popup.open('.order-payment-popup');
-                                localStorage.lastOrderId = null;
-                            }
+                    const order = await store.dispatch('order/getOrder');
+                    const workerCheckOrder = async (id) => {
+                        const result = await store.dispatch('order/checkOrderPayment', id);
+                        if (result?.is_paid) {
+                            f7.popup.open('.order-payment-popup');
+                            localStorage.lastOrderId = null;
+                        } else {
+                            setTimeout(async () => {
+                                await workerCheckOrder(id);
+                            }, 5000)
                         }
                     }
-                    workerOrder();
+                    if(order.id) {
+                        workerCheckOrder(order.id);
+                    }
 
                     await store.dispatch('events/getItems');
                     if (store.getters['order/items'].length > 0) {

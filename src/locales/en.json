@@ -84,5 +84,7 @@
   "complete_order": "Complete order",
   "details": "Details",
   "conditions": "Conditions",
-  "date": "Date"
+  "date": "Date",
+  "link": "Link",
+  "copy_link": "Click to copy"
 }

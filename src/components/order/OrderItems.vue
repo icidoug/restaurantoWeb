@@ -1,7 +1,7 @@
 <template>
     <div class="basket-items">
         <div v-if="paidItems.length === 0" class="basket-items__header">
-            <f7-toggle @change="splitToggle($event.target.checked)"></f7-toggle>
+            <f7-toggle :checked="splitBill" @change="splitToggle($event.target.checked)"></f7-toggle>
             <span>{{ $t('split_bill') }}</span>
         </div>
         <div class="basket-items__wrapper">
@@ -20,6 +20,7 @@
     import store from '@/store/store'
     import {computed, onMounted} from 'vue';
     import OrderItem from "@/components/order/OrderItem.vue";
+    import {f7} from "framework7-vue";
 
     export default {
         components: {
@@ -49,12 +50,17 @@
             }
 
             const shareBill = () => {
-                console.log('shareBill')
-                navigator.share({
-                    url: document.URL,
-                    title: document.title,
-                    text: ""
-                });
+                try {
+                    navigator.share({
+                        url: document.URL,
+                        title: document.title,
+                        text: ""
+                    });
+                } catch (e) {
+                    console.log('catch')
+                    f7.popup.open('.share-popup');
+                }
+
             }
 
             return {

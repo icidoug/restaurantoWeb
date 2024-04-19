@@ -10,15 +10,25 @@ export default {
 		return axios.get(url, {withCredentials: true})
 			.then(response => {
 				if(response.data?.data) {
-					//commit('setSplitBill', false);
+					const urlParams = new URLSearchParams(window.location.search);
+					const checkedItems = urlParams.has('items') ? urlParams.get('items').split(',') : [];
+					commit('setSplitBill', false);
 					if(response.data?.data?.list) {
 						const items = response.data?.data?.list.map(item => {
 							const catalogItem = rootGetters['catalog/getItemById'](item.id);
-							if(item.is_paid) {
+							if(item.is_paid || checkedItems.includes(item.basket_id)) {
 								commit('setSplitBill', true);
 							}
-							return {...item, image: catalogItem?.image || '', is_checked: !item.is_paid};
+							
+							let isChecked = false;
+							if (checkedItems.length) {
+								isChecked = checkedItems.includes(item.basket_id);
+							} else {
+								isChecked = !item.is_paid;
+							}
+							return {...item, image: catalogItem?.image || '', is_checked: isChecked};
 						});
+						
 						commit('setItems', items || []);
 					}
 					
@@ -86,12 +96,19 @@ export default {
 			})
 			.catch(error => console.log('Ошибка: ', error))
 	},
-	checkOrderPayment({commit, getters, rootGetters}, {orderId}) {
-		let url = import.meta.env.VITE_API_URL + '/order/?id=' + orderId;
+	checkOrderPayment({commit, getters, rootGetters}, orderId) {
+		let url = import.meta.env.VITE_API_URL + '/order/',
+			action = 'check';
 		
-		return axios.get(url, {withCredentials: true})
+		const params = {
+			action: action,
+			id: orderId,
+		};
+		
+		return axios.post(url, params, {withCredentials: true})
 			.then(response => {
-			
+				commit('setIsPaid', response.data.data?.is_paid);
+				return response.data?.data;
 			})
 			.catch(error => console.log('Ошибка: ', error))
 		

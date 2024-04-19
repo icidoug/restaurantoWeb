@@ -47,7 +47,6 @@
             const toggleChecked = () => {
                 if(!props.item.is_paid) {
                     store.commit('order/setCheckedItem', props.index)
-
                 }
             }
 
