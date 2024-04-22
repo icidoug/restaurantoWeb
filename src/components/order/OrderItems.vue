@@ -21,6 +21,7 @@
     import {computed, onMounted} from 'vue';
     import OrderItem from "@/components/order/OrderItem.vue";
     import {f7} from "framework7-vue";
+    import Cookies from "js-cookie";
 
     export default {
         components: {
@@ -49,15 +50,18 @@
                 store.commit('order/setSplitBill', val)
             }
 
+            const url = computed(() => {
+                return document.location.origin + '/?table=' + Cookies.get('table') + '&zone=' + Cookies.get('zone') + '&partner=' + Cookies.get('partner') + '&items=' + store.getters['order/checkedItems'].map(item => item.basket_id);
+            });
+
             const shareBill = () => {
                 try {
                     navigator.share({
-                        url: document.URL,
-                        title: document.title,
+                        url: url.value,
+                        title: "",
                         text: ""
                     });
                 } catch (e) {
-                    console.log('catch')
                     f7.popup.open('.share-popup');
                 }
 

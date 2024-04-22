@@ -41,6 +41,7 @@
     import store from '@/store/store'
     import Counter from "@/components/Counter.vue";
     import {computed} from "vue";
+    import {f7} from "framework7-vue";
 
     export default {
         components: {
@@ -64,6 +65,14 @@
             });
 
             const setQuantity = (qnt) => {
+                /*f7.notification.create({
+                    icon: '<i class="icon icon-f7"></i>',
+                    title: 'Framework7',
+                    titleRightText: 'now',
+                    subtitle: 'This is a subtitle',
+                    text: 'This is a simple notification message',
+                    closeTimeout: 3000,
+                }).open();*/
                 if (quantity.value !== qnt) {
                     store.dispatch('basket/updateBasket', {
                         item: props.item,
