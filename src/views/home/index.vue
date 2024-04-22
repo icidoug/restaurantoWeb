@@ -303,6 +303,12 @@
                         }, 100)
                     }
                 }
+
+                if (urlParams.has('items') && orderItems.value.length > 0 && !isOrderPaid.value && !partner.value.only_menu) {
+                    setTimeout(() => {
+                        props.f7router.navigate('/order/');
+                    }, 100)
+                }
             });
 
             onBeforeMount(async () => {

@@ -73,6 +73,7 @@
                     text: 'This is a simple notification message',
                     closeTimeout: 3000,
                 }).open();*/
+
                 if (quantity.value !== qnt) {
                     store.dispatch('basket/updateBasket', {
                         item: props.item,
