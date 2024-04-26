@@ -5,4 +5,7 @@ export default {
     setWaiter(state, waiter) {
         state.waiter = waiter
     },
+    setComment(state, comment) {
+        state.comment = comment
+    },
 }

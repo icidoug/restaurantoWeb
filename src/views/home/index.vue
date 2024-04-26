@@ -24,7 +24,7 @@
             </div>
             <your-waiter v-if="waiter.id" :waiter="waiter"/>
             <div class="home__waiter padding-side">
-                <f7-button class="btn btn--pink btn--arrow" popup-open=".waiter-popup">
+                <f7-button class="btn btn--pink btn--arrow" @click="openWaiterPopup" popup-open=".waiter-popup">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M2 16L22 16" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
                         <path d="M4 19L20 19" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
@@ -326,6 +326,10 @@
                 window.open(url)
             }
 
+            const openWaiterPopup = () => {
+                store.commit('waiter/setComment', '');
+            }
+
             return {
                 items,
                 sections,
@@ -338,7 +342,8 @@
                 partner,
                 isVisibleFooter,
                 isOrderPaid,
-                openLink
+                openLink,
+                openWaiterPopup
             };
         }
     }

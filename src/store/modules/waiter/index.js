@@ -6,6 +6,7 @@ const getDefaultState = () => {
     return {
         isError: true,
         waiter: {},
+        comment: '',
     }
 };
 

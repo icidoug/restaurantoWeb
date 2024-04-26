@@ -35,10 +35,10 @@
                     {{ $t('call_waiter') }}
                 </f7-button>
                 <waiter-confirm-popup :minutes-difference="minutesDifference" :is-loading="isFetching" :is-error="isWaiterCallError"/>
-                <f7-button class="btn btn--border" @click="callHookah">
+<!--                <f7-button class="btn btn&#45;&#45;border" @click="callHookah">
                     {{ $t('call_hookah_man') }}
                 </f7-button>
-                <hookah-confirm-popup :minutes-difference="minutesDifferenceHookah" :is-loading="isFetching" :is-error="isHookahCallError"/>
+                <hookah-confirm-popup :minutes-difference="minutesDifferenceHookah" :is-loading="isFetching" :is-error="isHookahCallError"/>-->
             </div>
         </div>
     </f7-popup>
@@ -46,7 +46,7 @@
 
 <script>
     import store from "@/store/store";
-    import {ref} from "vue";
+    import {computed, ref} from "vue";
     import WaiterConfirmPopup from "@/components/waiter/WaiterConfirmPopup.vue";
     import {f7} from 'framework7-vue';
     import HookahConfirmPopup from "@/components/waiter/HookahConfirmPopup.vue";
@@ -60,7 +60,15 @@
             },
         },
         setup() {
-            const comment = ref('');
+            const comment = computed({
+                get() {
+                    return store.getters['waiter/comment']
+                },
+                set(newValue) {
+                    store.commit('waiter/setComment', newValue);
+                }
+            });
+
             const isFetching = ref(true);
             const isWaiterCallError = ref(false);
             const isHookahCallError = ref(false);
