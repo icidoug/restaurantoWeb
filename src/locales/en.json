@@ -87,5 +87,7 @@
   "date": "Date",
   "link": "Link",
   "copy_link": "Click to copy",
-  "link_copied": "Link copied"
+  "link_copied": "Link copied",
+  "search": "Search",
+  "weight_value": "g"
 }

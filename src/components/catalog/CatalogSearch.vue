@@ -7,7 +7,7 @@
         </span>
         <span v-if="isSearchOpen" class="catalog-search__input">
             <input type="text"
-                   placeholder="Название блюда"
+                   :placeholder="$t('search')"
                    @input="search"
                    v-model="query"
             >

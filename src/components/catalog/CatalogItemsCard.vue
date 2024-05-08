@@ -15,7 +15,7 @@
         <div class="item-card__info">
             <div class="item-card__price" v-html="item.price_format"></div>
             <div class="item-card__weight">
-                {{ item.weight + 'г' }}
+                {{ item.weight + $t('weight_value') }}
             </div>
         </div>
         <div class="item-card__title" @click="getDetail">
