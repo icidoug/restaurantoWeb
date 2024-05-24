@@ -15,7 +15,9 @@
                         {{ $t('dishes') }}
                     </div>
                     <div class="order-form__td">
-                        {{ parseInt(sum - tipsSum).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}{{ $t('currency') }}
+                        {{ parseInt(sum - tipsSum).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}{{
+                            $t('currency')
+                        }}
                     </div>
                 </div>
                 <div v-if="waiter.id" class="order-form__tr">
@@ -42,8 +44,12 @@
             >
                 <div class="order-form__field_checkbox"></div>
                 <div class="order-form__field_title">
-                    {{ $t('agree_terms') }} <a @click.stop="openLink('/public/Public-offer-resto-ranto.pdf')" href="/public/Public-offer-resto-ranto.pdf" target="_blank">{{ $t('user_agreement') }}</a>
-                    {{ $t('and') }} <a @click.stop="openLink('/public/Private-policy-resto-ranto.pdf')" href="/public/Private-policy-resto-ranto.pdf" target="_blank">{{ $t('personal_data') }}</a>
+                    {{ $t('agree_terms') }} <a @click.stop="openLink('/public/Public-offer-resto-ranto.pdf')"
+                                               href="/public/Public-offer-resto-ranto.pdf"
+                                               target="_blank">{{ $t('user_agreement') }}</a>
+                    {{ $t('and') }} <a @click.stop="openLink('/public/Private-policy-resto-ranto.pdf')"
+                                       href="/public/Private-policy-resto-ranto.pdf"
+                                       target="_blank">{{ $t('personal_data') }}</a>
                 </div>
             </div>
         </div>
@@ -98,7 +104,8 @@
                     </svg>
                 </div>
             </f7-link>
-            <f7-button v-if="type === 'cash'" class="btn btn--pink btn--arrow" @click="openWaiterPopup" popup-open=".waiter-popup">
+            <f7-button v-if="type === 'cash'" class="btn btn--pink btn--arrow" @click="openWaiterPopup"
+                       popup-open=".waiter-popup">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M2 16L22 16" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
                     <path d="M4 19L20 19" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
@@ -112,7 +119,7 @@
                 </svg>
                 <span>{{ $t('call_waiter') }}</span>
             </f7-button>
-            <f7-button v-else popup-open=".order-confirm-popup"
+            <f7-button v-else
                        class="btn btn--pink" @click="onSubmit"
             >
                 {{ $t('pay') }} {{ splitBill ? ($t('in_part') + ' ') : '' }}
@@ -122,122 +129,111 @@
         <order-payment-type-popup @change="onChangeType($event)"/>
         <order-payment-result-popup :is-loading="isFetching"/>
         <order-payment-confirm-popup/>
+        <order-pay-dala-popup ref="payDalaPopup" :type="type" :commission="taxChecked"/>
     </div>
 </template>
 
-<script>
+<script setup>
     import store from '@/store/store'
     import {computed, onMounted, ref} from 'vue'
     import OrderPaymentTypePopup from "@/components/order/OrderPaymentTypePopup.vue";
     import OrderPaymentResultPopup from "@/components/order/OrderPaymentResultPopup.vue";
     import OrderPaymentConfirmPopup from "@/components/order/OrderPaymentConfirmPopup.vue";
+    import OrderPayDalaPopup from "@/components/order/OrderPayDalaPopup.vue";
     import {f7} from "framework7-vue";
 
-    export default {
-        components: {
-            OrderPaymentConfirmPopup,
-            OrderPaymentResultPopup,
-            OrderPaymentTypePopup
-        },
-        props: {},
-        setup() {
-            onMounted(() => {
-                const urlParams = new URLSearchParams(window.location.search);
-                const isOrderPaid = store.getters['order/isPaid'];
-                if (urlParams.has('operation') && urlParams.has('reference') && !isOrderPaid) {
-                    if (urlParams.has('code') && urlParams.get('code') !== '1') {
-                        f7.popup.open('.order-payment-popup');
-                    }
-
-                    window.history.replaceState(null, '', window.location.pathname);
-                }
-            });
-            const isFetching = ref(false);
-            const type = ref('card');
-            const taxChecked = ref(true);
-            const personalChecked = ref(true);
-
-            const onChangeType = (newType) => {
-                console.log('newType', newType)
-                type.value = newType;
+    onMounted(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const isOrderPaid = store.getters['order/isPaid'];
+        if (urlParams.has('operation') && urlParams.has('reference') && !isOrderPaid) {
+            if (urlParams.has('code') && urlParams.get('code') !== '1') {
+                f7.popup.open('.order-payment-popup');
             }
 
-            const waiter = computed(() => {
-                return store.getters['waiter/waiter']
-            });
-
-            const sum = computed(() => {
-                return store.getters['order/sum']
-            });
-
-            const tipsSum = computed(() => {
-                return store.getters['order/tipsSum']
-            });
-
-            const splitBill = computed(() => {
-                return store.getters['order/splitBill']
-            });
-
-            const commission = computed(() => {
-                const percentFood = store.getters['partner/partner']?.commission_food || 0;
-                const percentTips = store.getters['partner/partner']?.commission_tips || 0;
-                const commissionSumFood = percentFood > 0 ? parseFloat(((sum.value - tipsSum.value) * (percentFood / 100))) : 0;
-                const commissionSumTips = percentTips > 0 ? parseFloat((tipsSum.value * (percentTips / 100))) : 0;
-
-                return roundNumber(commissionSumFood + commissionSumTips, 2)
-            });
-
-            const roundNumber = (num, scale) => {
-                if (!("" + num).includes("e")) {
-                    return +(Math.round(num + "e+" + scale) + "e-" + scale);
-                } else {
-                    var arr = ("" + num).split("e");
-                    var sig = ""
-                    if (+arr[1] + scale > 0) {
-                        sig = "+";
-                    }
-                    return +(Math.round(+arr[0] + "e" + sig + (+arr[1] + scale)) + "e-" + scale);
-                }
-            }
-
-            const totalSum = computed(() => {
-                let totalSum = sum.value;
-                if (taxChecked.value) {
-                    totalSum += commission.value;
-                }
-                return totalSum;
-            });
-
-            const onSubmit = async () => {
-                isFetching.value = true;
-                await store.dispatch('order/pay', {
-                    type: type.value,
-                    commission: taxChecked.value
-                })
-            }
-            const openLink = (url) => {
-                window.open(url)
-            }
-            const openWaiterPopup = () => {
-                store.commit('waiter/setComment', 'Check');
-            }
-            return {
-                onSubmit,
-                isFetching,
-                onChangeType,
-                type,
-                sum,
-                splitBill,
-                tipsSum,
-                taxChecked,
-                personalChecked,
-                commission,
-                totalSum,
-                openLink,
-                waiter,
-                openWaiterPopup
-            }
+            window.history.replaceState(null, '', window.location.pathname);
         }
+    })
+    const isFetching = ref(false);
+    const type = ref('card');
+    const taxChecked = ref(true);
+    const personalChecked = ref(true);
+
+    const onChangeType = (newType) => {
+        console.log('newType', newType)
+        type.value = newType;
+    }
+
+    const waiter = computed(() => {
+        return store.getters['waiter/waiter']
+    });
+
+    const sum = computed(() => {
+        return store.getters['order/sum']
+    });
+
+    const tipsSum = computed(() => {
+        return store.getters['order/tipsSum']
+    });
+
+    const splitBill = computed(() => {
+        return store.getters['order/splitBill']
+    });
+
+    const isPaymentFetching = computed(() => {
+        return store.getters['order/isPaymentFetching']
+    });
+
+    const commission = computed(() => {
+        const percentFood = store.getters['partner/partner']?.commission_food || 0;
+        const percentTips = store.getters['partner/partner']?.commission_tips || 0;
+        const commissionSumFood = percentFood > 0 ? parseFloat(((sum.value - tipsSum.value) * (percentFood / 100))) : 0;
+        const commissionSumTips = percentTips > 0 ? parseFloat((tipsSum.value * (percentTips / 100))) : 0;
+
+        return roundNumber(commissionSumFood + commissionSumTips, 2)
+    });
+
+    const roundNumber = (num, scale) => {
+        if (!("" + num).includes("e")) {
+            return +(Math.round(num + "e+" + scale) + "e-" + scale);
+        } else {
+            var arr = ("" + num).split("e");
+            var sig = ""
+            if (+arr[1] + scale > 0) {
+                sig = "+";
+            }
+            return +(Math.round(+arr[0] + "e" + sig + (+arr[1] + scale)) + "e-" + scale);
+        }
+    }
+
+    const totalSum = computed(() => {
+        let totalSum = sum.value;
+        if (taxChecked.value) {
+            totalSum += commission.value;
+        }
+        return totalSum;
+    });
+
+    const payDalaPopup = ref(null);
+
+    const onSubmit = async () => {
+        /*isFetching.value = true;
+        await store.dispatch('order/pay', {
+            type: type.value,
+            commission: taxChecked.value
+        });*/
+        console.log('payDalaPopup', payDalaPopup.value)
+        payDalaPopup.value.initiatePayment();
+        store.commit('order/setIsPaymentFetching', true);
+        store.commit('order/setIsOpenPayDalaModal', true);
+        setTimeout(() => {
+            store.commit('order/setIsPaymentFetching', false);
+        }, 1500)
+    };
+    const openLink = (url) => {
+        window.open(url)
+    }
+    const openWaiterPopup = () => {
+        store.commit('waiter/setComment', 'Check');
     }
 </script>
 

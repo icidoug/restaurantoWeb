@@ -8,7 +8,7 @@
             </div>
             <order-tips v-if="waiter.id"/>
             <order-form/>
-            <share-bill-popup />
+            <share-bill-popup/>
         </div>
     </f7-page>
 </template>

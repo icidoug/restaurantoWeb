@@ -37,4 +37,6 @@ export default {
     checkedItems: (state) => state.items.filter(item => item?.is_checked === true) || [],
     paidItems: (state) => state.items.filter(item => item?.is_paid === true) || [],
     payments: (state) => state.payments,
+    isOpenPayDalaModal: (state) => state.isOpenPayDalaModal,
+    isPaymentFetching: (state) => state.isPaymentFetching,
 }

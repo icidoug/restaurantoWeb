@@ -83,16 +83,14 @@ export default {
 			params.waiter_id = rootGetters['waiter/waiter']?.id;
 		}
 		
+		console.log('pay', params)
+		
 		return axios.post(url, params, {withCredentials: true})
 			.then(response => {
+				//console.log('response', response)
 				//commit('setId', response.data.data.ORDER_ID);
-				if(response.data.data.link) {
-					const link = document.createElement('a');
-					link.href = response.data.data.link;
-					link.click();
-				}
 				
-				return false;
+				return response;
 			})
 			.catch(error => console.log('Ошибка: ', error))
 	},

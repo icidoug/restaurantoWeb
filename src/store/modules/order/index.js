@@ -11,6 +11,8 @@ const getDefaultState = () => {
         splitBill: false,
         tipsType: 'none',
         tipsSum: 0,
+        isOpenPayDalaModal: false,
+        isPaymentFetching: false,
     }
 };
 

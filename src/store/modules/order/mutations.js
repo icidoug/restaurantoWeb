@@ -38,4 +38,10 @@ export default {
     setPayments(state, payments) {
         state.payments = payments
     },
+    setIsOpenPayDalaModal(state, isOpenPayDalaModal) {
+        state.isOpenPayDalaModal = isOpenPayDalaModal
+    },
+    setIsPaymentFetching(state, isPaymentFetching) {
+        state.isPaymentFetching = isPaymentFetching
+    },
 }
