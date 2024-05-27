@@ -89,12 +89,14 @@
             environment: "sandbox",
             operatorCredentials: credentials,
             onClose: function (data) {
-                alert("Session Closed: " + JSON.stringify(data));
+                //alert("Session Closed: " + JSON.stringify(data));
                 paydalaInstance.value.unmount();
+                closeModal();
             },
             onTransactionComplete: function (data) {
-                alert("Transaction Complete: " + JSON.stringify(data));
+                //alert("Transaction Complete: " + JSON.stringify(data));
                 paydalaInstance.value.unmount();
+                closeModal();
             },
         };
 
