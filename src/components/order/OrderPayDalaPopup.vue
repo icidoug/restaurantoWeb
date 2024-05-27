@@ -67,16 +67,16 @@
             operatorCredentials: credentials,
             onClose: function (data) {
                 //alert("Session Closed: " + JSON.stringify(data));
+                store.dispatch('order/getOrder');
                 paydalaInstance.value.unmount();
                 closeModal();
             },
             onTransactionComplete: async function (data) {
                 //alert("Transaction Complete: " + JSON.stringify(data));
                 //paydalaInstance.value.unmount();
-                await store.dispatch('order/getOrder');
-                /*setTimeout(() => {
-                    location.reload();
-                }, 2000)*/
+                setTimeout(() => {
+                    store.dispatch('order/getOrder');
+                }, 1500)
             },
         };
 
