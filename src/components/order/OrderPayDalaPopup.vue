@@ -70,12 +70,13 @@
                 paydalaInstance.value.unmount();
                 closeModal();
             },
-            onTransactionComplete: function (data) {
+            onTransactionComplete: async function (data) {
                 //alert("Transaction Complete: " + JSON.stringify(data));
-                setTimeout(() => {
-                    paydalaInstance.value.unmount();
+                //paydalaInstance.value.unmount();
+                await store.dispatch('order/getOrder');
+                /*setTimeout(() => {
                     location.reload();
-                }, 1500)
+                }, 2000)*/
             },
         };
 
