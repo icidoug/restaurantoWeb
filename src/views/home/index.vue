@@ -291,7 +291,7 @@
                             f7.popup.open('.tips-payment-popup');
                         }
                         else if(isOrderWithTips) {
-                            f7.popup.open('.order-payment-popup');
+                            f7.popup.open('.order-payment-confirm-popup');
                         }
                         window.history.replaceState(null, '', window.location.pathname);
                     }

@@ -28,6 +28,7 @@
     import Preloader from "@/components/Preloader.vue";
     import Cookies from "js-cookie";
     import InitPreloader from "@/components/InitPreloader.vue";
+    import {workerCheckOrder} from "@/lib/workers/workerCheckOrder";
 
     const device = getDevice();
     // Framework7 Parameters
@@ -88,17 +89,7 @@
                     await store.dispatch('catalog/getItems');
                     await store.dispatch('basket/getItems');
                     const order = await store.dispatch('order/getOrder');
-                    const workerCheckOrder = async (id) => {
-                        const result = await store.dispatch('order/checkOrderPayment', id);
-                        if (result?.is_paid) {
-                            f7.popup.open('.order-payment-popup');
-                            localStorage.lastOrderId = null;
-                        } else {
-                            setTimeout(async () => {
-                                await workerCheckOrder(id);
-                            }, 5000)
-                        }
-                    }
+
                     if(order.id) {
                         workerCheckOrder(order.id);
                     }

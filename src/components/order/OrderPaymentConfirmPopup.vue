@@ -1,6 +1,6 @@
 <template>
     <f7-popup
-              class="popup-bottom order-payment-popup"
+              class="popup-bottom order-payment-confirm-popup"
               swipe-to-close="to-bottom"
               swipe-handler=".swipe-handler"
     >

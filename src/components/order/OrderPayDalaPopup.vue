@@ -43,36 +43,13 @@
     const initiatePayment = async () => {
         clearPaydalaFrame();
 
-        const payload = {
-            requestId: 7, // Unique for each request
-            customerId: "106e2191f92a4d93a9bbc42865264d52",
-            defaultUser: {
-                address: {
-                    street: "700 ELM STREET",
-                    city: "STUDIO CITY",
-                    postalCode: "91604",
-                    region: "CA",
-                },
-                dob: "1942-12-23",
-                email: "fisenko1989@gmail.com",
-                ssn: "0921",
-                first_name: "Alex",
-                last_name: "Fisenko",
-                phone: "5061234568",
-            },
-            predefinedAmount: {values: 10, isEditable: false},
-            //redirectUrl: "https://admin.resto-ranto.com/local/paydala/callback.php?test=1",
-            transactionType: "deposit",
-            userFlow: {guestOnly: true},
-        };
-
         try {
             const response = await store.dispatch('order/pay', {
                 type: props.type,
                 commission: props.commission
             });
             console.log('response', response)
-            //const response = await axios.post('https://admin.resto-ranto.com/local/paydala/php/op_server_php/op_server.php?action=getSignedCreds', payload);
+
             if (response.data.success) {
                 configurePaydala(response.data.response);
             } else {

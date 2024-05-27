@@ -38,6 +38,7 @@
     import BasketOrderTypePopup from "@/components/basket/BasketOrderTypePopup.vue";
     import {ref} from 'vue'
     import BasketOrderConfirmPopup from "@/components/basket/BasketOrderConfirmPopup.vue";
+    import {workerCheckOrder} from "@/lib/workers/workerCheckOrder";
 
     export default {
         components: {
@@ -63,6 +64,10 @@
                 })
                 if(store.getters['order/items'].length > 0) {
                     //store.commit('tips/setTipsType', 'none');
+                }
+
+                if(localStorage.lastOrderId) {
+                    workerCheckOrder(localStorage.lastOrderId);
                 }
 
                 isFetching.value = false;

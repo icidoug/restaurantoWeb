@@ -147,7 +147,7 @@
         const isOrderPaid = store.getters['order/isPaid'];
         if (urlParams.has('operation') && urlParams.has('reference') && !isOrderPaid) {
             if (urlParams.has('code') && urlParams.get('code') !== '1') {
-                f7.popup.open('.order-payment-popup');
+                f7.popup.open('.order-payment-confirm-popup');
             }
 
             window.history.replaceState(null, '', window.location.pathname);
