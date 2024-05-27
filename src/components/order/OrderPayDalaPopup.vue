@@ -68,16 +68,14 @@
             onClose: function (data) {
                 //alert("Session Closed: " + JSON.stringify(data));
                 paydalaInstance.value.unmount();
-                store.dispatch('order/getOrder');
                 closeModal();
             },
             onTransactionComplete: function (data) {
                 //alert("Transaction Complete: " + JSON.stringify(data));
-                paydalaInstance.value.unmount();
-                store.dispatch('order/getOrder');
                 setTimeout(() => {
-                    closeModal();
-                }, 2000)
+                    paydalaInstance.value.unmount();
+                    location.reload();
+                }, 1500)
             },
         };
 
