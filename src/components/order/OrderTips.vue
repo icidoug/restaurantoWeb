@@ -13,7 +13,7 @@
                     10%
                 </div>
                 <div class="order-tips__item_sum">
-                    {{ parseInt(sum * .1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}{{ $t('currency') }}
+                    {{ parseFloat(sum * .1).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}{{ $t('currency') }}
                 </div>
             </div>
             <div class="order-tips__item"
@@ -24,7 +24,7 @@
                     15%
                 </div>
                 <div class="order-tips__item_sum">
-                    {{ parseInt(sum * .15).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}{{ $t('currency') }}
+                    {{ parseFloat(sum * .15).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}{{ $t('currency') }}
                 </div>
             </div>
             <div class="order-tips__item"
@@ -35,7 +35,7 @@
                     20%
                 </div>
                 <div class="order-tips__item_sum">
-                    {{ parseInt(sum * .2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}{{ $t('currency') }}
+                    {{ parseFloat(sum * .2).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}{{ $t('currency') }}
                 </div>
             </div>
             <div class="order-tips__item"
@@ -116,13 +116,13 @@
                     type = 'none';
                 }
                 if(type === '10%') {
-                    tips = parseInt(sum.value * .1);
+                    tips = parseFloat(sum.value * .1);
                 }
                 else if(type === '15%') {
-                    tips = parseInt(sum.value * .15);
+                    tips = parseFloat(sum.value * .15);
                 }
                 else if(type === '20%') {
-                    tips = parseInt(sum.value * .2);
+                    tips = parseFloat(sum.value * .2);
                 }
                 else if(type === 'custom') {
                     tips = customTipsSum.value;
@@ -134,8 +134,8 @@
             const setCustomTips = (value) => {
                 const sum = value > 0  ? value.replace(/^0+/, '') : '';
 
-                customTipsSum.value = sum === '' ? '' : parseInt(sum);
-                store.commit('order/setTipsSum', sum === '' ? '' : parseInt(sum));
+                customTipsSum.value = sum === '' ? '' : parseFloat(sum);
+                store.commit('order/setTipsSum', sum === '' ? '' : parseFloat(sum));
             }
 
             const checkSum = (value) => {

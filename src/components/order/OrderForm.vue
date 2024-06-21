@@ -172,7 +172,7 @@
     });
 
     const tipsSum = computed(() => {
-        return store.getters['order/tipsSum']
+        return store.getters['order/tipsSum'].toFixed(2)
     });
 
     const splitBill = computed(() => {
@@ -210,7 +210,7 @@
         if (taxChecked.value) {
             totalSum += commission.value;
         }
-        return totalSum;
+        return parseFloat(totalSum).toFixed(2);
     });
 
     const payDalaPopup = ref(null);

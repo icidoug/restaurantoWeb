@@ -6,7 +6,7 @@
             <div v-else class="basket__empty padding-side">
                 {{ $t('no_goods_in_order') }}
             </div>
-            <order-tips v-if="waiter.id"/>
+            <order-tips v-if="waiter.id && waiter.can_tips"/>
             <order-form/>
             <share-bill-popup/>
         </div>
