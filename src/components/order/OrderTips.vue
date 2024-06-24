@@ -1,7 +1,7 @@
 <template>
     <div class="order-tips">
         <div class="order-tips__header">
-            {{ $t('tips') }} {{ tipsSum > 0 ? tipsSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + $t('currency') : '' }}
+            {{ $t('tips') }} {{ tipsSum > 0 ? tipsSum.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + $t('currency') : '' }}
         </div>
         <your-waiter :waiter="waiter"/>
         <div class="order-tips__items">
