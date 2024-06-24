@@ -19,6 +19,7 @@
     import store from '@/store/store';
     import axios from 'axios';
     import Preloader from "@/components/Preloader.vue";
+    import {f7} from "framework7-vue";
 
     const props = defineProps({
         type: String,
@@ -51,7 +52,7 @@
                 type: props.type,
                 commission: props.commission
             };
-            if(props.isTips) {
+            if (props.isTips) {
                 params.sum = store.getters['tips/tipsSum'];
             }
 
@@ -83,7 +84,12 @@
                 //alert("Transaction Complete: " + JSON.stringify(data));
                 //paydalaInstance.value.unmount();
                 setTimeout(() => {
-                    store.dispatch('order/getOrder');
+                    if (props.isTips) {
+                        store.commit('tips/setIsPaid', true);
+                        f7.popup.open('.tips-payment-popup');
+                    } else {
+                        store.dispatch('order/getOrder');
+                    }
                 }, 1500)
             },
         };
