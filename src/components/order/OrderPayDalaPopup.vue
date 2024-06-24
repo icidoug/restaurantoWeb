@@ -23,6 +23,7 @@
     const props = defineProps({
         type: String,
         commission: Boolean,
+        isTips: Boolean,
     });
 
     const isFetching = computed(() => store.getters['order/isPaymentFetching']);
@@ -44,10 +45,17 @@
         clearPaydalaFrame();
 
         try {
-            const response = await store.dispatch('order/pay', {
+            const type = props.isTips ? 'tips/pay' : 'order/pay';
+
+            const params = {
                 type: props.type,
                 commission: props.commission
-            });
+            };
+            if(props.isTips) {
+                params.sum = store.getters['tips/tipsSum'];
+            }
+
+            const response = await store.dispatch(type, params);
             console.log('response', response)
 
             if (response.data.success) {

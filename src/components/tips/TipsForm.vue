@@ -90,10 +90,11 @@
         <order-payment-result-popup :is-loading="isFetching" />
         <tips-payment-confirm-popup/>
         <order-payment-confirm-popup/>
+        <order-pay-dala-popup ref="payDalaPopup" :type="type" :commission="taxChecked" :is-tips="true"/>
     </div>
 </template>
 
-<script>
+<script setup>
     import store from '@/store/store'
     import {computed, onMounted, ref} from 'vue'
     import OrderPaymentTypePopup from "@/components/order/OrderPaymentTypePopup.vue";
@@ -101,101 +102,86 @@
     import TipsPaymentConfirmPopup from "@/components/tips/TipsPaymentConfirmPopup.vue";
     import OrderPaymentResultPopup from "@/components/order/OrderPaymentResultPopup.vue";
     import OrderPaymentConfirmPopup from "@/components/order/OrderPaymentConfirmPopup.vue";
+    import OrderPayDalaPopup from "@/components/order/OrderPayDalaPopup.vue";
 
-    export default {
-        components: {
-            OrderPaymentConfirmPopup,
-            OrderPaymentResultPopup,
-            TipsPaymentConfirmPopup,
-            OrderPaymentTypePopup
-        },
-        props: {},
-        setup() {
-
-            onMounted(() => {
-                const urlParams = new URLSearchParams(window.location.search);
-                const isOrderPaid = store.getters['order/isPaid'];
-                const isTipsPaid = store.getters['tips/isPaid'];
-                const isTipsOrder = store.getters['tips/isTipsOrder'];
-                if(urlParams.has('operation') && urlParams.has('reference')) {
-                    if(isTipsOrder) {
-                        f7.popup.open('.tips-payment-popup');
-                    }
-                    else if(isOrderPaid) {
-                        f7.popup.open('.order-payment-confirm-popup');
-                    }
-
-                    window.history.replaceState(null, '', window.location.pathname);
-                }
-
-            });
-
-            const isFetching = ref(false);
-            const type = ref('sbp');
-            const taxChecked = ref(true);
-            const personalChecked = ref(true);
-
-            const onChangeType = (newType) => {
-                type.value = newType;
+    onMounted(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const isOrderPaid = store.getters['order/isPaid'];
+        const isTipsPaid = store.getters['tips/isPaid'];
+        const isTipsOrder = store.getters['tips/isTipsOrder'];
+        if(urlParams.has('operation') && urlParams.has('reference')) {
+            if(isTipsOrder) {
+                f7.popup.open('.tips-payment-popup');
+            }
+            else if(isOrderPaid) {
+                f7.popup.open('.order-payment-confirm-popup');
             }
 
-            const tipsSum = computed(() => {
-                const sum = parseInt(store.getters['tips/tipsSum']);
-                return sum > 0 ? sum : 0;
-            });
-
-            const commission = computed(() => {
-                const percentTips = store.getters['partner/partner']?.commission_tips || 0;
-                const commissionSumTips = percentTips > 0 ? parseFloat((tipsSum.value * (percentTips / 100))) : 0;
-
-                return roundNumber(commissionSumTips, 2)
-            });
-
-            const roundNumber = (num, scale) => {
-                if(!("" + num).includes("e")) {
-                    return +(Math.round(num + "e+" + scale)  + "e-" + scale);
-                } else {
-                    var arr = ("" + num).split("e");
-                    var sig = ""
-                    if(+arr[1] + scale > 0) {
-                        sig = "+";
-                    }
-                    return +(Math.round(+arr[0] + "e" + sig + (+arr[1] + scale)) + "e-" + scale);
-                }
-            }
-
-            const totalSum = computed(() => {
-                let totalSum = tipsSum.value;
-                if (taxChecked.value) {
-                    totalSum += commission.value;
-                }
-                return totalSum;
-            });
-
-            const onSubmit = async () => {
-                isFetching.value = true;
-                await store.dispatch('tips/pay', {
-                    type: type.value,
-                    sum: store.getters['tips/tipsSum'],
-                    commission: taxChecked.value
-                })
-            }
-            const openLink = (url) => {
-                window.open(url)
-            }
-            return {
-                onSubmit,
-                isFetching,
-                onChangeType,
-                type,
-                tipsSum,
-                taxChecked,
-                personalChecked,
-                commission,
-                totalSum,
-                openLink
-            }
+            window.history.replaceState(null, '', window.location.pathname);
         }
+
+    });
+
+    const isFetching = ref(false);
+    const type = ref('sbp');
+    const taxChecked = ref(true);
+    const personalChecked = ref(true);
+
+    const onChangeType = (newType) => {
+        type.value = newType;
+    }
+
+    const tipsSum = computed(() => {
+        const sum = parseInt(store.getters['tips/tipsSum']);
+        return sum > 0 ? sum : 0;
+    });
+
+    const commission = computed(() => {
+        const percentTips = store.getters['partner/partner']?.commission_tips || 0;
+        const commissionSumTips = percentTips > 0 ? parseFloat((tipsSum.value * (percentTips / 100))) : 0;
+
+        return roundNumber(commissionSumTips, 2)
+    });
+
+    const roundNumber = (num, scale) => {
+        if(!("" + num).includes("e")) {
+            return +(Math.round(num + "e+" + scale)  + "e-" + scale);
+        } else {
+            var arr = ("" + num).split("e");
+            var sig = ""
+            if(+arr[1] + scale > 0) {
+                sig = "+";
+            }
+            return +(Math.round(+arr[0] + "e" + sig + (+arr[1] + scale)) + "e-" + scale);
+        }
+    }
+
+    const totalSum = computed(() => {
+        let totalSum = tipsSum.value;
+        if (taxChecked.value) {
+            totalSum += commission.value;
+        }
+        return totalSum;
+    });
+
+    const payDalaPopup = ref(null);
+
+    const onSubmit = async () => {
+        /*isFetching.value = true;
+        await store.dispatch('tips/pay', {
+            type: type.value,
+            sum: store.getters['tips/tipsSum'],
+            commission: taxChecked.value
+        })*/
+        payDalaPopup.value.initiatePayment();
+        store.commit('order/setIsPaymentFetching', true);
+        store.commit('order/setIsOpenPayDalaModal', true);
+        setTimeout(() => {
+            store.commit('order/setIsPaymentFetching', false);
+        }, 1500)
+    }
+    const openLink = (url) => {
+        window.open(url)
     }
 </script>
 

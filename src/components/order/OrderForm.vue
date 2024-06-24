@@ -129,7 +129,7 @@
         <order-payment-type-popup @change="onChangeType($event)"/>
         <order-payment-result-popup :is-loading="isFetching"/>
         <order-payment-confirm-popup/>
-        <order-pay-dala-popup ref="payDalaPopup" :type="type" :commission="taxChecked"/>
+        <order-pay-dala-popup ref="payDalaPopup" :type="type" :commission="taxChecked" :is-tips="false"/>
     </div>
 </template>
 
@@ -221,7 +221,6 @@
             type: type.value,
             commission: taxChecked.value
         });*/
-        console.log('payDalaPopup', payDalaPopup.value)
         payDalaPopup.value.initiatePayment();
         store.commit('order/setIsPaymentFetching', true);
         store.commit('order/setIsOpenPayDalaModal', true);
