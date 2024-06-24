@@ -86,6 +86,7 @@
                 setTimeout(() => {
                     if (props.isTips) {
                         store.commit('tips/setIsPaid', true);
+                        store.commit('order/setIsOpenPayDalaModal', false);
                         f7.popup.open('.tips-payment-popup');
                     } else {
                         store.dispatch('order/getOrder');
