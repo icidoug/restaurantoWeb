@@ -89,6 +89,7 @@
                         store.commit('order/setIsOpenPayDalaModal', false);
                         f7.popup.open('.tips-payment-popup');
                     } else {
+                        localStorage.paidOrderId = localStorage.lastOrderId;
                         store.dispatch('order/getOrder');
                     }
                 }, 1500)

@@ -3,7 +3,7 @@ import {f7} from "framework7-vue";
 
 export const workerCheckOrder = async (id) => {
 	const result = await store.dispatch('order/checkOrderPayment', id);
-	if (result?.is_paid && localStorage.lastOrderId) {
+	if (result?.is_paid && localStorage.lastOrderId && localStorage?.paidOrderId === localStorage.lastOrderId) {
 		console.log('localStorage.lastOrderId', localStorage.lastOrderId)
 		store.commit('order/setIsOpenPayDalaModal', false);
 		store.commit('order/setItems', []);
@@ -11,6 +11,7 @@ export const workerCheckOrder = async (id) => {
 			f7.views.current.router.navigate('/')
 			f7.popup.open('.order-payment-confirm-popup');
 			localStorage.lastOrderId = null;
+			localStorage.paidOrderId = null;
 		}, 200)
 		
 	} else {
