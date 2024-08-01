@@ -79,7 +79,7 @@ export default {
 		}
 		
 		if(getters['tipsSum'] > 0) {
-			params.tips = getters['tipsSum'];
+			params.tips = getters['tipsSum'].toFixed(2);
 			params.waiter_id = rootGetters['waiter/waiter']?.id;
 		}
 		
