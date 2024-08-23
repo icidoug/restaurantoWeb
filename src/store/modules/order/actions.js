@@ -83,8 +83,6 @@ export default {
 			params.waiter_id = rootGetters['waiter/waiter']?.id;
 		}
 		
-		console.log('pay', params)
-		
 		return axios.post(url, params, {withCredentials: true})
 			.then(response => {
 				//console.log('response', response)
