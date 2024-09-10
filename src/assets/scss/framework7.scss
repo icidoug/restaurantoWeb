@@ -32,7 +32,7 @@ html.with-modal-popup-push .popup-push, html.with-modal-popup-push-closing .popu
   --f7-toggle-inactive-border-color: #F2F1EF;
 }
 :root {
-  --f7-ios-primary: #D2015F !important;
+  --f7-ios-primary: var(--pink) !important;
 }
 
 .ios .toggle-icon:before {

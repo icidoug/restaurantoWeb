@@ -82,6 +82,10 @@
     --r-basket-line-color: #F2F1EF;
     --r-fixed-border-top-color: #F2F1EF;
     --r-event-date-bg-color: #F2F1EF;
+
+    .preloader-icon-stop-end {
+        stop-color:var(--pink);
+    }
 }
 
 :root.dark {

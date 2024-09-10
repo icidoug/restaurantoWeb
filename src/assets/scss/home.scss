@@ -28,6 +28,10 @@
   align-items: center;
   font-size: 13px;
   color: #898989;
+
+  svg, path {
+    fill: var(--pink);
+  }
 }
 
 .home__waiter {
@@ -70,6 +74,10 @@
 .home-menu__item_icon {
   margin-bottom: 26px;
   margin-left: 6px;
+
+  svg, path {
+    fill: var(--pink);
+  }
 }
 
 .home-menu__item_subtitle {

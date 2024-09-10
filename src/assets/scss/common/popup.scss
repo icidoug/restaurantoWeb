@@ -34,8 +34,8 @@
 
   &.active {
     .popup-form__item_checkbox {
-      background: #D2015F;
-      border-color: #D2015F;
+      background: var(--pink);
+      border-color: var(--pink);
 
       &:after {
         content: '';

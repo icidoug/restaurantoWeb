@@ -76,6 +76,14 @@
                     f7.setDarkMode(true);
                     isDarkMode.value = true;
                 }
+                if(settings.theme_color) {
+                    let styles = document.querySelector("#app").style;
+                    const setOpacity = (hex, alpha) => `${hex}${Math.floor(alpha * 255).toString(16).padStart(2, 0)}`
+
+                    styles.setProperty('--pink', settings.theme_color);
+                    styles.setProperty('--f7-theme-color', settings.theme_color);
+                    styles.setProperty('--pink-hover', setOpacity(settings.theme_color, 0.8));
+                }
             })
 
             isFetching.value = true;

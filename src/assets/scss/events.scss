@@ -36,6 +36,10 @@
   font-weight: 600;
   font-size: 11px;
   color: var(--r-textarea-prompt-text-color);
+
+  svg, path {
+    fill: var(--pink);
+  }
 }
 
 .events-detail {
@@ -111,6 +115,10 @@
   font-weight: 600;
   font-size: 11px;
   width: fit-content;
+
+  svg, path {
+    fill: var(--pink);
+  }
 }
 
 .events-detail__title {
