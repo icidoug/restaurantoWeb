@@ -1,6 +1,13 @@
 @import 'utils/vars';
 @import 'utils/reset';
-
+@import 'framework7';
+@import 'home';
+@import 'waiter';
+@import 'catalog';
+@import 'basket';
+@import 'order';
+@import 'events';
+@import 'common/_common';
 
 @font-face {
     font-family: "Manrope";
@@ -305,13 +312,4 @@ button {
 .v-leave-to {
     opacity: 0;
 }
-
-@import 'framework7';
-@import 'home';
-@import 'waiter';
-@import 'catalog';
-@import 'basket';
-@import 'order';
-@import 'events';
-@import 'common/_common';
 

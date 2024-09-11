@@ -30,7 +30,7 @@
                 </div>
             </div>
             <div v-if="commission > 0" class="order-form__field"
-                 :class="{active: taxChecked}"
+                 :class="{active: taxChecked, hide: type === 'cash'}"
                  @click="taxChecked = !taxChecked"
             >
                 <div class="order-form__field_checkbox"></div>
@@ -39,7 +39,7 @@
                 </div>
             </div>
             <div class="order-form__field"
-                 :class="{active: personalChecked}"
+                 :class="{active: personalChecked, hide: type === 'cash'}"
                  @click="personalChecked = !personalChecked"
             >
                 <div class="order-form__field_checkbox"></div>
@@ -159,12 +159,21 @@
             window.history.replaceState(null, '', window.location.pathname);
         }
     })
+    const partner = computed(() => {
+        return store.getters['partner/partner']
+    });
+
+
     const isFetching = ref(false);
-    const taxChecked = ref(true);
+    const taxChecked = ref(!partner.value?.hide_online_payment);
     const personalChecked = ref(true);
+    const type = ref(partner.value?.hide_online_payment ? 'cash' : 'card');
 
     const onChangeType = (newType) => {
         type.value = newType;
+        if(newType === 'cash') {
+            taxChecked.value = false;
+        }
     }
 
     const waiter = computed(() => {
@@ -187,11 +196,6 @@
         return store.getters['order/isPaymentFetching']
     });
 
-    const partner = computed(() => {
-        return store.getters['partner/partner']
-    });
-
-    const type = ref(partner.value?.hide_online_payment ? 'cash' : 'card');
 
     const commission = computed(() => {
         const percentFood = partner.value?.commission_food || 0;
