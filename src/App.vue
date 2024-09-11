@@ -82,7 +82,8 @@
 
                     styles.setProperty('--pink', settings.theme_color);
                     styles.setProperty('--f7-theme-color', settings.theme_color);
-                    styles.setProperty('--pink-hover', setOpacity(settings.theme_color, 0.8));
+                    //.setProperty('--pink-hover', setOpacity(settings.theme_color, 0.8));
+                    styles.setProperty('--pink-hover', settings.theme_color);
                 }
             })
 

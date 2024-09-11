@@ -13,6 +13,7 @@
             </div>
             <div class="popup-form">
                 <div
+                    v-if="!partner?.hide_online_payment"
                     class="popup-form__item"
                     :class="{active: selected === 'card'}"
                     @click="selected = 'card'"
@@ -31,7 +32,13 @@
                      @click="selected = 'cash'"
                 >
                     <div class="popup-form__item_title">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="6" width="20" height="12" rx="2" ry="2" stroke="#656666"></rect>
+                            <circle cx="12" cy="12" r="3" stroke="#656666"></circle>
+                            <line x1="6" y1="6" x2="6" y2="6" stroke="#656666"></line>
+                            <line x1="18" y1="6" x2="18" y2="6" stroke="#656666"></line>
+                            <line x1="6" y1="18" x2="6" y2="18" stroke="#656666"></line>
+                            <line x1="18" y1="18" x2="18" y2="18" stroke="#656666"></line>
                         </svg>
                         <span>
                             {{ $t('cash') }}
@@ -45,11 +52,18 @@
 </template>
 
 <script>
+    import store from "@/store/store";
+
     export default {
         data() {
             return {
-                selected: 'card'
+                selected: store.getters['partner/partner']?.hide_online_payment ? 'cash' : 'card'
             };
+        },
+        computed: {
+          partner() {
+              return store.getters['partner/partner']
+          }
         },
         watch: {
             selected(val) {
