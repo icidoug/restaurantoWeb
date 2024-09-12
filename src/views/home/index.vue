@@ -224,6 +224,7 @@
             const orderSum = computed(() => {
                 return store.getters['order/sum']
             });
+
             const orderItems = computed(() => {
                 return store.getters['order/items']
             });

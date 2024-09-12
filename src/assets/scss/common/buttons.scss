@@ -47,15 +47,25 @@
     /*background: #FD7621;
     border: 1px solid #DD6B24;*/
     background: var(--pink);
-    color: #fff;
+    color: var(--btn-text-color);
 
     &:hover {
         background: var(--pink-hover);
-        color: #fff;
     }
 
     &.active {
         background: transparent;
+    }
+
+    svg:not(.svg-fill) {
+        path {
+            stroke: var(--btn-text-color);
+        }
+    }
+    svg.svg-fill {
+        path {
+            fill: var(--btn-text-color);
+        }
     }
 }
 
@@ -79,10 +89,11 @@
     justify-content: flex-start;
     &:after {
         content: '';
-        background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iOCIgdmlld0JveD0iMCAwIDE0IDgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMC40Njk2NyAwLjQ2OTY3QzAuNzYyNTYzIDAuMTc2Nzc3IDEuMjM3NDQgMC4xNzY3NzcgMS41MzAzMyAwLjQ2OTY3TDYuMzk4OTYgNS4zMzgzQzYuNjA1NzIgNS41NDUwNiA2LjcyOTMxIDUuNjY3ODIgNi44MjgwNyA1Ljc1MTY3QzYuODg4MzUgNS44MDI4NCA2LjkxNzc4IDUuODIwMjYgNi45MjYwMSA1LjgyNDU5QzYuOTc0MiA1LjgzOTUyIDcuMDI1OCA1LjgzOTUyIDcuMDczOTkgNS44MjQ1OUM3LjA4MjIyIDUuODIwMjYgNy4xMTE2NSA1LjgwMjg0IDcuMTcxOTMgNS43NTE2N0M3LjI3MDY5IDUuNjY3ODIgNy4zOTQyOCA1LjU0NTA2IDcuNjAxMDQgNS4zMzgzTDEyLjQ2OTcgMC40Njk2N0MxMi43NjI2IDAuMTc2Nzc3IDEzLjIzNzQgMC4xNzY3NzcgMTMuNTMwMyAwLjQ2OTY3QzEzLjgyMzIgMC43NjI1NjMgMTMuODIzMiAxLjIzNzQ0IDEzLjUzMDMgMS41MzAzM0w4LjY2MTcgNi4zOTg5Nkw4LjY0MzE2IDYuNDE3NUM4LjQ2MTExIDYuNTk5NTggOC4yOTM5IDYuNzY2ODEgOC4xNDI2OSA2Ljg5NTE4QzcuOTc5NjcgNy4wMzM1NyA3Ljc4NjYxIDcuMTcwMjYgNy41NDA3OCA3LjI1MDE0QzcuMTg5MyA3LjM2NDM0IDYuODEwNyA3LjM2NDM0IDYuNDU5MjIgNy4yNTAxNEM2LjIxMzM5IDcuMTcwMjYgNi4wMjAzMyA3LjAzMzU3IDUuODU3MzEgNi44OTUxOEM1LjcwNjEgNi43NjY4MSA1LjUzODg5IDYuNTk5NTggNS4zNTY4NCA2LjQxNzVMNS4zMzgzIDYuMzk4OTZMMC40Njk2NyAxLjUzMDMzQzAuMTc2Nzc3IDEuMjM3NDQgMC4xNzY3NzcgMC43NjI1NjMgMC40Njk2NyAwLjQ2OTY3WiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+Cg==");
-        width: 13px;
-        height: 7px;
-        background-size: cover;
+        transform: translate(-50%, -40%) rotate(45deg);
+        width: 10px;
+        height: 10px;
+        border-bottom: 2px solid var(--btn-text-color);
+        border-right: 2px solid var(--btn-text-color);
         position: absolute;
         right: 20px;
     }

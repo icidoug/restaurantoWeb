@@ -72,12 +72,12 @@
         f7ready(async () => {
             await store.dispatch('partner/getPartner').then(settings => {
                 const urlParams = new URLSearchParams(window.location.search);
+                const styles = document.querySelector("#app").style;
                 if (settings.dark_theme || urlParams.get('dark')) {
                     f7.setDarkMode(true);
                     isDarkMode.value = true;
                 }
                 if(settings.theme_color) {
-                    let styles = document.querySelector("#app").style;
                     const setOpacity = (hex, alpha) => `${hex}${Math.floor(alpha * 255).toString(16).padStart(2, 0)}`
 
                     styles.setProperty('--pink', settings.theme_color);
@@ -85,6 +85,10 @@
                     //.setProperty('--pink-hover', setOpacity(settings.theme_color, 0.8));
                     styles.setProperty('--pink-hover', settings.theme_color);
                 }
+                if(settings.text_color) {
+                    styles.setProperty('--btn-text-color', settings.text_color);
+                }
+                document.title = settings.name;
             })
 
             isFetching.value = true;

@@ -15,7 +15,7 @@ export default {
             sum += parseFloat(state.tipsSum);
         }
         
-        return sum;
+        return sum.toFixed(2);
     },
     sumWithoutTips: (state) => {
         let items = state.items;

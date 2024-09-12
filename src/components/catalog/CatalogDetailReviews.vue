@@ -77,12 +77,26 @@
                     <img v-if="partner.dark_theme" src="/src/assets/images/services/tripadvisor_dark.png" alt="">
                     <img v-else src="/src/assets/images/services/tripadvisor.png" alt="">
                 </f7-link>
+                <f7-link external v-if="partner.services['yelp']" :href="partner.services['yelp']"
+                         target="_blank"
+                         class="review-services__item"
+                >
+                    <img v-if="partner.dark_theme" src="/src/assets/images/services/yelp_dark.png" alt="">
+                    <img v-else src="/src/assets/images/services/yelp.png" alt="">
+                </f7-link>
+                <f7-link external v-if="partner.services['google']" :href="partner.services['google']"
+                         target="_blank"
+                         class="review-services__item"
+                >
+                    <img v-if="partner.dark_theme" src="/src/assets/images/services/google_dark.png" alt="">
+                    <img v-else src="/src/assets/images/services/yelp.png" alt="">
+                </f7-link>
             </div>
         </div>
         <div v-if="reviews.length > 0" class="item-detail-review__items">
             <div class="item-detail__line"></div>
             <div class="item-detail__subtitle">
-                {{ $t('order_price') }}
+                {{ $t('guest_reviews') }}
             </div>
             <div v-for="review in reviews" class="review-item">
                 <div class="review-item__icon">
