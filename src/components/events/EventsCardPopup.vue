@@ -51,7 +51,7 @@
                     </div>
                 </div>
             </div>
-            <div class="events-detail__footer">
+            <div v-if="!partner.hide_call_waiter" class="events-detail__footer">
                 <f7-button class="btn btn--pink btn--arrow" popup-open=".waiter-popup">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M2 16L22 16" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
@@ -91,6 +91,10 @@
                 return store.getters['events/detailItem']
             });
 
+            const partner = computed(() => {
+                return store.getters['partner/partner']
+            });
+
             const closeModal = () => {
                 store.commit('events/setIsOpenModal', false);
             }
@@ -100,6 +104,7 @@
                 closeModal,
                 isFetching,
                 item,
+                partner
             }
         }
     }

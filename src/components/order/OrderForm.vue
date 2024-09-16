@@ -112,7 +112,7 @@
                     </svg>
                 </div>
             </f7-link>
-            <f7-button v-if="type === 'cash'" class="btn btn--pink btn--arrow" @click="openWaiterPopup"
+            <f7-button v-if="type === 'cash' && !partner.hide_call_waiter" class="btn btn--pink btn--arrow" @click="openWaiterPopup"
                        popup-open=".waiter-popup">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M2 16L22 16" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
