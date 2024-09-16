@@ -89,7 +89,7 @@
                          class="review-services__item"
                 >
                     <img v-if="partner.dark_theme" src="/src/assets/images/services/google_dark.png" alt="">
-                    <img v-else src="/src/assets/images/services/yelp.png" alt="">
+                    <img v-else src="/src/assets/images/services/google.png" alt="">
                 </f7-link>
             </div>
         </div>
