@@ -13,7 +13,7 @@
         </div>
         <div class="item-card__info">
             <div class="item-card__price" v-html="item.price_format"></div>
-            <div class="item-card__weight">
+            <div v-if="item.weight" class="item-card__weight">
                 {{ item.weight + $t('weight_value') }}
             </div>
         </div>
