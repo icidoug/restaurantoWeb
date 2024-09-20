@@ -3,8 +3,8 @@
         <Transition>
             <div class="app-view" v-if="partner.id">
                 <div v-if="isFetching" class="app-preloader">
-<!--                    <init-preloader :is-dark-mode="isDarkMode"/>-->
-                    <Preloader />
+                    <!--                    <init-preloader :is-dark-mode="isDarkMode"/>-->
+                    <Preloader/>
                 </div>
                 <div v-else-if="isError" class="app-empty-table">
                     Для начала работы с системой, отсканируйте QR код расположенный на столе
@@ -16,7 +16,8 @@
         </Transition>
     </f7-app>
 </template>
-<script setup>
+<script setup type="module">
+    import Chatbox from 'https://a.8up.ru/dist/chatbox/index.js';
     import {onMounted, ref, computed} from 'vue';
     import {
         f7ready,
@@ -70,14 +71,14 @@
 
     onMounted(() => {
         f7ready(async () => {
-            await store.dispatch('partner/getPartner').then(settings => {
+            await store.dispatch('partner/getPartner').then(async settings => {
                 const urlParams = new URLSearchParams(window.location.search);
                 const styles = document.querySelector("#app").style;
                 if (settings.dark_theme || urlParams.get('dark')) {
                     f7.setDarkMode(true);
                     isDarkMode.value = true;
                 }
-                if(settings.theme_color) {
+                if (settings.theme_color) {
                     const setOpacity = (hex, alpha) => `${hex}${Math.floor(alpha * 255).toString(16).padStart(2, 0)}`
 
                     styles.setProperty('--pink', settings.theme_color);
@@ -85,10 +86,24 @@
                     //.setProperty('--pink-hover', setOpacity(settings.theme_color, 0.8));
                     styles.setProperty('--pink-hover', settings.theme_color);
                 }
-                if(settings.text_color) {
+                if (settings.text_color) {
                     styles.setProperty('--btn-text-color', settings.text_color);
                 }
                 document.title = settings.name;
+
+                if (settings?.agent?.id && settings.show_chat_widget) {
+                    const widgetParams = {
+                        agentId: settings.agent.id,
+                        interface: {}
+                    };
+                    if (settings?.agent?.initial_messages) {
+                        widgetParams.interface.initialMessages = settings?.agent?.initial_messages;
+                    }
+                    if (settings?.agent?.message_templates) {
+                        widgetParams.interface.messageTemplates = settings?.agent?.message_templates;
+                    }
+                    window.widget = await Chatbox.initBubble(widgetParams);
+                }
             })
 
             isFetching.value = true;
@@ -103,7 +118,7 @@
                     await store.dispatch('basket/getItems');
                     const order = await store.dispatch('order/getOrder');
 
-                    if(order.id) {
+                    if (order.id) {
                         workerCheckOrder(order.id);
                     }
 
