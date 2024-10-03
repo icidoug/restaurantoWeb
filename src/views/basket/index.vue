@@ -41,6 +41,7 @@
     import BasketItems from "@/components/basket/BasketItems.vue";
     import CatalogBuyWith from "@/components/catalog/CatalogBuyWith.vue";
     import BasketForm from "@/components/basket/BasketForm.vue";
+    import {sendAiSystemMessage} from "@/services/sendAiSystemMessage";
 
     export default {
         components: {
@@ -61,6 +62,20 @@
 
             onMounted(async () => {
                 await store.dispatch('basket/getItems');
+
+                const sentEvents = JSON.parse(localStorage.getItem('sentEvents')) || [];
+                if (!sentEvents.includes('beforeOrderCreate')) {
+                    const response = await sendAiSystemMessage('beforeOrderCreate');
+                    if (!response.error) {
+                        window.widget.close();
+                        setTimeout(() => {
+                            window.widget.open();
+                        }, 3000)
+
+                        sentEvents.push('beforeOrderCreate');
+                        localStorage.setItem('sentEvents', JSON.stringify(sentEvents))
+                    }
+                }
             });
 
             const items = computed(() => {

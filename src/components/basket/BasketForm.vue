@@ -37,7 +37,8 @@
     import BasketOrderTypePopup from "@/components/basket/BasketOrderTypePopup.vue";
     import {ref} from 'vue'
     import BasketOrderConfirmPopup from "@/components/basket/BasketOrderConfirmPopup.vue";
-    import {workerCheckOrder} from "@/lib/workers/workerCheckOrder";
+    import {workerCheckOrderPayment} from "@/lib/workers/workerCheckOrderPayment";
+    import {workerCheckOrderTime} from "@/lib/workers/workerCheckOrderTime";
 
     export default {
         components: {
@@ -61,12 +62,22 @@
                     type: type.value,
                     comment: comment.value,
                 })
+                localStorage.setItem('sentEvents', JSON.stringify([]))
+
+                const currentTime = Date.now();
+                localStorage.setItem('orderCreationTime', currentTime);
+
+                const intervalId = setInterval(() => {
+                    console.log('setInterval')
+                    workerCheckOrderTime(intervalId);
+                }, 5000);
+
                 if(store.getters['order/items'].length > 0) {
                     //store.commit('tips/setTipsType', 'none');
                 }
 
                 if(localStorage.lastOrderId) {
-                    workerCheckOrder(localStorage.lastOrderId);
+                    workerCheckOrderPayment(localStorage.lastOrderId);
                 }
 
                 isFetching.value = false;

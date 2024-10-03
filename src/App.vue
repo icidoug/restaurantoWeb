@@ -29,7 +29,8 @@
     import Preloader from "@/components/Preloader.vue";
     import Cookies from "js-cookie";
     import InitPreloader from "@/components/InitPreloader.vue";
-    import {workerCheckOrder} from "@/lib/workers/workerCheckOrder";
+    import {workerCheckOrderPayment} from "@/lib/workers/workerCheckOrderPayment";
+    import axios from "axios";
 
     const device = getDevice();
     // Framework7 Parameters
@@ -102,7 +103,18 @@
                     if (settings?.agent?.message_templates) {
                         widgetParams.interface.messageTemplates = settings?.agent?.message_templates;
                     }
+
                     window.widget = await Chatbox.initBubble(widgetParams);
+
+                    /* await axios.get(import.meta.env.VITE_API_URL + `/chat/?action=getConversation`, {withCredentials: true})
+                         .then(response => {
+                             //return response.data.data;
+                         })*/
+                }
+
+                if (urlParams.get('item')) {
+                    store.commit('catalog/setIsOpenModal', true);
+                    store.dispatch('catalog/getDetail', urlParams.get('item'));
                 }
             })
 
@@ -119,7 +131,7 @@
                     const order = await store.dispatch('order/getOrder');
 
                     if (order.id) {
-                        workerCheckOrder(order.id);
+                        workerCheckOrderPayment(order.id);
                     }
 
                     await store.dispatch('events/getItems');
