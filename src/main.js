@@ -10,6 +10,7 @@ import Vue3Lottie from 'vue3-lottie'
 import { createI18n } from "vue-i18n";
 import './assets/scss/main.scss'
 import messages from "@intlify/unplugin-vue-i18n/messages";
+import store from '@/store/store'
 
 const i18n = createI18n({
 	legacy: false,
@@ -39,6 +40,17 @@ registerComponents(app);
 
 axios.defaults.withCredentials = true;
 axios.defaults.headers.common['partner'] = Cookies.get('partner') || '';
+
+app.config.globalProperties.$formatCurrency = (amount) => {
+	const template = store.getters['partner/partner'].currency_template || '$#';
+	const numericAmount = typeof amount === 'string' ? parseFloat(amount) : amount;
+	
+	if (isNaN(numericAmount)) return template.replace('#', '0');
+	
+	const formattedAmount = numericAmount % 1 === 0 ? numericAmount.toFixed(0) : numericAmount.toFixed(2);
+	
+	return template.replace('#', formattedAmount);
+}
 
 app.use(VueAxios, axios)
 	.use(Vue3Lottie)

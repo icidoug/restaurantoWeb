@@ -1,7 +1,7 @@
 <template>
     <div class="order-tips">
         <div class="order-tips__header">
-            {{ $t('tips') }} {{ tipsSum > 0 ? tipsSum.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + $t('currency') : '' }}
+            {{ $t('tips') }} {{ tipsSum > 0 ? $formatCurrency(tipsSum) : '' }}
         </div>
         <your-waiter :waiter="waiter"/>
         <div class="order-tips__items">
@@ -13,7 +13,7 @@
                     10%
                 </div>
                 <div class="order-tips__item_sum">
-                    {{ parseFloat(sum * .1).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}{{ $t('currency') }}
+                    {{ $formatCurrency(parseFloat(sum * .1)) }}
                 </div>
             </div>
             <div class="order-tips__item"
@@ -24,7 +24,7 @@
                     15%
                 </div>
                 <div class="order-tips__item_sum">
-                    {{ parseFloat(sum * .15).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}{{ $t('currency') }}
+                    {{ $formatCurrency(parseFloat(sum * .15)) }}
                 </div>
             </div>
             <div class="order-tips__item"
@@ -35,7 +35,7 @@
                     20%
                 </div>
                 <div class="order-tips__item_sum">
-                    {{ parseFloat(sum * .2).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}{{ $t('currency') }}
+                    {{ $formatCurrency(parseFloat(sum * .2)) }}
                 </div>
             </div>
             <div class="order-tips__item"

@@ -7,7 +7,7 @@
                         {{ $t('total') }}:
                     </div>
                     <div class="order-form__td">
-                        {{ totalSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}{{ $t('currency') }}
+                        {{ $formatCurrency(totalSum) }}
                     </div>
                 </div>
             </div>
@@ -17,7 +17,7 @@
             >
                 <div class="order-form__field_checkbox"></div>
                 <div class="order-form__field_title">
-                    {{ $t('take_commission') }} {{ commission }}{{ $t('currency') }}
+                    {{ $t('take_commission') }} {{ $formatCurrency(commission) }}
                 </div>
             </div>
             <div class="order-form__field"
@@ -91,7 +91,7 @@
                 </div>
             </f7-link>
             <f7-button popup-open=".order-confirm-popup" class="btn btn--pink" @click="onSubmit">
-                {{ $t('pay') }} {{ totalSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} {{ $t('currency') }}
+                {{ $t('pay') }} {{ $formatCurrency(totalSum) }}
             </f7-button>
         </div>
         <order-payment-type-popup @change="onChangeType($event)"/>

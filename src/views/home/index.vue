@@ -51,7 +51,7 @@
                         {{ $t('current_order') }}
                     </div>
                     <div class="home-menu__item_title">
-                        {{ orderSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} {{ $t('currency') }}
+                        {{ $formatCurrency(orderSum) }}
                     </div>
                 </f7-link>
                 <f7-link v-else-if="basketItems.length > 0 && !partner.only_menu" href="/basket/"
@@ -67,7 +67,7 @@
                         {{ $t('current_order') }}
                     </div>
                     <div class="home-menu__item_title">
-                        {{ basketSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} {{ $t('currency') }}
+                        {{ $formatCurrency(basketSum) }}
                     </div>
                 </f7-link>
                 <f7-link class="home-menu__item" popup-open=".wifi-popup">
@@ -150,7 +150,7 @@
                                 {{ $t('order') }}
                             </div>
                             <div class="footer-btn__sum">
-                                {{ orderSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} {{ $t('currency') }}
+                                {{ $formatCurrency(orderSum) }}
                             </div>
                         </div>
                     </f7-link>
@@ -166,7 +166,7 @@
                                 {{ $t('order') }}
                             </div>
                             <div class="footer-btn__sum">
-                                {{ basketSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} {{ $t('currency') }}
+                                {{ $formatCurrency(basketSum) }}
                             </div>
                         </div>
                     </f7-link>

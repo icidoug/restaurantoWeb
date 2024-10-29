@@ -7,7 +7,7 @@
                     <Preloader/>
                 </div>
                 <div v-else-if="isError" class="app-empty-table">
-                    Для начала работы с системой, отсканируйте QR код расположенный на столе
+                    {{ $t('start_system_scan_qr') }}
                 </div>
                 <f7-views v-else tabs class="safe-areas">
                     <f7-view id="view-home" main tab tab-active url="/"></f7-view>
