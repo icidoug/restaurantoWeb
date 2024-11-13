@@ -12,7 +12,7 @@ import './assets/scss/main.scss'
 import messages from "@intlify/unplugin-vue-i18n/messages";
 import store from '@/store/store'
 
-const i18n = createI18n({
+export const i18n = createI18n({
 	legacy: false,
 	globalInjection: true,
 	locale: "en",

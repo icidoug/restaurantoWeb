@@ -31,6 +31,7 @@
     import InitPreloader from "@/components/InitPreloader.vue";
     import {workerCheckOrderPayment} from "@/lib/workers/workerCheckOrderPayment";
     import axios from "axios";
+    import { i18n } from './main.js';
 
     const device = getDevice();
     // Framework7 Parameters
@@ -73,6 +74,14 @@
     onMounted(() => {
         f7ready(async () => {
             await store.dispatch('partner/getPartner').then(async settings => {
+                console.log({settings})
+                console.log({i18n})
+                if (settings.language && i18n.global.availableLocales.includes(settings.language)) {
+                    i18n.global.locale.value = settings.language;
+                } else {
+                    i18n.global.locale.value = "en"; // Устанавливаем "en" по умолчанию
+                }
+
                 const urlParams = new URLSearchParams(window.location.search);
                 const styles = document.querySelector("#app").style;
                 if (settings.dark_theme || urlParams.get('dark')) {
