@@ -84,6 +84,13 @@
     }
 }
 
+.btn--disabled {
+    background: transparent;
+    border: 2px solid #8b8989;;
+    color: #8b8989;
+    font-weight: 700;
+}
+
 .btn--arrow {
     position: relative;
     justify-content: flex-start;

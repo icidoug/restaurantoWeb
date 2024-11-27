@@ -1,5 +1,7 @@
 <template>
-    <div class="item-card">
+    <div class="item-card"
+         :class="{temp: item.temporarily_unavailable}"
+    >
         <div class="item-card__image" @click="getDetail">
             <img v-if="item.image && item.image !== ''" :src="item.image">
             <svg v-else-if="item.type === 'drink'" width="24" height="24"  viewBox="-1.6 -1.6 35.20 35.20" fill="#000000">
@@ -24,7 +26,8 @@
         <div class="item-card__title" @click="getDetail">
             {{ item.name }}
         </div>
-        <counter v-if="!partner.only_menu"
+        <div v-if="item.temporarily_unavailable" class="btn btn--disabled">{{ $t('temporarily_unavailable') }}</div>
+        <counter v-else-if="!partner.only_menu"
                  class="item-card____btn"
                  :value="quantity"
                  @change="setQuantity($event)"
@@ -59,6 +62,9 @@
         },
         setup(props) {
             const getDetail = () => {
+                if (props.item.temporarily_unavailable) {
+                    return;
+                }
                 store.commit('catalog/setIsOpenModal', true);
                 store.dispatch('catalog/getDetail', props.item.id);
             }
