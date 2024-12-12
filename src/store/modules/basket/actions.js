@@ -19,7 +19,7 @@ export default {
 			.catch(error => console.log('Ошибка: ', error))
 		
 	},
-	updateBasket({commit, getters, rootGetters}, {item, quantity}) {
+	updateBasket({commit, getters, rootGetters}, {item, quantity, extra_for_item}) {
 		let url = import.meta.env.VITE_API_URL + '/basket/',
 			action = 'add';
 		
@@ -53,11 +53,17 @@ export default {
 				break;
 		}
 		
-		return axios.post(url, {
+		const data = {
 			action: action,
 			id: item.id,
 			quantity: quantity,
-		}, {withCredentials: true})
+		};
+		
+		if (extra_for_item && action === 'add') {
+			data.extra_for_item = extra_for_item;
+		}
+		
+		return axios.post(url, data, {withCredentials: true})
 			.then(response => {
 				/*const items = response.data.data.list.map(item => {
 					const catalogItem = rootGetters['catalog/getItemById'](item.id);

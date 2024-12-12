@@ -45,6 +45,10 @@
     export default {
         components: {Counter},
         props: {
+            parentItem: {
+                type: Object,
+                required: true
+            },
             item: {
                 type: Object,
                 required: true
@@ -65,6 +69,7 @@
                     store.dispatch('basket/updateBasket', {
                         item: props.item,
                         quantity: qnt,
+                        extra_for_item: props.parentItem.id,
                     });
                 }
             }

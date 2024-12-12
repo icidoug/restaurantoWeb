@@ -92,5 +92,6 @@
   "weight_value": "г",
   "start_system_scan_qr": "Для начала работы с системой, отсканируйте QR код расположенный на столе",
   "password_copied": "Пароль скопирован",
-  "temporarily_unavailable": "Временно недоступно"
+  "temporarily_unavailable": "Временно недоступно",
+  "extras": "Дополнительные ингредиенты"
 }

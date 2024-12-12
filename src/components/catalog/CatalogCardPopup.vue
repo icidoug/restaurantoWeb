@@ -60,7 +60,14 @@
                             </svg>
                             {{ $t('add_to_order') }}
                         </counter>
-                        <div v-if="item.compound" class="item-detail__line"></div>
+                        <height-transition :show="item.extras && item.extras.length > 0 && quantity > 0">
+                            <div v-if="item.extras && item.extras.length > 0 && quantity > 0" class="extras">
+                                <div class="item-detail__subtitle">
+                                    {{ $t('extras') }}
+                                </div>
+                                <catalog-extras :item="item"/>
+                            </div>
+                        </height-transition>
                         <div v-if="item.compound" class="item-detail__subtitle">
                             {{ $t('ingredients') }}
                         </div>
@@ -110,14 +117,18 @@
     import CatalogDetailReviews from "@/components/catalog/CatalogDetailReviews.vue";
     import Preloader from "@/components/Preloader.vue";
     import Counter from "@/components/Counter.vue";
+    import HeightTransition from "@/components/HeightTransition.vue";
+    import CatalogExtras from "@/components/catalog/CatalogExtras.vue";
     //import $$ from "dom7";
 
     export default {
         components: {
+            CatalogExtras,
             Counter,
             Preloader,
             CatalogBuyWith,
-            CatalogDetailReviews
+            CatalogDetailReviews,
+            HeightTransition
         },
         setup() {
             const isOpenModal = computed(() => {
