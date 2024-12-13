@@ -1,5 +1,5 @@
 <template>
-    <div class="basket-item">
+    <div class="basket-item" :class="{'basket-item--extra': isExtra}">
         <div class="basket-item__image">
             <img v-if="item.image" :src="item.image" alt="">
             <svg v-else-if="item.type === 'drink'" width="24" height="24"  viewBox="-1.6 -1.6 35.20 35.20" fill="#000000">
@@ -44,6 +44,10 @@
             item: {
                 type: Object,
                 required: true
+            },
+            isExtra: {
+                type: Boolean,
+                default: false
             },
         },
         setup(props) {

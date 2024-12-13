@@ -53,15 +53,20 @@
                 type: Object,
                 required: true
             },
+            index: {
+                type: Number,
+                required: true
+            },
         },
         setup(props) {
+            const extra_for_item =  props.parentItem.id + '_' + props.index
             const getDetail = (id) => {
                 store.commit('catalog/setIsOpenModal', true);
                 store.dispatch('catalog/getDetail', id);
             }
 
             const quantity = computed(() => {
-                return store.getters['basket/getItemById'](props.item?.id)?.quantity || 0
+                return store.getters['basket/getExtraItemById'](props.item?.id, extra_for_item)?.quantity || 0
             });
 
             const setQuantity = (qnt) => {
@@ -69,7 +74,7 @@
                     store.dispatch('basket/updateBasket', {
                         item: props.item,
                         quantity: qnt,
-                        extra_for_item: props.parentItem.id,
+                        extra_for_item,
                     });
                 }
             }

@@ -23,7 +23,8 @@ export default {
 		let url = import.meta.env.VITE_API_URL + '/basket/',
 			action = 'add';
 		
-		const basketItem = getters['getItemById'](item.id);
+		
+		const basketItem = extra_for_item ? getters['getExtraItemById'](item.id, extra_for_item) : getters['getItemById'](item.id);
 		if (basketItem.id) {
 			action = quantity > 0 ? 'edit' : 'remove';
 		}
@@ -43,6 +44,7 @@ export default {
 				commit('updateQuantity', {
 					id: item.id,
 					quantity: quantity,
+					extra_for_item: extra_for_item,
 				})
 				break;
 			case "remove":
@@ -59,9 +61,11 @@ export default {
 			quantity: quantity,
 		};
 		
-		if (extra_for_item && action === 'add') {
+		if (extra_for_item && (action === 'add' || action === 'edit')) {
 			data.extra_for_item = extra_for_item;
 		}
+		
+		console.log('data', data)
 		
 		return axios.post(url, data, {withCredentials: true})
 			.then(response => {

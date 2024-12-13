@@ -60,14 +60,14 @@
                             </svg>
                             {{ $t('add_to_order') }}
                         </counter>
-                        <height-transition :show="item.extras && item.extras.length > 0 && quantity > 0">
-                            <div v-if="item.extras && item.extras.length > 0 && quantity > 0" class="extras">
+                        <div v-if="item.extras && item.extras.length > 0 && quantity > 0" class="extras">
+                            <div class="extras__item" v-for="i in quantity">
                                 <div class="item-detail__subtitle">
-                                    {{ $t('extras') }}
+                                    {{ $t('extras') + ' ' + i }}
                                 </div>
-                                <catalog-extras :item="item"/>
+                                <catalog-extras :item="item" :index="i"/>
                             </div>
-                        </height-transition>
+                        </div>
                         <div v-if="item.compound" class="item-detail__subtitle">
                             {{ $t('ingredients') }}
                         </div>

@@ -56,7 +56,29 @@
     height: 1px;
     background: var(--r-basket-line-color);
   }
+
+  &.basket-item--extra {
+    padding-left: 70px;
+    .basket-item__image {
+      width: 40px;
+      min-width: 40px;
+      height: 40px;
+      min-height: 40px;
+    }
+    .basket-item__title {
+      font-size: 12px;
+    }
+    .basket-item__info {
+      padding-bottom: 0;
+    }
+
+    &:not(:last-child):after {
+      height: 0;
+    }
+  }
 }
+
+
 
 .basket-item__image {
   width: 60px;

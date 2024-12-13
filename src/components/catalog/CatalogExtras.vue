@@ -1,7 +1,7 @@
 <template>
    <div class="buy-with">
        <div class="buy-with__wrapper">
-          <catalog-extras-item v-for="extraItem in item.extras" :parent-item="item" :item="extraItem"/>
+          <catalog-extras-item v-for="extraItem in item.extras" :parent-item="item" :item="extraItem" :index="index"/>
        </div>
    </div>
 </template>
@@ -16,9 +16,13 @@
                 type: Object,
                 required: true
             },
+            index: {
+                type: Number,
+                required: true
+            },
         },
-        setup() {
-
+        setup(props) {
+            console.log('props item', props.item)
             return {
 
             }

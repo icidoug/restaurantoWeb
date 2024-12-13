@@ -81,7 +81,6 @@
             const items = computed(() => {
                 return store.getters['basket/items']
             });
-
             const suitableItems = computed(() => {
                 return store.getters['basket/suitableItems']
             });
