@@ -23,49 +23,19 @@ export default {
 		let url = import.meta.env.VITE_API_URL + '/basket/',
 			action = 'add';
 		
-		
-		const basketItem = extra_for_item ? getters['getExtraItemById'](item.id, extra_for_item) : getters['getItemById'](item.id);
-		if (basketItem.id) {
-			action = quantity > 0 ? 'edit' : 'remove';
-		}
-		
-		switch (action) {
-			case "add":
-				commit('addItem', {
-					id: item.id,
-					name: item.name,
-					image: item.image,
-					price: item.price,
-					price_format: item.price_format,
-					quantity: quantity,
-				})
-				break;
-			case "edit":
-				commit('updateQuantity', {
-					id: item.id,
-					quantity: quantity,
-					extra_for_item: extra_for_item,
-				})
-				break;
-			case "remove":
-				commit('deleteItem', {
-					id: item.id,
-					quantity: quantity,
-				})
-				break;
-		}
-		
 		const data = {
 			action: action,
 			id: item.id,
 			quantity: quantity,
 		};
 		
+		if(item.selected_extras) {
+			data.selected_extras = item.selected_extras;
+		}
+		
 		if (extra_for_item && (action === 'add' || action === 'edit')) {
 			data.extra_for_item = extra_for_item;
 		}
-		
-		console.log('data', data)
 		
 		return axios.post(url, data, {withCredentials: true})
 			.then(response => {
@@ -75,6 +45,31 @@ export default {
 				});
 				
 				commit('setItems', items || []);*/
+				commit('addItem', {
+					id: item.id,
+					basket_id: response.data.data.basket_id,
+					name: item.name,
+					image: item.image,
+					price: item.price,
+					price_format: item.price_format,
+					quantity: quantity,
+					selected_extras: item.selected_extras,
+				})
+			})
+			.catch(error => console.log('Ошибка: ', error))
+	},
+	remove({commit, getters, rootGetters}, basket_id) {
+		let url = import.meta.env.VITE_API_URL + '/basket/',
+			action = 'remove';
+		
+		const data = {
+			action: action,
+			basket_id
+		};
+		
+		return axios.post(url, data, {withCredentials: true})
+			.then(response => {
+				commit('deleteItem', basket_id)
 			})
 			.catch(error => console.log('Ошибка: ', error))
 	},

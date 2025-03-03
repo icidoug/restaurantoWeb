@@ -1,11 +1,11 @@
 <template>
-    <div class="basket-item">
+    <div class="basket-item" :class="{'basket-item--extra': isExtra}">
         <div v-if="splitBill"
              class="basket-item__image"
              :class="{'active': item.is_checked && !item.is_paid}"
              @click="toggleChecked"
         >
-            <div v-if="!item.is_paid" class="basket-item__checkbox"></div>
+            <div v-if="!item.is_paid && !isExtra" class="basket-item__checkbox"></div>
             <img v-if="item.image" :src="item.image" alt="">
             <svg v-else-if="item.type === 'drink'" width="24" height="24"  viewBox="-1.6 -1.6 35.20 35.20" fill="#000000">
                 <path
@@ -38,7 +38,7 @@
         <div class="basket-item__info">
             <div class="basket-item__title">
                 {{ item.name }}
-                <span v-if="splitBill" :class="{'basket-item__paid': item.is_paid}">
+                <span v-if="splitBill && !isExtra" :class="{'basket-item__paid': item.is_paid}">
                     {{ item.is_paid ? $t('paid') : $t('not_paid') }}
                 </span>
             </div>
@@ -60,7 +60,10 @@
             },
             index: {
                 type: Number,
-                required: true
+            },
+            isExtra: {
+                type: Boolean,
+                default: false
             },
         },
         setup(props) {
@@ -70,7 +73,7 @@
 
             const toggleChecked = () => {
                 if(!props.item.is_paid) {
-                    store.commit('order/setCheckedItem', props.index)
+                    store.commit('order/setCheckedItemByBasketId', props.item.basket_id)
                 }
             }
 

@@ -282,6 +282,7 @@
   background: var(--r-bg-panel-color);
   border-top: 1px solid var(--r-fixed-border-top-color);
   box-shadow: 0 2px 6px rgba(17, 17, 17, 0.1);
+  z-index: 1;
 
   .btn {
     width: 100%;

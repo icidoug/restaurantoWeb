@@ -52,10 +52,7 @@
         },
         setup(props) {
             const deleteItem = () => {
-                store.dispatch('basket/updateBasket', {
-                    item: props.item,
-                    quantity: props.item.quantity - 1,
-                });
+                store.dispatch('basket/remove', props.item.basket_id);
             }
             return {
                 deleteItem

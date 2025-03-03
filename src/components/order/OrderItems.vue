@@ -5,7 +5,15 @@
             <span>{{ $t('split_bill') }}</span>
         </div>
         <div class="basket-items__wrapper">
-            <order-item v-for="(item, i) in items" :index="i" :item="item"/>
+
+            <div v-for="(item, i) in groupedItems" :key="item.id">
+                <order-item :index="i" :item="item"/>
+                <div v-if="item.added_extras && item.added_extras.length > 0">
+                    <div v-for="extraItem in item.added_extras">
+                        <order-item :item="extraItem" isExtra/>
+                    </div>
+                </div>
+            </div>
         </div>
         <div v-if="splitBill" class="btn btn--border" @click="shareBill">
             <svg width="23" height="22" viewBox="0 0 23 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -33,7 +41,7 @@
                 required: true
             },
         },
-        setup() {
+        setup(props) {
             const sum = computed(() => {
                 return store.getters['order/sum']
             });
@@ -64,15 +72,36 @@
                 } catch (e) {
                     f7.popup.open('.share-popup');
                 }
-
             }
+
+            const groupedItems = computed(() => {
+                const items = props.items;
+                const result = [];
+
+                items.forEach((item) => {
+                    if (!item.extra_for_item) {
+                        item.added_extras = [];
+                        items.forEach((extra) => {
+                            if (extra.extra_for_item === `${item.basket_id}`) {
+                                item.added_extras.push(extra);
+                            }
+                        });
+                        result.push(item);
+                    }
+                });
+
+                console.log('result', result)
+
+                return result;
+            });
 
             return {
                 sum,
                 splitToggle,
                 splitBill,
                 paidItems,
-                shareBill
+                shareBill,
+                groupedItems
             }
         }
     }

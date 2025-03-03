@@ -32,6 +32,8 @@
                  :value="quantity"
                  @change="setQuantity($event)"
                  btn-style="border"
+                 :hasExtras="item.extra_sections && Object.keys(item.extra_sections).length > 0"
+                 @openExtrasPopup="isExtrasPopupOpen = true"
         >
             <span>{{ $t('to_order') }}</span>
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -40,19 +42,27 @@
                       fill="#D2015F"/>
             </svg>
         </counter>
+        <item-extras-popup
+            v-if="item.extra_sections && Object.keys(item.extra_sections).length > 0"
+            :item="item"
+            :is-open="isExtrasPopupOpen"
+            @update:isOpen="isExtrasPopupOpen = $event"
+            @added="handleItemAdded"
+        />
     </div>
 </template>
 
 <script>
     import store from '@/store/store'
     import Counter from "@/components/Counter.vue";
-    import {computed} from "vue";
+    import {computed, ref} from "vue";
     import {f7} from "framework7-vue";
+    import ItemExtrasPopup from "@/components/catalog/ItemExtrasPopup.vue";
 
     export default {
         components: {
-            Counter
-
+            Counter,
+            ItemExtrasPopup
         },
         props: {
             item: {
@@ -61,6 +71,8 @@
             },
         },
         setup(props) {
+            const isExtrasPopupOpen = ref(false)
+
             const getDetail = () => {
                 if (props.item.temporarily_unavailable) {
                     return;
@@ -70,24 +82,22 @@
             }
 
             const quantity = computed(() => {
-                return store.getters['basket/getItemById'](props.item?.id)?.quantity || 0
+                return store.getters['basket/getItemQuantityById'](props.item?.id) || 0
             });
 
             const setQuantity = (qnt) => {
-                /*f7.notification.create({
-                    icon: '<i class="icon icon-f7"></i>',
-                    title: 'Framework7',
-                    titleRightText: 'now',
-                    subtitle: 'This is a subtitle',
-                    text: 'This is a simple notification message',
-                    closeTimeout: 3000,
-                }).open();*/
-
                 if (quantity.value !== qnt) {
-                    store.dispatch('basket/updateBasket', {
-                        item: props.item,
-                        quantity: qnt,
-                    });
+                    if (qnt < quantity.value) {
+                        const lastBasketItem = store.getters['basket/getLastItemById'](props.item?.id)
+                        if (lastBasketItem.basket_id) {
+                            store.dispatch('basket/remove', lastBasketItem.basket_id);
+                        }
+                    } else {
+                        store.dispatch('basket/updateBasket', {
+                            item: props.item,
+                            quantity: qnt,
+                        });
+                    }
                 }
             }
 
@@ -95,11 +105,17 @@
                 return store.getters['partner/partner']
             });
 
+            const handleItemAdded = async () => {
+                isExtrasPopupOpen.value = false;
+            };
+
             return {
                 getDetail,
                 quantity,
                 setQuantity,
-                partner
+                partner,
+                handleItemAdded,
+                isExtrasPopupOpen
             }
         }
     }
