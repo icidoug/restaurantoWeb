@@ -20,6 +20,7 @@
 
                         <f7-list no-hairlines>
                             <f7-list-item
+                                class="item-radio"
                                 v-if="section.single_choose"
                                 v-for="extra in section.extras"
                                 :key="extra.id"
@@ -31,7 +32,6 @@
                                 :disabled="extra.temporarily_unavailable"
                                 @change="handleSingleSelection(sectionId, extra.id)"
                             />
-
                             <f7-list-item
                                 v-else
                                 v-for="extra in section.extras"

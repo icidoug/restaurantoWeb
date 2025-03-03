@@ -38,3 +38,15 @@ html.with-modal-popup-push .popup-push, html.with-modal-popup-push-closing .popu
 .ios .toggle-icon:before {
   background: unset;
 }
+
+.ios .item-radio label.item-checkbox input[type="checkbox"]:checked ~ .icon-checkbox::after {
+  content: '';
+  display: block;
+  width: 10px;
+  height: 10px;
+  background: #fff;
+  border-radius: 50%;
+  top: 5px;
+  left: 5px;
+  position: relative;
+}
