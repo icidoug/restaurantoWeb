@@ -5,6 +5,9 @@
                 <div class="home__header_wrapper">
                     <div class="home__header_title">
                         {{ partner?.name }}
+                        <div v-if="partner.logo" class="home__header_logo">
+                            <img :src="partner.logo" alt="">
+                        </div>
                     </div>
                     <div
                         v-if="partner.hasOwnProperty('address')"
