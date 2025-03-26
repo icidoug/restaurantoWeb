@@ -133,21 +133,25 @@
             const zone = Cookies.get('zone') || null;
             if (table && zone) {
                 await store.dispatch('waiter/getWaiter', {table, zone});
-                if (!isError.value) {
-                    await store.dispatch('catalog/getSections');
-                    await store.dispatch('catalog/getItems');
-                    await store.dispatch('basket/getItems');
-                    const order = await store.dispatch('order/getOrder');
+                const order = await store.dispatch('order/getOrder');
 
-                    if (order.id) {
-                        workerCheckOrderPayment(order.id);
-                    }
+                if (order.id) {
+                    workerCheckOrderPayment(order.id);
+                }
+            }
+            if (!isError.value) {
+                await store.dispatch('catalog/getSections');
+                await store.dispatch('catalog/getItems');
+                await store.dispatch('basket/getItems');
 
-                    await store.dispatch('events/getItems');
-                    if (store.getters['order/items'].length > 0) {
-                        //console.log(f7.views[0].navigate('/tips'))
-                        //store.commit('tips/setTipsType', 'none');
-                    }
+
+                await store.dispatch('events/getItems');
+                if (store.getters['order/items'].length > 0) {
+                    //console.log(f7.views[0].navigate('/tips'))
+                    //store.commit('tips/setTipsType', 'none');
+                }
+                if (!store.getters['waiter/waiter']?.id) {
+                    store.commit('partner/setOnlyMenu')
                 }
             }
 

@@ -4,7 +4,7 @@ import getters from './getters';
 
 const getDefaultState = () => {
     return {
-        isError: true,
+        isError: false,
         waiter: {},
         comment: '',
     }

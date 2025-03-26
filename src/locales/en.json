@@ -93,5 +93,6 @@
   "start_system_scan_qr": "To start working with the system, please scan the QR code located on the table",
   "password_copied": "Password copied",
   "temporarily_unavailable": "Temporarily unavailable",
-  "extras": "Subitems"
+  "extras": "Subitems",
+  "scan_qr": "To call the waiter and place an order, scan the QR code on the table"
 }

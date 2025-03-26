@@ -14,8 +14,8 @@
                       fill="#898989"/>
             </svg>
         </f7-link>
-        <div class="waiter-popup__wrapper">
-            <div v-if="waiter.id" class="waiter-popup__header">
+        <div v-if="waiter.id" class="waiter-popup__wrapper">
+            <div class="waiter-popup__header">
                 <div class="waiter-popup__image">
                     <img v-if="waiter.image" :src="waiter.image">
                 </div>
@@ -39,6 +39,11 @@
                     {{ $t('call_hookah_man') }}
                 </f7-button>
                 <hookah-confirm-popup :minutes-difference="minutesDifferenceHookah" :is-loading="isFetching" :is-error="isHookahCallError"/>-->
+            </div>
+        </div>
+        <div v-else class="waiter-popup__wrapper">
+            <div class="waiter-popup__scan-qr">
+                {{ $t('scan_qr') }}
             </div>
         </div>
     </f7-popup>
