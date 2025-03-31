@@ -27,7 +27,7 @@
                     </div>
                     <div class="popup-form__item_checkbox"></div>
                 </div>
-                <div class="popup-form__item"
+                <div v-if="!tips" class="popup-form__item"
                      :class="{active: selected === 'cash'}"
                      @click="selected = 'cash'"
                 >
@@ -55,6 +55,12 @@
     import store from "@/store/store";
 
     export default {
+        props: {
+            tips: {
+                type: Boolean,
+                default: false
+            },
+        },
         data() {
             return {
                 selected: store.getters['partner/partner']?.hide_online_payment ? 'cash' : 'card'

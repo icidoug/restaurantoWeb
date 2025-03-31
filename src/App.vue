@@ -10,7 +10,7 @@
                     {{ $t('start_system_scan_qr') }}
                 </div>
                 <f7-views v-else tabs class="safe-areas">
-                    <f7-view id="view-home" main tab tab-active url="/"></f7-view>
+                    <f7-view id="view-home" main tab tab-active :url="startPage"></f7-view>
                 </f7-views>
             </div>
         </Transition>
@@ -31,7 +31,7 @@
     import InitPreloader from "@/components/InitPreloader.vue";
     import {workerCheckOrderPayment} from "@/lib/workers/workerCheckOrderPayment";
     import axios from "axios";
-    import { i18n } from './main.js';
+    import {i18n} from './main.js';
 
     const device = getDevice();
     // Framework7 Parameters
@@ -55,6 +55,7 @@
     };
 
     const isFetching = ref(false);
+    const startPage = ref('/');
 
     const waiter = computed(() => {
         return store.getters['waiter/waiter']
@@ -73,16 +74,15 @@
 
     onMounted(() => {
         f7ready(async () => {
+            const urlParams = new URLSearchParams(window.location.search);
+
             await store.dispatch('partner/getPartner').then(async settings => {
-                console.log({settings})
-                console.log({i18n})
                 if (settings.language && i18n.global.availableLocales.includes(settings.language)) {
                     i18n.global.locale.value = settings.language;
                 } else {
                     i18n.global.locale.value = "en"; // Устанавливаем "en" по умолчанию
                 }
 
-                const urlParams = new URLSearchParams(window.location.search);
                 const styles = document.querySelector("#app").style;
                 if (settings.dark_theme || urlParams.get('dark')) {
                     f7.setDarkMode(true);
@@ -129,33 +129,42 @@
 
             isFetching.value = true;
 
-            const table = Cookies.get('table') || null;
-            const zone = Cookies.get('zone') || null;
-            if (table && zone) {
-                await store.dispatch('waiter/getWaiter', {table, zone});
-                const order = await store.dispatch('order/getOrder');
-
-                if (order.id) {
-                    workerCheckOrderPayment(order.id);
+            if (urlParams.get('tips') && urlParams.get('tips') === 'y' && urlParams.get('waiter')) {
+                await store.dispatch('waiter/getWaiterById', urlParams.get('waiter'));
+                if (waiter.value) {
+                    store.commit('waiter/setOnlyTipsPage', true);
+                    startPage.value = '/tips/';
                 }
+                isFetching.value = false;
+            } else {
+                const table = Cookies.get('table') || null;
+                const zone = Cookies.get('zone') || null;
+                if (table && zone) {
+                    await store.dispatch('waiter/getWaiter', {table, zone});
+                    const order = await store.dispatch('order/getOrder');
+
+                    if (order.id) {
+                        workerCheckOrderPayment(order.id);
+                    }
+                }
+                if (!isError.value) {
+                    await store.dispatch('catalog/getSections');
+                    await store.dispatch('catalog/getItems');
+                    await store.dispatch('basket/getItems');
+
+
+                    await store.dispatch('events/getItems');
+                    if (store.getters['order/items'].length > 0) {
+                        //console.log(f7.views[0].navigate('/tips'))
+                        //store.commit('tips/setTipsType', 'none');
+                    }
+                    if (!store.getters['waiter/waiter']?.id) {
+                        store.commit('partner/setOnlyMenu')
+                    }
+                }
+
+                isFetching.value = false;
             }
-            if (!isError.value) {
-                await store.dispatch('catalog/getSections');
-                await store.dispatch('catalog/getItems');
-                await store.dispatch('basket/getItems');
-
-
-                await store.dispatch('events/getItems');
-                if (store.getters['order/items'].length > 0) {
-                    //console.log(f7.views[0].navigate('/tips'))
-                    //store.commit('tips/setTipsType', 'none');
-                }
-                if (!store.getters['waiter/waiter']?.id) {
-                    store.commit('partner/setOnlyMenu')
-                }
-            }
-
-            isFetching.value = false;
         });
     });
 </script>

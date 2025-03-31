@@ -7,6 +7,7 @@ const getDefaultState = () => {
         isError: false,
         waiter: {},
         comment: '',
+        onlyTipsPage: false,
     }
 };
 

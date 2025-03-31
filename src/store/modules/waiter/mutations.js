@@ -8,4 +8,7 @@ export default {
     setComment(state, comment) {
         state.comment = comment
     },
+    setOnlyTipsPage(state, onlyTipsPage) {
+        state.onlyTipsPage = onlyTipsPage
+    },
 }

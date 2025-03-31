@@ -1,7 +1,7 @@
 <template>
     <f7-page>
         <div class="order">
-            <navbar :title="$t('tips')" back-url="/"/>
+            <navbar :title="$t('tips')" :back-url="onlyTipsPage ? '' : '/'"/>
             <div class="order-tips">
                 <div class="order-tips__header">
                     {{ $t('tips') }} {{ tipsSum > 0 ? $formatCurrency(tipsSum) : '' }}
@@ -70,7 +70,7 @@
                         <path d="M16 14L12 10" stroke="#111111" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </div>
-                <waiter-review/>
+                <waiter-review v-if="!onlyTipsPage"/>
             </div>
             <tips-form/>
         </div>
@@ -113,6 +113,10 @@
 
             const customTipsSum = ref(0);
 
+            const onlyTipsPage = computed(() => {
+                return store.getters['waiter/onlyTipsPage']
+            });
+
             const setTips = (type, sum) => {
                 if(tipsType.value === type) {
                     type = 'none';
@@ -152,7 +156,8 @@
                 customTipsSum,
                 setCustomTips,
                 isNumber,
-                checkSum
+                checkSum,
+                onlyTipsPage
             }
         }
     }

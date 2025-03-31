@@ -14,7 +14,7 @@
                     </div>
                 </div>
             </div>
-            <div class="waiter__rating">
+            <div v-if="!onlyTipsPage" class="waiter__rating">
                 <img v-if="parseFloat(waiter.rating) > 4" src="/src/assets/images/emoji/heart_eyes.png">
                 <img v-else-if="parseFloat(waiter.rating) > 3" src="/src/assets/images/emoji/smile.png">
                 <img v-else src="/src/assets/images/emoji/sad.png">
@@ -25,6 +25,9 @@
 </template>
 
 <script>
+    import {computed} from "vue";
+    import store from "@/store/store";
+
     export default {
         components: {},
         props: {
@@ -34,8 +37,12 @@
             },
         },
         setup() {
-
-            return {}
+            const onlyTipsPage = computed(() => {
+                return store.getters['waiter/onlyTipsPage']
+            });
+            return {
+                onlyTipsPage
+            }
         }
     }
 </script>

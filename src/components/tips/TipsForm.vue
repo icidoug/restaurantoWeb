@@ -94,7 +94,7 @@
                 {{ $t('pay') }} {{ $formatCurrency(totalSum) }}
             </f7-button>
         </div>
-        <order-payment-type-popup @change="onChangeType($event)"/>
+        <order-payment-type-popup @change="onChangeType($event)" tips/>
         <order-payment-result-popup :is-loading="isFetching" />
         <tips-payment-confirm-popup/>
         <order-payment-confirm-popup/>
@@ -145,7 +145,7 @@
     }
 
     const tipsSum = computed(() => {
-        const sum = parseInt(store.getters['tips/tipsSum']);
+        const sum = parseFloat(store.getters['tips/tipsSum']);
         return sum > 0 ? sum : 0;
     });
 
@@ -171,6 +171,7 @@
 
     const totalSum = computed(() => {
         let totalSum = tipsSum.value;
+        console.log('totalSum', totalSum)
         if (taxChecked.value) {
             totalSum += commission.value;
         }
@@ -180,18 +181,18 @@
     const payDalaPopup = ref(null);
 
     const onSubmit = async () => {
-        /*isFetching.value = true;
+        isFetching.value = true;
         await store.dispatch('tips/pay', {
             type: type.value,
             sum: store.getters['tips/tipsSum'],
             commission: taxChecked.value
-        })*/
-        payDalaPopup.value.initiatePayment();
+        })
+        /*payDalaPopup.value.initiatePayment();
         store.commit('order/setIsPaymentFetching', true);
         store.commit('order/setIsOpenPayDalaModal', true);
         setTimeout(() => {
             store.commit('order/setIsPaymentFetching', false);
-        }, 1500)
+        }, 1500)*/
     }
     const openLink = (url) => {
         window.open(url)
