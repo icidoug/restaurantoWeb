@@ -94,5 +94,11 @@
   "password_copied": "Password copied",
   "temporarily_unavailable": "Temporarily unavailable",
   "extras": "Subitems",
+  "address": "Address",
+  "name": "Name",
+  "email": "Email",
+  "phone": "Phone",
+  "work_hours": "Work hours",
+  "contacts": "Contacts",
   "scan_qr": "To call the waiter and place an order, scan the QR code on the table"
 }

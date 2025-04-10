@@ -88,6 +88,21 @@
                         {{ $t('connect') }}
                     </div>
                 </f7-link>
+                <f7-link class="home-menu__item" popup-open=".contacts-popup">
+                    <div class="home-menu__item_icon">
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                  d="M2.79231 14.56C6.06858 10.9878 10.7723 8.75 15.9999 8.75C21.2274 8.75 25.9312 10.9878 29.2074 14.56C29.4874 14.8653 29.9618 14.8858 30.2671 14.6058C30.5724 14.3258 30.5929 13.8514 30.3129 13.5461C26.7645 9.67719 21.6651 7.25 15.9999 7.25C10.3347 7.25 5.23528 9.67719 1.68685 13.5461C1.40688 13.8514 1.42738 14.3258 1.73264 14.6058C2.03791 14.8858 2.51234 14.8653 2.79231 14.56ZM7.37608 17.503C9.62903 15.382 12.662 14.0833 15.9998 14.0833C19.3377 14.0833 22.3706 15.382 24.6236 17.503C24.9252 17.787 25.3998 17.7727 25.6838 17.4711C25.9677 17.1695 25.9534 16.6948 25.6518 16.4109C23.1317 14.0383 19.7349 12.5833 15.9998 12.5833C12.2648 12.5833 8.868 14.0383 6.34787 16.4109C6.04629 16.6948 6.03197 17.1695 6.31591 17.4711C6.59984 17.7727 7.0745 17.787 7.37608 17.503ZM15.9997 19.4167C14.2049 19.4167 12.5641 20.0679 11.2979 21.1478C10.9827 21.4166 10.5093 21.379 10.2406 21.0639C9.97176 20.7487 10.0094 20.2753 10.3245 20.0065C11.852 18.7038 13.8349 17.9167 15.9997 17.9167C18.1645 17.9167 20.1474 18.7038 21.6749 20.0065C21.9901 20.2753 22.0277 20.7487 21.7589 21.0639C21.4901 21.379 21.0167 21.4166 20.7016 21.1478C19.4353 20.0679 17.7945 19.4167 15.9997 19.4167ZM16 25.3333C16.7364 25.3333 17.3333 24.7364 17.3333 24C17.3333 23.2636 16.7364 22.6667 16 22.6667C15.2636 22.6667 14.6667 23.2636 14.6667 24C14.6667 24.7364 15.2636 25.3333 16 25.3333Z"
+                                  fill="#D2015F"/>
+                        </svg>
+                    </div>
+                    <div class="home-menu__item_subtitle">
+                        {{ $t('wi_fi') }}
+                    </div>
+                    <div class="home-menu__item_title">
+                        {{ $t('connect') }}
+                    </div>
+                </f7-link>
                 <f7-link v-if="waiter.id && waiter.can_tips" class="home-menu__item" href="/tips/">
                     <div class="home-menu__item_icon">
                         <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -178,6 +193,7 @@
         </div>
         <waiter-popup :waiter="waiter"/>
         <wi-fi-popup :partner="partner"/>
+        <contacts-popup :partner="partner"/>
         <catalog-card-popup/>
         <tips-payment-confirm-popup/>
         <order-payment-confirm-popup/>
@@ -197,9 +213,11 @@
     import axios from "axios";
     import TipsPaymentConfirmPopup from "@/components/tips/TipsPaymentConfirmPopup.vue";
     import OrderPaymentConfirmPopup from "@/components/order/OrderPaymentConfirmPopup.vue";
+    import ContactsPopup from "@/components/ContactsPopup.vue";
 
     export default {
         components: {
+            ContactsPopup,
             WiFiPopup,
             CatalogCardPopup,
             WaiterPopup,
