@@ -159,7 +159,7 @@
                         //store.commit('tips/setTipsType', 'none');
                     }
                     if (!store.getters['waiter/waiter']?.id) {
-                        //store.commit('partner/setOnlyMenu')
+                        store.commit('partner/setOnlyMenu')
                     }
                 }
 
