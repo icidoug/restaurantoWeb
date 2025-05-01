@@ -64,7 +64,15 @@
                             </svg>
                             {{ $t('add_to_order') }}
                         </counter>
-                        <div v-if="item.extras && item.extras.length > 0 && quantity > 0" class="extras">
+                        <div v-if="item.extras && item.extras.length > 0 && partner.id == 3267" class="extras">
+                            <div class="extras__item">
+                                <div class="item-detail__subtitle">
+                                    {{ $t('extras') }}
+                                </div>
+                                <catalog-extras :item="item" :index="1"/>
+                            </div>
+                        </div>
+                        <div v-else-if="item.extras && item.extras.length > 0 && quantity > 0" class="extras">
                             <div class="extras__item" v-for="i in quantity">
                                 <div class="item-detail__subtitle">
                                     {{ $t('extras') + ' ' + i }}

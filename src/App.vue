@@ -158,7 +158,7 @@
                         //console.log(f7.views[0].navigate('/tips'))
                         //store.commit('tips/setTipsType', 'none');
                     }
-                    if (!store.getters['waiter/waiter']?.id) {
+                    if (!store.getters['waiter/waiter']?.id/* && partner.value?.id != 3267*/) {
                         store.commit('partner/setOnlyMenu')
                     }
                 }
