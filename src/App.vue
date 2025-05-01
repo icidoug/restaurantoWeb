@@ -77,7 +77,7 @@
             const urlParams = new URLSearchParams(window.location.search);
 
             await store.dispatch('partner/getPartner').then(async settings => {
-                if (settings.language && i18n.global.availableLocales.includes(settings.language)) {
+                if (settings?.language && i18n.global.availableLocales.includes(settings.language)) {
                     i18n.global.locale.value = settings.language;
                 } else {
                     i18n.global.locale.value = "en"; // Устанавливаем "en" по умолчанию
@@ -159,7 +159,7 @@
                         //store.commit('tips/setTipsType', 'none');
                     }
                     if (!store.getters['waiter/waiter']?.id) {
-                        store.commit('partner/setOnlyMenu')
+                        //store.commit('partner/setOnlyMenu')
                     }
                 }
 
