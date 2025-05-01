@@ -33,6 +33,9 @@
                           fill="#D2015F"/>
                 </svg>
             </counter>
+            <div class="item-detail__price" v-else>
+                <span v-html="item.price_format"></span>
+            </div>
         </div>
     </div>
 </template>
