@@ -17,7 +17,6 @@
     </f7-app>
 </template>
 <script setup type="module">
-    import Chatbox from 'https://a.8up.ru/dist/chatbox/index.js';
     import {onMounted, ref, computed} from 'vue';
     import {
         f7ready,
@@ -54,7 +53,7 @@
         },
     };
 
-    const isFetching = ref(false);
+    const isFetching = ref(true);
     const startPage = ref('/');
 
     const waiter = computed(() => {
@@ -102,23 +101,23 @@
                 document.title = settings.name;
 
                 if (settings?.agent?.id && settings.show_chat_widget) {
-                    const widgetParams = {
-                        agentId: settings.agent.id,
-                        interface: {}
-                    };
-                    if (settings?.agent?.initial_messages) {
-                        widgetParams.interface.initialMessages = settings?.agent?.initial_messages;
-                    }
-                    if (settings?.agent?.message_templates) {
-                        widgetParams.interface.messageTemplates = settings?.agent?.message_templates;
-                    }
+                    try {
+                        const { default: Chatbox } = await import('https://a.8up.ru/dist/chatbox/index.js');
+                        const widgetParams = {
+                            agentId: settings.agent.id,
+                            interface: {},
+                        };
+                        if (settings?.agent?.initial_messages) {
+                            widgetParams.interface.initialMessages = settings.agent.initial_messages;
+                        }
+                        if (settings?.agent?.message_templates) {
+                            widgetParams.interface.messageTemplates = settings.agent.message_templates;
+                        }
 
-                    window.widget = await Chatbox.initBubble(widgetParams);
-
-                    /* await axios.get(import.meta.env.VITE_API_URL + `/chat/?action=getConversation`, {withCredentials: true})
-                         .then(response => {
-                             //return response.data.data;
-                         })*/
+                        window.widget = await Chatbox.initBubble(widgetParams);
+                    } catch (error) {
+                        console.error('Failed to load Chatbox:', error);
+                    }
                 }
 
                 if (urlParams.get('item')) {
@@ -127,7 +126,7 @@
                 }
             })
 
-            isFetching.value = true;
+            //isFetching.value = true;
 
             if (urlParams.get('tips') && urlParams.get('tips') === 'y' && urlParams.get('waiter')) {
                 await store.dispatch('waiter/getWaiterById', urlParams.get('waiter'));
